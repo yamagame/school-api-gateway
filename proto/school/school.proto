@@ -12,7 +12,7 @@ service Shool {
   // 研究室の一覧を返す
   rpc ListLabos(ListLabosRequest) returns (ListLabosResponse) {
     option (google.api.http) = {
-      post: "/v1/shool/labos"
+      post: "/v1/school/labos"
       body: "*"
     };
   }

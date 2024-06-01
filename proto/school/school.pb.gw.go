@@ -71,7 +71,7 @@ func RegisterShoolHandlerServer(ctx context.Context, mux *runtime.ServeMux, serv
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/school.Shool/ListLabos", runtime.WithHTTPPathPattern("/v1/shool/labos"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/school.Shool/ListLabos", runtime.WithHTTPPathPattern("/v1/school/labos"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -135,7 +135,7 @@ func RegisterShoolHandlerClient(ctx context.Context, mux *runtime.ServeMux, clie
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/school.Shool/ListLabos", runtime.WithHTTPPathPattern("/v1/shool/labos"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/school.Shool/ListLabos", runtime.WithHTTPPathPattern("/v1/school/labos"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -155,7 +155,7 @@ func RegisterShoolHandlerClient(ctx context.Context, mux *runtime.ServeMux, clie
 }
 
 var (
-	pattern_Shool_ListLabos_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "shool", "labos"}, ""))
+	pattern_Shool_ListLabos_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "school", "labos"}, ""))
 )
 
 var (

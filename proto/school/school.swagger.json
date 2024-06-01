@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/shool/labos": {
+    "/v1/school/labos": {
       "post": {
         "summary": "研究室の一覧を返す",
         "operationId": "Shool_ListLabos",
