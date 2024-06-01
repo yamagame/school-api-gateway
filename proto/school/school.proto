@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package school;
+
+import "google/api/annotations.proto";
+
+// 生成される Go パッケージの名前
+option go_package = "github.com/yamagame/school-grpc-gateway/proto;school";
+
+// School サービス
+service Shool {
+  // 研究室の一覧を返す
+  rpc ListLabos(ListLabosRequest) returns (ListLabosResponse) {
+    option (google.api.http) = {
+      post: "/v1/shool/labos"
+      body: "*"
+    };
+  }
+}
+
+// 研究室の情報
+message Labo {
+  string name = 1;
+}
+
+// The request message containing the user's name
+message ListLabosRequest {
+  optional int32 page_size = 1;
+  optional int32 offset = 2;
+}
+
+// The response message containing the greetings
+message ListLabosResponse {
+  repeated Labo labos = 1;
+  int32 offset = 2;
+}

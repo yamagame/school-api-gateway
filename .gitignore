@@ -1,0 +1,6 @@
+.DS_Store
+
+/private/**
+!/private/.gitkeep
+/work/**
+!/work/.gitkeep

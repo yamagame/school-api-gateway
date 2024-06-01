@@ -1,0 +1,123 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "school/school.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "Shool"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/shool/labos": {
+      "post": {
+        "summary": "研究室の一覧を返す",
+        "operationId": "Shool_ListLabos",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/schoolListLabosResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/schoolListLabosRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Shool"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "schoolLabo": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "title": "研究室の情報"
+    },
+    "schoolListLabosRequest": {
+      "type": "object",
+      "properties": {
+        "pageSize": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "offset": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "The request message containing the user's name"
+    },
+    "schoolListLabosResponse": {
+      "type": "object",
+      "properties": {
+        "labos": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/schoolLabo"
+          }
+        },
+        "offset": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "The response message containing the greetings"
+    }
+  }
+}
