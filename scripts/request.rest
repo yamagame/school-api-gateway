@@ -1,11 +1,11 @@
-POST http://localhost:8090/v1/shool/labos HTTP/1.1
+POST http://localhost:8090/v1/school/labos HTTP/1.1
 content-type: application/json
 
 {
 }
 
 ###
-POST http://localhost:8090/v1/shool/labos HTTP/1.1
+POST http://localhost:8090/v1/school/labos HTTP/1.1
 content-type: application/json
 
 {
