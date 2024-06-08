@@ -3,7 +3,6 @@ version: "3.8"
 services:
   go-dev:
     image: golang:1.22.4
-    platform: linux/x86_64
     tty: true
     working_dir: /app
     volumes:
