@@ -4,6 +4,8 @@ services:
   go-dev:
     image: golang:1.22.4
     tty: true
+    ports:
+      - 8090:8090
     working_dir: /app
     volumes:
       - ./:/app
