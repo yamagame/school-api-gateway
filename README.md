@@ -28,3 +28,34 @@ $ go run main.go
 $ curl -X POST http://localhost:8090/v1/school/labos
 {"labos":[{"name":"研究室-0001"},{"name":"研究室-0002"},{"name":"研究室-0003"},{"name":"研究室-0004"},{"name":"研究室-0005"}],"offset":5}
 ```
+
+
+```sh
+# コンテナの起動
+$ docker-compose up -d
+
+# コンテナの削除
+$ docker-compose down --rmi 
+
+# イメージも含めての削除
+$ docker-compose down --rmi all
+
+# go-dev コンテナにログイン
+$ docker exec -it school-api-gateway-go-dev-1 bash
+```
+
+- [Go言語のための最高のORMライブラリ](https://gorm.io/ja_JP/)
+
+```golang
+func main() {
+	db := infra.DB()  // データベースに接続
+	db.AutoMigrate(&repository.Labos{}) // Labosテーブルの作成
+	db.Create(&repository.Labos{  // 研究室-001 の作成
+		Name: "研修室-001",
+	})
+  var labos []*repository.Labos
+  db.Limit(10).Offset(0).Find(&labos) // Labosテーブルを検索
+	jsonData, _ := json.MarshalIndent(labos, "", "  ")  // 検索結果をJSON文字列で表示
+	fmt.Printf("%s\n", jsonData)
+}
+```

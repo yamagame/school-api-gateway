@@ -1,0 +1,20 @@
+version: "3.8"
+
+services:
+  go-dev:
+    image: golang:1.22.4
+    platform: linux/x86_64
+    tty: true
+    working_dir: /app
+    volumes:
+      - ./:/app
+
+  mysql:
+    restart: always
+    hostname: mysql
+    image: mysql:8.0.32
+    ports:
+      - 3336:3306
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: yes
+      MYSQL_DATABASE: school-database
