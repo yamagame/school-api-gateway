@@ -38,7 +38,7 @@ func (*server) ListLabos(_ context.Context, in *pbSchool.ListLabosRequest) (*pbS
 
 func main() {
 	// TCP ポートを作成する
-	lis, err := net.Listen("tcp", "localhost:8080")
+	lis, err := net.Listen("tcp", "0.0.0.0:8080")
 	if err != nil {
 		log.Fatalln("TCP ポートのリッスンに失敗:", err)
 	}
@@ -55,7 +55,7 @@ func main() {
 
 	// gRPC サーバーに接続するクライアントの作成
 	conn, err := grpc.NewClient(
-		"localhost:8080",
+		"0.0.0.0:8080",
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
 	)
 	if err != nil {
@@ -72,10 +72,10 @@ func main() {
 
 	// HTTP サーバーを作成
 	gwServer := &http.Server{
-		Addr:    "localhost:8090",
+		Addr:    "0.0.0.0:8090",
 		Handler: gwmux,
 	}
 
-	log.Println("gRPC-Gateway 起動 http://locahost:8090")
+	log.Println("gRPC-Gateway 起動 http://localhost:8090")
 	log.Fatalln(gwServer.ListenAndServe())
 }
