@@ -1,0 +1,18 @@
+{
+  "sqltools.connections": [
+    {
+      "mysqlOptions": {
+        "authProtocol": "default",
+        "enableSsl": "Disabled"
+      },
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 3336,
+      "driver": "MySQL",
+      "name": "school-database",
+      "database": "school-database",
+      "username": "root",
+      "password": ""
+    }
+  ]
+}
