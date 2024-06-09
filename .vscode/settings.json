@@ -1,4 +1,5 @@
 {
+  // データベースへの接続情報
   "sqltools.connections": [
     {
       "mysqlOptions": {
@@ -14,5 +15,10 @@
       "username": "root",
       "password": ""
     }
-  ]
+  ],
+  // フォーマッター設定
+  "[sql]": {
+    "editor.defaultFormatter": "mtxr.sqltools",
+    "editor.formatOnSave": false
+  }
 }
