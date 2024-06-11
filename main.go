@@ -30,7 +30,9 @@ func (*server) ListLabos(_ context.Context, in *pbSchool.ListLabosRequest) (*pbS
 	labos := []*pbSchool.Labo{}
 	for i := int32(0); i < pageSize; i++ {
 		labos = append(labos, &pbSchool.Labo{
-			Name: fmt.Sprintf("研究室-%04d", i+1+offset),
+			Name:    fmt.Sprintf("研究室-%04d", i+1+offset),
+			Group:   "",
+			Program: "",
 		})
 	}
 	return &pbSchool.ListLabosResponse{Labos: labos, Offset: pageSize + offset}, nil

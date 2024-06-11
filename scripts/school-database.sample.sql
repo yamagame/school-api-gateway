@@ -6,10 +6,10 @@ DROP DATABASE IF EXISTS `school-database`;
 
 -- テーブルの作成
 CREATE TABLE `labos` (
-  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '''主キーの標準フィールド''',
-  `name` varchar(255) DEFAULT NULL COMMENT '''研究室の名前''',
-  `created_at` datetime(3) DEFAULT NULL COMMENT '''GORMによって自動的に管理される作成時間''',
-  `updated_at` datetime(3) DEFAULT NULL COMMENT '''GORMによって自動的に管理される更新時間''',
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主キーの標準フィールド',
+  `name` varchar(255) DEFAULT NULL COMMENT '研究室の名前',
+  `created_at` datetime(3) DEFAULT NULL COMMENT 'GORMによって自動的に管理される作成時間',
+  `updated_at` datetime(3) DEFAULT NULL COMMENT 'GORMによって自動的に管理される更新時間',
   PRIMARY KEY (`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -18,14 +18,17 @@ DROP TABLE IF EXISTS labos;
 
 -- カラムの追加
 ALTER TABLE labos
-ADD name_kana varchar(255)
+ADD `group` varchar(255) COMMENT '研究室のグループ'
 AFTER name;
 
 -- カラムの削除
-ALTER TABLE labos DROP COLUMN name_kana;
+ALTER TABLE labos DROP COLUMN `group`;
 
 -- テーブルのカラムを表示
 DESC labos;
+
+-- テーブルのカラムを詳細表示
+SHOW FULL COLUMNS from labos;
 
 -- レコードの作成
 INSERT INTO labos (name)
@@ -35,7 +38,7 @@ VALUES ("研究室-001"),
 
 -- レコードの更新
 UPDATE labos
-SET name_kana = "ケンキュウシツ-003"
+SET `group` = "Ⅰ類（情報系）"
 WHERE id = 3;
 
 -- レコードの削除

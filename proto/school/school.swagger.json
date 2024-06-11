@@ -84,6 +84,12 @@
       "properties": {
         "name": {
           "type": "string"
+        },
+        "group": {
+          "type": "string"
+        },
+        "program": {
+          "type": "string"
         }
       },
       "title": "研究室の情報"

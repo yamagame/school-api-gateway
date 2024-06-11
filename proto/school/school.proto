@@ -21,6 +21,8 @@ service Shool {
 // 研究室の情報
 message Labo {
   string name = 1;
+  string group = 2;
+  string program = 3;
 }
 
 // The request message containing the user's name
