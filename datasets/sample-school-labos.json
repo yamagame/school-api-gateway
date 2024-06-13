@@ -1,151 +1,181 @@
 {
   "labs": [
     {
+      "building": "A棟",
       "group": "Ⅰ類（情報系）",
       "name": "佐藤",
       "program": "01.メディア情報学プログラム"
     },
     {
+      "building": "B棟",
       "group": "Ⅱ類（融合系）",
       "name": "清水",
       "program": "02.経営・社会情報学プログラム"
     },
     {
+      "building": "C棟",
       "group": "Ⅲ類（理工系）",
       "name": "鈴木",
       "program": "03.情報数理工学プログラム"
     },
     {
+      "building": "D棟",
       "group": "Ⅰ類（情報系）",
       "name": "高橋",
       "program": "04.コンピュータサイエンスプログラム"
     },
     {
+      "building": "E棟",
       "group": "Ⅱ類（融合系）",
       "name": "田中",
       "program": "05.デザイン思考・データサイエンスプログラム"
     },
     {
+      "building": "F棟",
       "group": "Ⅲ類（理工系）",
       "name": "渡辺",
       "program": "06.セキュリティ情報学プログラム"
     },
     {
+      "building": "G棟",
       "group": "Ⅰ類（情報系）",
       "name": "伊藤",
       "program": "07.情報通信工学プログラム"
     },
     {
+      "building": "H棟",
       "group": "Ⅱ類（融合系）",
       "name": "山本",
       "program": "08.電子情報学プログラム"
     },
     {
+      "building": "I棟",
       "group": "Ⅲ類（理工系）",
       "name": "中村",
       "program": "09.計測・制御システムプログラム"
     },
     {
+      "building": "J棟",
       "group": "Ⅰ類（情報系）",
       "name": "小林",
       "program": "10.先端ロボティクスプログラム"
     },
     {
+      "building": "K棟",
       "group": "Ⅱ類（融合系）",
       "name": "斎藤",
       "program": "11.機械システムプログラム"
     },
     {
+      "building": "L棟",
       "group": "Ⅲ類（理工系）",
       "name": "加藤",
       "program": "12.電子工学プログラム"
     },
     {
+      "building": "M棟",
       "group": "Ⅰ類（情報系）",
       "name": "吉田",
       "program": "13.光工学プログラム"
     },
     {
+      "building": "A棟",
       "group": "Ⅱ類（融合系）",
       "name": "山田",
       "program": "14.物理工学プログラム"
     },
     {
+      "building": "B棟",
       "group": "Ⅲ類（理工系）",
       "name": "佐々木",
       "program": "15.化学生命工学プログラム"
     },
     {
+      "building": "C棟",
       "group": "Ⅰ類（情報系）",
       "name": "山口",
       "program": "01.メディア情報学プログラム"
     },
     {
+      "building": "D棟",
       "group": "Ⅱ類（融合系）",
       "name": "松本",
       "program": "02.経営・社会情報学プログラム"
     },
     {
+      "building": "E棟",
       "group": "Ⅲ類（理工系）",
       "name": "井上",
       "program": "03.情報数理工学プログラム"
     },
     {
+      "building": "F棟",
       "group": "Ⅰ類（情報系）",
       "name": "木村",
       "program": "04.コンピュータサイエンスプログラム"
     },
     {
+      "building": "G棟",
       "group": "Ⅱ類（融合系）",
       "name": "清水",
       "program": "05.デザイン思考・データサイエンスプログラム"
     },
     {
+      "building": "H棟",
       "group": "Ⅲ類（理工系）",
       "name": "山崎",
       "program": "06.セキュリティ情報学プログラム"
     },
     {
+      "building": "I棟",
       "group": "Ⅰ類（情報系）",
       "name": "中島",
       "program": "07.情報通信工学プログラム"
     },
     {
+      "building": "J棟",
       "group": "Ⅱ類（融合系）",
       "name": "池田",
       "program": "08.電子情報学プログラム"
     },
     {
+      "building": "K棟",
       "group": "Ⅲ類（理工系）",
       "name": "阿部",
       "program": "09.計測・制御システムプログラム"
     },
     {
+      "building": "L棟",
       "group": "Ⅰ類（情報系）",
       "name": "橋本",
       "program": "10.先端ロボティクスプログラム"
     },
     {
+      "building": "M棟",
       "group": "Ⅱ類（融合系）",
       "name": "山下",
       "program": "11.機械システムプログラム"
     },
     {
+      "building": "A棟",
       "group": "Ⅲ類（理工系）",
       "name": "石川",
       "program": "12.電子工学プログラム"
     },
     {
+      "building": "B棟",
       "group": "Ⅰ類（情報系）",
       "name": "前田",
       "program": "13.光工学プログラム"
     },
     {
+      "building": "C棟",
       "group": "Ⅱ類（融合系）",
       "name": "小川",
       "program": "14.物理工学プログラム"
     },
     {
+      "building": "D棟",
       "group": "Ⅲ類（理工系）",
       "name": "藤田",
       "program": "15.化学生命工学プログラム"
