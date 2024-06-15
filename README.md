@@ -47,7 +47,7 @@ $ curl -X POST http://localhost:8090/v1/school/labos
 $ docker-compose up -d
 
 # コンテナの削除
-$ docker-compose down --rmi 
+$ docker-compose down
 
 # イメージも含めての削除
 $ docker-compose down --rmi all
