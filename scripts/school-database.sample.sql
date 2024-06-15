@@ -4,10 +4,16 @@ CREATE DATABASE IF NOT EXISTS 'school-database';
 -- データベースの削除
 DROP DATABASE IF EXISTS `school-database`;
 
+-- テーブルを一覧表示
+SHOW tables;
+
 -- テーブルの作成
 CREATE TABLE `labos` (
   `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主キーの標準フィールド',
   `name` varchar(255) DEFAULT NULL COMMENT '研究室の名前',
+  `group` varchar(255) DEFAULT NULL COMMENT '研究室のグループ',
+  `program` varchar(255) DEFAULT NULL COMMENT '研究室のプログラム',
+  `building` varchar(255) DEFAULT NULL COMMENT '研究室の建物名',
   `created_at` datetime(3) DEFAULT NULL COMMENT 'GORMによって自動的に管理される作成時間',
   `updated_at` datetime(3) DEFAULT NULL COMMENT 'GORMによって自動的に管理される更新時間',
   PRIMARY KEY (`id`)
@@ -19,7 +25,7 @@ DROP TABLE IF EXISTS labos;
 -- カラムの追加
 ALTER TABLE labos
 ADD `group` varchar(255) COMMENT '研究室のグループ'
-AFTER name;
+AFTER `name`;
 
 -- カラムの削除
 ALTER TABLE labos DROP COLUMN `group`;
