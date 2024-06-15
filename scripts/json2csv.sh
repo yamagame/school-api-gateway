@@ -9,5 +9,5 @@
 # brew install jq
 
 JSONFILE=$1
-echo "name, group, program" > ${JSONFILE%.*}.csv
+echo "name, group, program, building" > ${JSONFILE%.*}.csv
 cat $JSONFILE | jq -r '.labs[] | [.name, .group, .program, .building] | @csv' >> ${JSONFILE%.*}.csv
