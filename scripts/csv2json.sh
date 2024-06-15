@@ -2,7 +2,7 @@
 #
 # CSVファイルをJSON形式に変換する
 #
-# 使用例 ./scripts/csv2json.sh ./datasets/sample-school-labos.json
+# 使用例 ./scripts/csv2json.sh ./datasets/sample-school-labos.csv
 #
 
 JSONFILE=$1
