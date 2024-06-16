@@ -10,15 +10,19 @@ import (
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
+	"gorm.io/gorm"
 
+	"github.com/yamagame/school-api-gateway/infra"
 	pbSchool "github.com/yamagame/school-api-gateway/proto/school"
 )
 
 // School サービスの構造体
-type server struct{}
+type server struct {
+	DB *gorm.DB
+}
 
 // ListLabos 研究室の一覧を返す
-func (*server) ListLabos(_ context.Context, in *pbSchool.ListLabosRequest) (*pbSchool.ListLabosResponse, error) {
+func (r *server) ListLabos(ctx context.Context, in *pbSchool.ListLabosRequest) (*pbSchool.ListLabosResponse, error) {
 	pageSize := int32(5)
 	if in.PageSize != nil {
 		pageSize = *in.PageSize
@@ -27,15 +31,10 @@ func (*server) ListLabos(_ context.Context, in *pbSchool.ListLabosRequest) (*pbS
 	if in.Offset != nil {
 		offset = *in.Offset
 	}
-	labos := []*pbSchool.Labo{}
-	for i := int32(0); i < pageSize; i++ {
-		labos = append(labos, &pbSchool.Labo{
-			Name:    fmt.Sprintf("研究室-%04d", i+1+offset),
-			Group:   "",
-			Program: "",
-		})
-	}
-	return &pbSchool.ListLabosResponse{Labos: labos, Offset: pageSize + offset}, nil
+	fmt.Println(pageSize, offset)
+	var labos []*pbSchool.Labo
+	err := r.DB.WithContext(ctx).Limit(int(pageSize)).Offset(int(offset)).Order("id").Find(&labos).Error
+	return &pbSchool.ListLabosResponse{Labos: labos, Offset: pageSize + offset}, err
 }
 
 func main() {
@@ -48,7 +47,9 @@ func main() {
 	// gRPC サーバーオブジェクトを作成する
 	s := grpc.NewServer()
 	// School サービスを接続
-	pbSchool.RegisterShoolServer(s, &server{})
+	pbSchool.RegisterShoolServer(s, &server{
+		DB: infra.DB(),
+	})
 	// gRPC サーバーを起動
 	log.Println("gRPC を起動 locahost:8080")
 	go func() {

@@ -6,4 +6,4 @@
 #
 
 CSVFILE=$1
-cat $CSVFILE | go run cmd/csv2sql/main.go
+cat $CSVFILE | go run cmd/csv2sql/main.go > ${CSVFILE%.*}.sql
