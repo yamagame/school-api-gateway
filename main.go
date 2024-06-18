@@ -6,6 +6,7 @@ import (
 	"log"
 	"net"
 	"net/http"
+	"os"
 
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"google.golang.org/grpc"
@@ -15,6 +16,15 @@ import (
 	"github.com/yamagame/school-api-gateway/infra"
 	pbSchool "github.com/yamagame/school-api-gateway/proto/school"
 )
+
+var SERVER_HOST = "localhost"
+
+func init() {
+	serverhost, ok := os.LookupEnv("SERVER_HOST")
+	if ok {
+		SERVER_HOST = serverhost
+	}
+}
 
 // School サービスの構造体
 type server struct {
@@ -39,7 +49,7 @@ func (r *server) ListLabos(ctx context.Context, in *pbSchool.ListLabosRequest) (
 
 func main() {
 	// TCP ポートを作成する
-	lis, err := net.Listen("tcp", "0.0.0.0:8080")
+	lis, err := net.Listen("tcp", SERVER_HOST+":8080")
 	if err != nil {
 		log.Fatalln("TCP ポートのリッスンに失敗:", err)
 	}
@@ -51,14 +61,14 @@ func main() {
 		DB: infra.DB(),
 	})
 	// gRPC サーバーを起動
-	log.Println("gRPC を起動 locahost:8080")
+	log.Println("gRPC を起動 " + SERVER_HOST + ":8080")
 	go func() {
 		log.Fatalln(s.Serve(lis))
 	}()
 
 	// gRPC サーバーに接続するクライアントの作成
 	conn, err := grpc.NewClient(
-		"0.0.0.0:8080",
+		"localhost:8080",
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
 	)
 	if err != nil {
@@ -75,10 +85,10 @@ func main() {
 
 	// HTTP サーバーを作成
 	gwServer := &http.Server{
-		Addr:    "0.0.0.0:8090",
+		Addr:    SERVER_HOST + ":8090",
 		Handler: gwmux,
 	}
 
-	log.Println("gRPC-Gateway 起動 http://localhost:8090")
+	log.Println("gRPC-Gateway 起動 http://" + SERVER_HOST + ":8090")
 	log.Fatalln(gwServer.ListenAndServe())
 }

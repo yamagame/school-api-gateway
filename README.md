@@ -54,6 +54,9 @@ $ docker-compose down --rmi all
 
 # go-dev コンテナにログイン
 $ docker exec -it school-api-gateway-go-dev-1 bash
+
+# コンテナ内で実行
+$ SERVER_HOST=0.0.0.0 DB_HOST=mysql DB_PORT=3306 go run main.go
 ```
 
 ## SQL Tools プラグインの使い方
