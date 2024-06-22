@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"log"
 	"net"
 	"net/http"
@@ -11,9 +10,10 @@ import (
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
-	"gorm.io/gorm"
 
 	"github.com/yamagame/school-api-gateway/infra"
+	"github.com/yamagame/school-api-gateway/infra/conv"
+	"github.com/yamagame/school-api-gateway/infra/repository"
 	pbSchool "github.com/yamagame/school-api-gateway/proto/school"
 )
 
@@ -28,7 +28,7 @@ func init() {
 
 // School サービスの構造体
 type server struct {
-	DB *gorm.DB
+	Repo *repository.School
 }
 
 // ListLabos 研究室の一覧を返す
@@ -41,9 +41,18 @@ func (r *server) ListLabos(ctx context.Context, in *pbSchool.ListLabosRequest) (
 	if in.Offset != nil {
 		offset = *in.Offset
 	}
-	fmt.Println(pageSize, offset)
+	results, err := r.Repo.ListLabos(ctx, int(pageSize), int(offset))
+	if err != nil {
+		return nil, err
+	}
 	var labos []*pbSchool.Labo
-	err := r.DB.WithContext(ctx).Limit(int(pageSize)).Offset(int(offset)).Order("id").Find(&labos).Error
+	for _, labo := range results {
+		l, err := conv.LaboToProto(labo)
+		if err != nil {
+			return nil, err
+		}
+		labos = append(labos, l)
+	}
 	return &pbSchool.ListLabosResponse{Labos: labos, Offset: pageSize + offset}, err
 }
 
@@ -58,7 +67,7 @@ func main() {
 	s := grpc.NewServer()
 	// School サービスを接続
 	pbSchool.RegisterShoolServer(s, &server{
-		DB: infra.DB(),
+		Repo: repository.NewSchool(infra.DB()),
 	})
 	// gRPC サーバーを起動
 	log.Println("gRPC を起動 " + SERVER_HOST + ":8080")

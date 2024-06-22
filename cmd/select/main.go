@@ -6,14 +6,14 @@ import (
 	"log"
 
 	"github.com/yamagame/school-api-gateway/infra"
-	"github.com/yamagame/school-api-gateway/infra/repository"
+	"github.com/yamagame/school-api-gateway/infra/model"
 )
 
 func main() {
 	db := infra.DB()
 
 	// labosテーブルをセレクト
-	var labos []repository.Labos
+	var labos []model.Labo
 	db.Find(&labos)
 
 	// JSONに変換

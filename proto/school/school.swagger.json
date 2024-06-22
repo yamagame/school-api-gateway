@@ -82,6 +82,10 @@
     "schoolLabo": {
       "type": "object",
       "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
         "name": {
           "type": "string"
         },
@@ -89,6 +93,9 @@
           "type": "string"
         },
         "program": {
+          "type": "string"
+        },
+        "building": {
           "type": "string"
         }
       },

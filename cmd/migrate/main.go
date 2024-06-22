@@ -2,12 +2,12 @@ package main
 
 import (
 	"github.com/yamagame/school-api-gateway/infra"
-	"github.com/yamagame/school-api-gateway/infra/repository"
+	"github.com/yamagame/school-api-gateway/infra/model"
 )
 
 func main() {
 	db := infra.DB()
 
 	// labos テーブルをマイグレート
-	db.AutoMigrate(&repository.Labos{})
+	db.AutoMigrate(&model.Labo{})
 }
