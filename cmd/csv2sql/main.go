@@ -13,7 +13,7 @@ func record2column(record []string) string {
 }
 
 func record2value(record []string) string {
-	return "(\"" + strings.Join(record, "\", \"") + "\")"
+	return "(\"" + strings.Join(record, "\", \"") + "\", NOW(), NOW())"
 }
 
 func main() {
@@ -25,7 +25,7 @@ func main() {
 	}
 
 	// JSONデータを格納するためのスライス
-	sql := "INSERT INTO labos (" + record2column(records[0]) + ") VALUES\n"
+	sql := "INSERT INTO labos (" + record2column(records[0]) + ", `created_at`, `updated_at`) VALUES\n"
 
 	// 各レコードを処理
 	sql += record2value(records[1])
