@@ -1,0 +1,37 @@
+{
+  // データベースへの接続情報
+  "sqltools.connections": [
+    {
+      "mysqlOptions": {
+        "authProtocol": "default",
+        "enableSsl": "Disabled"
+      },
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 3336,
+      "driver": "MySQL",
+      "name": "school-database",
+      "database": "school-database",
+      "username": "root",
+      "password": ""
+    }
+  ],
+  // フォーマッター設定
+  "[sql]": {
+    "editor.defaultFormatter": "mtxr.sqltools",
+    "editor.formatOnSave": false
+  },
+  // golangci-lintの設定
+  "go.lintTool": "golangci-lint",
+  "go.lintFlags": ["--config=${workspaceFolder}/.golangci.yml", "--fast"],
+  // go test の設定
+  "go.testEnvFile": "${workspaceFolder}/.env",
+  "go.testFlags": ["-v", "-cover"],
+  "go.testTimeout": "1800s",
+  "go.testEnvVars": {},
+  // protcの設定
+  "protoc": {
+    "options": ["--proto_path=google/api/annotations.proto"],
+    "editor.formatOnSave": true
+  }
+}
