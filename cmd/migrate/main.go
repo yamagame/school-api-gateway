@@ -9,5 +9,5 @@ func main() {
 	db := infra.DB()
 
 	// labos テーブルをマイグレート
-	db.AutoMigrate(&model.Labo{})
+	_ = db.AutoMigrate(&model.Labo{})
 }

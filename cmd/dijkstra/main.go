@@ -22,8 +22,8 @@ func NewNode(index int32) *Node {
 }
 
 // ノードに次の接続先を示したエッジを追加する
-func (self *Node) AddEdge(edge *Edge) {
-	self.edges = append(self.edges, edge)
+func (s *Node) AddEdge(edge *Edge) {
+	s.edges = append(s.edges, edge)
 }
 
 // エッジ
@@ -48,18 +48,18 @@ func NewDirectedGraph() *DirectedGraph {
 }
 
 // グラフの要素を追加する (接続元ノード名、接続先ノード名、移動にかかるコスト)
-func (self *DirectedGraph) Add(src, dst int32, cost int) {
+func (s *DirectedGraph) Add(src, dst int32, cost int) {
 	// ノードが既にある場合は追加しない
-	srcNode, ok := self.nodes[src]
+	srcNode, ok := s.nodes[src]
 	if !ok {
 		srcNode = NewNode(src)
-		self.nodes[src] = srcNode
+		s.nodes[src] = srcNode
 	}
 
-	dstNode, ok := self.nodes[dst]
+	dstNode, ok := s.nodes[dst]
 	if !ok {
 		dstNode = NewNode(dst)
-		self.nodes[dst] = dstNode
+		s.nodes[dst] = dstNode
 	}
 
 	// ノードをエッジでつなぐ
@@ -68,16 +68,16 @@ func (self *DirectedGraph) Add(src, dst int32, cost int) {
 }
 
 // スタートとゴールを指定して最短経路を求める
-func (self *DirectedGraph) ShortestPath(start, goal int32) (ret []*Node, err error) {
+func (s *DirectedGraph) ShortestPath(start, goal int32) (ret []*Node, err error) {
 	// 名前からスタート地点のノードを取得する
-	startNode := self.nodes[start]
+	startNode := s.nodes[start]
 
 	// スタートのコストを 0 に設定することで処理対象にする
 	startNode.cost = 0
 
 	for {
 		// 次の処理対象のノードを取得する
-		node, err := self.nextNode()
+		node, err := s.nextNode()
 
 		// 次に処理するノードが見つからなければ終了
 		if err != nil {
@@ -90,11 +90,11 @@ func (self *DirectedGraph) ShortestPath(start, goal int32) (ret []*Node, err err
 		}
 
 		// 取得したノードを処理する
-		self.calc(node)
+		s.calc(node)
 	}
 
 	// ゴールから逆順にスタートまでノードをたどっていく
-	n := self.nodes[goal]
+	n := s.nodes[goal]
 	for {
 		ret = append(ret, n)
 		if n.index == start {
@@ -107,7 +107,7 @@ func (self *DirectedGraph) ShortestPath(start, goal int32) (ret []*Node, err err
 }
 
 // つながっているノードのコストを計算する
-func (self *DirectedGraph) calc(node *Node) {
+func (s *DirectedGraph) calc(node *Node) {
 	// ノードにつながっているエッジを取得する
 	for _, edge := range node.edges {
 		nextNode := edge.next
@@ -130,9 +130,9 @@ func (self *DirectedGraph) calc(node *Node) {
 	node.done = true
 }
 
-func (self *DirectedGraph) nextNode() (next *Node, err error) {
+func (s *DirectedGraph) nextNode() (next *Node, err error) {
 	// グラフに含まれるノードを線形探索する
-	for _, node := range self.nodes {
+	for _, node := range s.nodes {
 
 		// 処理済みのノードは対象外
 		if node.done {
@@ -164,12 +164,12 @@ func (self *DirectedGraph) nextNode() (next *Node, err error) {
 }
 
 const (
-	NODE_S = 1
-	NODE_A = 2
-	NODE_B = 3
-	NODE_C = 4
-	NODE_D = 5
-	NODE_Z = 6
+	NodeS = 1
+	NodeA = 2
+	NodeB = 3
+	NodeC = 4
+	NodeD = 5
+	NodeZ = 6
 )
 
 func main() {
@@ -177,18 +177,18 @@ func main() {
 	g := NewDirectedGraph()
 
 	// グラフを定義していく
-	g.Add(NODE_S, NODE_A, 2)
-	g.Add(NODE_S, NODE_B, 5)
-	g.Add(NODE_A, NODE_B, 2)
-	g.Add(NODE_A, NODE_C, 5)
-	g.Add(NODE_B, NODE_C, 4)
-	g.Add(NODE_B, NODE_D, 2)
-	g.Add(NODE_C, NODE_Z, 7)
-	g.Add(NODE_D, NODE_C, 5)
-	g.Add(NODE_D, NODE_Z, 2)
+	g.Add(NodeS, NodeA, 2)
+	g.Add(NodeS, NodeB, 5)
+	g.Add(NodeA, NodeB, 2)
+	g.Add(NodeA, NodeC, 5)
+	g.Add(NodeB, NodeC, 4)
+	g.Add(NodeB, NodeD, 2)
+	g.Add(NodeC, NodeZ, 7)
+	g.Add(NodeD, NodeC, 5)
+	g.Add(NodeD, NodeZ, 2)
 
 	// NODE_S ノードから NODE_Z ノードへの最短経路を得る
-	path, err := g.ShortestPath(NODE_S, NODE_Z)
+	path, err := g.ShortestPath(NodeS, NodeZ)
 
 	// 経路が見つからなければ終了
 	if err != nil {

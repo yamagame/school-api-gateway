@@ -1,0 +1,5 @@
+# .golangci-lint.yaml
+
+linters:
+  enable:
+    - revive

@@ -5,7 +5,7 @@ import (
 )
 
 var (
-	NotFoundErr = fmt.Errorf("値が見つかりません")
+	ErrNotFound = fmt.Errorf("値が見つかりません")
 )
 
 type FieldInterface interface {
@@ -38,14 +38,14 @@ func (x *Field) IsExist(key string) (bool, error) {
 	if v, ok := x.values[key]; ok {
 		return v.IsExist(), nil
 	}
-	return false, NotFoundErr
+	return false, ErrNotFound
 }
 
 func (x *Field) GetValue(key string) (interface{}, error) {
 	if v, ok := x.values[key]; ok {
 		return v.Get(), nil
 	}
-	return nil, NotFoundErr
+	return nil, ErrNotFound
 }
 
 func (x *Field) SetValue(key string, value interface{}) error {
@@ -53,7 +53,7 @@ func (x *Field) SetValue(key string, value interface{}) error {
 		v.Set(value)
 		return nil
 	}
-	return NotFoundErr
+	return ErrNotFound
 }
 
 func (x *Field) SetIfExist(key string, cb func(key string, val interface{}) error) error {
@@ -64,7 +64,7 @@ func (x *Field) SetIfExist(key string, cb func(key string, val interface{}) erro
 		}
 		return cb(key, val)
 	}
-	return NotFoundErr
+	return ErrNotFound
 }
 
 func (x *Field) ToMap() map[string]interface{} {

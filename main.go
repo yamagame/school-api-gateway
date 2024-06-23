@@ -17,12 +17,12 @@ import (
 	pbSchool "github.com/yamagame/school-api-gateway/proto/school"
 )
 
-var SERVER_HOST = "localhost"
+var ServerHost = "localhost"
 
 func init() {
 	serverhost, ok := os.LookupEnv("SERVER_HOST")
 	if ok {
-		SERVER_HOST = serverhost
+		ServerHost = serverhost
 	}
 }
 
@@ -58,7 +58,7 @@ func (r *server) ListLabos(ctx context.Context, in *pbSchool.ListLabosRequest) (
 
 func main() {
 	// TCP ポートを作成する
-	lis, err := net.Listen("tcp", SERVER_HOST+":8080")
+	lis, err := net.Listen("tcp", ServerHost+":8080")
 	if err != nil {
 		log.Fatalln("TCP ポートのリッスンに失敗:", err)
 	}
@@ -70,7 +70,7 @@ func main() {
 		Repo: repository.NewSchool(infra.DB()),
 	})
 	// gRPC サーバーを起動
-	log.Println("gRPC を起動 " + SERVER_HOST + ":8080")
+	log.Println("gRPC を起動 " + ServerHost + ":8080")
 	go func() {
 		log.Fatalln(s.Serve(lis))
 	}()
@@ -94,10 +94,10 @@ func main() {
 
 	// HTTP サーバーを作成
 	gwServer := &http.Server{
-		Addr:    SERVER_HOST + ":8090",
+		Addr:    ServerHost + ":8090",
 		Handler: gwmux,
 	}
 
-	log.Println("gRPC-Gateway 起動 http://" + SERVER_HOST + ":8090")
+	log.Println("gRPC-Gateway 起動 http://" + ServerHost + ":8090")
 	log.Fatalln(gwServer.ListenAndServe())
 }

@@ -8,43 +8,59 @@ import (
 
 func LaboToInfra(in *entity.Labo) (*model.Labo, error) {
 	out := &model.Labo{}
-	in.SetIfExist("id", func(key string, val interface{}) error {
+	if err := in.SetIfExist("id", func(_ string, val interface{}) error {
 		out.ID = val.(int32)
 		return nil
-	})
-	in.SetIfExist("name", func(key string, val interface{}) error {
+	}); err != nil {
+		return nil, err
+	}
+	if err := in.SetIfExist("name", func(_ string, val interface{}) error {
 		out.Name = ToStrPtr(val)
 		return nil
-	})
-	in.SetIfExist("group", func(key string, val interface{}) error {
+	}); err != nil {
+		return nil, err
+	}
+	if err := in.SetIfExist("group", func(_ string, val interface{}) error {
 		out.Group = ToStrPtr(val)
 		return nil
-	})
-	in.SetIfExist("program", func(key string, val interface{}) error {
+	}); err != nil {
+		return nil, err
+	}
+	if err := in.SetIfExist("program", func(_ string, val interface{}) error {
 		out.Program = ToStrPtr(val)
 		return nil
-	})
+	}); err != nil {
+		return nil, err
+	}
 	return out, nil
 }
 
 func LaboToProto(in *entity.Labo) (*school.Labo, error) {
 	out := &school.Labo{}
-	in.SetIfExist("id", func(key string, val interface{}) error {
+	if err := in.SetIfExist("id", func(_ string, val interface{}) error {
 		out.Id = val.(int32)
 		return nil
-	})
-	in.SetIfExist("name", func(key string, val interface{}) error {
+	}); err != nil {
+		return nil, err
+	}
+	if err := in.SetIfExist("name", func(_ string, val interface{}) error {
 		out.Name = ToStr(val)
 		return nil
-	})
-	in.SetIfExist("group", func(key string, val interface{}) error {
+	}); err != nil {
+		return nil, err
+	}
+	if err := in.SetIfExist("group", func(_ string, val interface{}) error {
 		out.Group = ToStr(val)
 		return nil
-	})
-	in.SetIfExist("program", func(key string, val interface{}) error {
+	}); err != nil {
+		return nil, err
+	}
+	if err := in.SetIfExist("program", func(_ string, val interface{}) error {
 		out.Program = ToStr(val)
 		return nil
-	})
+	}); err != nil {
+		return nil, err
+	}
 	return out, nil
 }
 

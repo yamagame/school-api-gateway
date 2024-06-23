@@ -10,23 +10,30 @@ import (
 )
 
 func TestSchool(t *testing.T) {
+	var err error
 	ctx := context.Background()
 	db := infra.DB()
 	repo := NewSchool(db)
 	labo1 := entity.NewLabo()
-	labo1.SetValue("id", int32(1))
-	labo1.SetValue("name", "サトウ")
+	err = labo1.SetValue("id", int32(1))
+	assert.NoError(t, err)
+	err = labo1.SetValue("name", "サトウ")
+	assert.NoError(t, err)
 	labo2 := entity.NewLabo()
-	labo2.SetValue("id", int32(2))
-	labo2.SetValue("name", "シミズ")
+	err = labo2.SetValue("id", int32(2))
+	assert.NoError(t, err)
+	err = labo2.SetValue("name", "シミズ")
+	assert.NoError(t, err)
 	labo3 := entity.NewLabo()
-	labo3.SetValue("id", int32(0))
-	labo3.SetValue("name", "スズキ")
+	err = labo3.SetValue("id", int32(0))
+	assert.NoError(t, err)
+	err = labo3.SetValue("name", "スズキ")
+	assert.NoError(t, err)
 	labos := []*entity.Labo{
 		labo1,
 		labo2,
 		labo3,
 	}
-	err := repo.SaveLabos(ctx, labos)
+	err = repo.SaveLabos(ctx, labos)
 	assert.NoError(t, err)
 }
