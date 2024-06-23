@@ -14,13 +14,13 @@ func TestSchool(t *testing.T) {
 	db := infra.DB()
 	repo := NewSchool(db)
 	labo1 := entity.NewLabo()
-	labo1.SetUintValue("id", 1)
+	labo1.SetValue("id", int32(1))
 	labo1.SetValue("name", "サトウ")
 	labo2 := entity.NewLabo()
-	labo2.SetUintValue("id", 2)
+	labo2.SetValue("id", int32(2))
 	labo2.SetValue("name", "シミズ")
 	labo3 := entity.NewLabo()
-	labo3.SetUintValue("id", 0)
+	labo3.SetValue("id", int32(0))
 	labo3.SetValue("name", "スズキ")
 	labos := []*entity.Labo{
 		labo1,

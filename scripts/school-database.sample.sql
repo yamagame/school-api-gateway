@@ -9,7 +9,7 @@ SHOW tables;
 
 -- テーブルの作成
 CREATE TABLE `labos` (
-  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主キーの標準フィールド',
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '主キーの標準フィールド',
   `name` varchar(255) DEFAULT NULL COMMENT '研究室の名前',
   `group` varchar(255) DEFAULT NULL COMMENT '研究室のグループ',
   `program` varchar(255) DEFAULT NULL COMMENT '研究室のプログラム',

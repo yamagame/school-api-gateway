@@ -42,9 +42,9 @@ func (r *School) SaveLabos(ctx context.Context, labos []*entity.Labo) error {
 	return r.db.WithContext(ctx).Debug().CreateInBatches(creates, 100).Error
 }
 
-func (r *School) ListLabos(ctx context.Context, limit, offset int) ([]*entity.Labo, error) {
+func (r *School) ListLabos(ctx context.Context, limit, offset int32) ([]*entity.Labo, error) {
 	var models []*model.Labo
-	err := r.db.WithContext(ctx).Limit(limit).Offset(offset).Order("id").Find(&models).Error
+	err := r.db.WithContext(ctx).Limit(int(limit)).Offset(int(offset)).Order("id").Find(&models).Error
 	labos := []*entity.Labo{}
 	for _, v := range models {
 		labo, err := conv.LaboToEntity(v)

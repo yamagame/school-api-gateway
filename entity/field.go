@@ -9,12 +9,12 @@ var (
 )
 
 type FieldInterface interface {
-	AddProp(key, defval string)
-	GetValue(key string) (string, error)
-	SetValue(key, value string) error
-	AddUintProp(key, defval uint)
-	GetUintValue(key string) (uint, error)
-	SetUintValue(key string, value uint) error
+	AddProp(key string, defval interface{})
+	IsExist(key string) (bool, error)
+	GetValue(key string) (interface{}, error)
+	SetValue(key string, value interface{}) error
+	SetIfExist(key string, cb func(key string, val interface{}) error) error
+	ToMap() map[string]interface{}
 }
 
 type Field struct {
@@ -27,7 +27,7 @@ func NewField() Field {
 	}
 }
 
-func (x *Field) AddProp(key, defval string) {
+func (x *Field) AddProp(key string, defval interface{}) {
 	x.values[key] = &Value{
 		Key:     key,
 		Default: defval,
@@ -41,39 +41,36 @@ func (x *Field) IsExist(key string) (bool, error) {
 	return false, NotFoundErr
 }
 
-func (x *Field) GetValue(key string) (string, error) {
+func (x *Field) GetValue(key string) (interface{}, error) {
 	if v, ok := x.values[key]; ok {
-		return v.Get().(string), nil
+		return v.Get(), nil
 	}
-	return "", NotFoundErr
+	return nil, NotFoundErr
 }
 
-func (x *Field) SetValue(key, value string) error {
-	if v, ok := x.values[key]; ok {
-		v.Set(value)
-		return nil
-	}
-	return NotFoundErr
-}
-
-func (x *Field) AddUintProp(key string, defval uint) {
-	x.values[key] = &Value{
-		Key:     key,
-		Default: defval,
-	}
-}
-
-func (x *Field) GetUintValue(key string) (uint, error) {
-	if v, ok := x.values[key]; ok {
-		return v.Get().(uint), nil
-	}
-	return 0, NotFoundErr
-}
-
-func (x *Field) SetUintValue(key string, value uint) error {
+func (x *Field) SetValue(key string, value interface{}) error {
 	if v, ok := x.values[key]; ok {
 		v.Set(value)
 		return nil
 	}
 	return NotFoundErr
+}
+
+func (x *Field) SetIfExist(key string, cb func(key string, val interface{}) error) error {
+	if flag, _ := x.IsExist(key); flag {
+		val, err := x.GetValue(key)
+		if err != nil {
+			return err
+		}
+		return cb(key, val)
+	}
+	return NotFoundErr
+}
+
+func (x *Field) ToMap() map[string]interface{} {
+	r := map[string]interface{}{}
+	for key, val := range x.values {
+		r[key] = val.Get()
+	}
+	return r
 }

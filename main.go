@@ -41,7 +41,7 @@ func (r *server) ListLabos(ctx context.Context, in *pbSchool.ListLabosRequest) (
 	if in.Offset != nil {
 		offset = *in.Offset
 	}
-	results, err := r.Repo.ListLabos(ctx, int(pageSize), int(offset))
+	results, err := r.Repo.ListLabos(ctx, pageSize, offset)
 	if err != nil {
 		return nil, err
 	}
