@@ -17,5 +17,6 @@ POST http://localhost:8090/v1/school/labos HTTP/1.1
 content-type: application/json
 
 {
-    "offset": 5
+    "page_size": 10,
+    "offset": 30
 }

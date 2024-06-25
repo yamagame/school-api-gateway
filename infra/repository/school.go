@@ -3,9 +3,9 @@ package repository
 import (
 	"context"
 
-	"github.com/yamagame/school-api-gateway/entity"
 	"github.com/yamagame/school-api-gateway/infra/conv"
 	"github.com/yamagame/school-api-gateway/infra/model"
+	"github.com/yamagame/school-api-gateway/pkg/field"
 	"gorm.io/gorm"
 )
 
@@ -19,7 +19,7 @@ func NewSchool(db *gorm.DB) *School {
 	}
 }
 
-func (r *School) SaveLabos(ctx context.Context, labos []*entity.Labo) error {
+func (r *School) SaveLabos(ctx context.Context, labos []*field.Field) error {
 	models := []*model.Labo{}
 	for _, v := range labos {
 		labo, err := conv.LaboToInfra(v)
@@ -42,10 +42,20 @@ func (r *School) SaveLabos(ctx context.Context, labos []*entity.Labo) error {
 	return r.db.WithContext(ctx).Debug().CreateInBatches(creates, 100).Error
 }
 
-func (r *School) ListLabos(ctx context.Context, limit, offset int32) ([]*entity.Labo, error) {
+func (r *School) ListLabos(ctx context.Context, limit, offset int32) ([]*field.Field, error) {
 	var models []*model.Labo
-	err := r.db.WithContext(ctx).Limit(int(limit)).Offset(int(offset)).Order("id").Find(&models).Error
-	labos := []*entity.Labo{}
+	err := r.db.WithContext(ctx).
+		Joins("Group").
+		Joins("Program").
+		Joins("Building").
+		Limit(int(limit)).
+		Offset(int(offset)).
+		Order("id").
+		Find(&models).Error
+	if err != nil {
+		return nil, err
+	}
+	labos := []*field.Field{}
 	for _, v := range models {
 		labo, err := conv.LaboToEntity(v)
 		if err != nil {

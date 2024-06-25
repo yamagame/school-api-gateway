@@ -6,7 +6,12 @@
 # asdf のインストール
 $ brew install coreutils curl git
 $ brew install asdf
+
+# asdfの管理対象へのパスを追加
 $ echo -e "\n. $(brew --prefix asdf)/libexec/asdf.sh" >> ${ZDOTDIR:-~}/.zshrc
+
+# GOのバイナリへパスを追加
+$ echo -e 'export PATH="$PATH:$(go env GOPATH)/bin"' >> ${ZDOTDIR:-~}/.zshrc
 
 # golang プラグインのインストール
 $ asdf plugin list all | grep golang
@@ -27,6 +32,16 @@ verifying checksum
 /Users/yamagame/.asdf/downloads/golang/1.22.3/archive.tar.gz: OK
 checksum verified
 $ asdf local golang 1.22.4
+```
+
+## プロトのビルド方法
+
+```sh
+# プロトgenをインストール
+$ make install
+
+# プロトのビルド
+$ make generate
 ```
 
 ## サーバーの起動

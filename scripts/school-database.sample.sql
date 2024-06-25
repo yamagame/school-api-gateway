@@ -1,5 +1,5 @@
 -- データベースの作成
-CREATE DATABASE IF NOT EXISTS 'school-database';
+CREATE DATABASE IF NOT EXISTS `school-database`;
 
 -- データベースの削除
 DROP DATABASE IF EXISTS `school-database`;
@@ -53,6 +53,23 @@ WHERE id = 2;
 
 -- レコードの表示
 SELECT *
-FROM labos;
+FROM `labos`;
+
+-- レコードの表示
+SELECT *
+FROM `groups`;
+
+-- レコードの表示
+SELECT *
+FROM `programs`;
+
+-- レコードの表示
+SELECT labos.id, labos.name, groups.name, programs.name
+FROM `labos`
+JOIN `groups` ON groups.id = labos.group_id
+JOIN `programs` ON programs.id = labos.program_id
+ORDER BY id;
+
+SELECT LAST_INSERT_ID();
 
 -- EOF

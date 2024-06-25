@@ -6,7 +6,7 @@ generate:
 	buf generate --path ./proto/school/school.proto
 
 install:
-	go get \
+	go install \
 		github.com/bufbuild/buf/cmd/buf \
 		github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway \
 		github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2 \
