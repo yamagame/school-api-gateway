@@ -12,9 +12,9 @@ import (
 	"google.golang.org/grpc/credentials/insecure"
 
 	"github.com/yamagame/school-api-gateway/infra"
-	"github.com/yamagame/school-api-gateway/infra/conv"
 	"github.com/yamagame/school-api-gateway/infra/repository"
 	pbSchool "github.com/yamagame/school-api-gateway/proto/school"
+	"github.com/yamagame/school-api-gateway/service/svcconv"
 )
 
 var ServerHost = "localhost"
@@ -47,7 +47,7 @@ func (r *server) ListLabos(ctx context.Context, in *pbSchool.ListLabosRequest) (
 	}
 	var labos []*pbSchool.Labo
 	for _, labo := range results {
-		l, err := conv.LaboToProto(labo)
+		l, err := svcconv.LaboToProto(labo)
 		if err != nil {
 			return nil, err
 		}

@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/yamagame/school-api-gateway/infra"
+	"github.com/yamagame/school-api-gateway/infra/model"
 	"gorm.io/gen"
 )
 
@@ -10,7 +11,7 @@ func main() {
 
 	g := gen.NewGenerator(gen.Config{
 		// 生成ディレクトリ、パッケージ名になる
-		OutPath: "./infra/dao",
+		OutPath: "./infra/dao/query",
 		// モード
 		Mode:              gen.WithoutContext | gen.WithQueryInterface,
 		FieldWithIndexTag: true,
@@ -21,24 +22,27 @@ func main() {
 	// gorm.DBを指定する
 	g.UseDB(db)
 
-	// 全てのテーブルを取得
-	tableList, err := db.Migrator().GetTables()
-	if err != nil {
-		panic(err)
-	}
+	g.ApplyBasic(model.Labo{})
 
-	// 各テーブル毎にモデルを作成
-	tables := make([]interface{}, len(tableList))
+	// // 全てのテーブルを取得
+	// tableList, err := db.Migrator().GetTables()
+	// if err != nil {
+	// 	panic(err)
+	// }
 
-	// 残りのテーブルのモデルを作成
-	for _, tableName := range tableList {
-		tables = append(tables, g.GenerateModel(tableName))
-	}
+	// // 各テーブル毎にモデルを作成
+	// tables := make([]interface{}, len(tableList))
 
-	// DAOを生成
-	g.ApplyBasic(
-		tables...,
-	)
+	// // 残りのテーブルのモデルを作成
+	// for _, tableName := range tableList {
+	// 	tables = append(tables, g.GenerateModel(tableName))
+	// }
+
+	// // DAOを生成
+	// g.ApplyBasic(
+	// 	tables...,
+	// )
+
 	// コードを生成
 	g.Execute()
 }
