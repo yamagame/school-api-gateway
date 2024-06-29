@@ -1,6 +1,6 @@
 module github.com/yamagame/school-api-gateway
 
-go 1.21
+go 1.22.0
 
 toolchain go1.22.4
 
@@ -33,4 +33,6 @@ require (
 	gorm.io/gen v0.3.26 // indirect
 	gorm.io/hints v1.1.0 // indirect
 	gorm.io/plugin/dbresolver v1.5.0 // indirect
+	k8s.io/client-go v0.30.2 // indirect
+	sigs.k8s.io/json v0.0.0-20221116044647-bc3834ca7abd // indirect
 )

@@ -10,7 +10,7 @@ import (
 	"github.com/yamagame/school-api-gateway/pkg/conv"
 )
 
-func TestLaboToEntity(t *testing.T) {
+func TestLaboConv(t *testing.T) {
 	in := &model.Labo{
 		ID:      10,
 		Name:    conv.ToPtr("名前"),
@@ -27,10 +27,16 @@ func TestLaboToEntity(t *testing.T) {
 			Name: "建物名",
 		},
 	}
-	out, err := LaboToEntity(in)
+	entity, err := LaboToEntity(in)
 	assert.NoError(t, err)
 
-	bytes, err := json.MarshalIndent(out, "", "  ")
+	bytes, err := json.MarshalIndent(entity.ValueMap(), "", "  ")
 	assert.NoError(t, err)
 	fmt.Println(string(bytes))
+
+	out, err := LaboToInfra(entity)
+	assert.NoError(t, err)
+	bytes2, err := json.MarshalIndent(out, "", "  ")
+	assert.NoError(t, err)
+	fmt.Println(string(bytes2))
 }
