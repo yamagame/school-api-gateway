@@ -3,7 +3,6 @@ package conv
 import (
 	"fmt"
 	"reflect"
-	"strings"
 
 	"k8s.io/client-go/util/jsonpath"
 )
@@ -165,35 +164,4 @@ func toReflectValue(i interface{}) (reflect.Value, bool) {
 	}
 	// 構造体以外
 	return rv, false
-}
-
-func output(depth int, name string, value interface{}, kind reflect.Kind) {
-	indent := strings.Repeat("  ", depth)
-	if kind == reflect.Struct {
-		fmt.Printf("%s- FieldName: %s, Type: %v\n", indent, name, kind)
-	} else {
-		fmt.Printf("%s- FieldName: %s, Value: %v, Type: %v\n", indent, name, value, kind)
-	}
-}
-
-func recursive(depth int, rv reflect.Value) {
-	typ := rv.Type()
-	for i := 0; i < typ.NumField(); i++ {
-		field := typ.Field(i)
-		kind := field.Type.Kind()
-		value := rv.FieldByName(field.Name)
-
-		if kind == reflect.Ptr {
-			vv, isStructure := toReflectValue(value)
-			output(depth, field.Name, vv.Interface(), vv.Kind())
-			if isStructure {
-				recursive(depth+1, vv)
-			}
-		} else {
-			output(depth, field.Name, value, kind)
-			if kind == reflect.Struct {
-				recursive(depth+1, value)
-			}
-		}
-	}
 }
