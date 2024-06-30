@@ -108,26 +108,27 @@ func CopyStruct(srcdata interface{}, dstdata interface{}) error {
 				if svalue.IsNil() {
 					continue
 				}
-				sval, isSrcStructure := toReflectValue(svalue)
-				dval, isDstStructure := toReflectValue(dvalue)
-				if isSrcStructure && isDstStructure {
-					err = CopyStruct(sval, dval)
-					if err != nil {
-						return err
+				var createElement func(val reflect.Value)
+				createElement = func(val reflect.Value) {
+					if val.Kind() == reflect.Ptr && val.IsNil() {
+						n := reflect.New(val.Type().Elem())
+						createElement(n.Elem())
+						val.Set(n)
 					}
 				}
+				createElement(dvalue)
 				if dvalue.CanSet() {
-					if isSrcStructure {
-						n := reflect.New(dvalue.Type().Elem())
-						dvalue.Set(n)
+					srckind := svalue.Elem().Kind()
+					switch srckind {
+					case reflect.Struct:
 						err = CopyStruct(svalue, dvalue)
 						if err != nil {
 							return err
 						}
-					} else {
-						n := reflect.New(sval.Type())
-						n.Elem().Set(sval)
-						dvalue.Set(n)
+					case reflect.Ptr:
+						dvalue.Elem().Set(reflect.Indirect(svalue))
+					default:
+						dvalue.Elem().Set(reflect.Indirect(svalue))
 					}
 				} else {
 					return ErrProtectedValue
