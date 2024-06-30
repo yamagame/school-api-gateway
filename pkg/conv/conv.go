@@ -194,3 +194,14 @@ func toReflectValue(i interface{}) (reflect.Value, bool) {
 	// 構造体以外
 	return rv, false
 }
+
+func MergeMap(m ...map[string]interface{}) map[string]interface{} {
+	ans := make(map[string]interface{}, 0)
+
+	for _, c := range m {
+		for k, v := range c {
+			ans[k] = v
+		}
+	}
+	return ans
+}

@@ -1,8 +1,6 @@
 package conv
 
 import (
-	"encoding/csv"
-	"io"
 	"reflect"
 	"strconv"
 )
@@ -165,6 +163,13 @@ func (m *Record) Set(jsonpath string, val interface{}) error {
 	return ErrNotFound
 }
 
+func (m *Record) Update(jsonpath string, val interface{}) error {
+	if v, err := m.getVal(jsonpath); err == nil {
+		return v.(*Value).Update(val)
+	}
+	return ErrNotFound
+}
+
 func (m *Record) Get(jsonpath string) (interface{}, error) {
 	if val, err := m.getVal(jsonpath); err == nil {
 		return val.(*Value).Get(), nil
@@ -261,7 +266,10 @@ func (m *Record) setVal(template string, val interface{}) error {
 
 func (m *Record) ToStruct(src, dst string, data interface{}, conv func(v interface{}) interface{}) error {
 	if value, err := m.Value(src); err == nil {
-		return SetVal(data, dst, conv(value.Get()))
+		if value.IsExist() {
+			return SetVal(data, dst, conv(value.Get()))
+		}
+		return nil
 	}
 	return ErrNotFound
 }
@@ -278,52 +286,47 @@ func (m *Record) FromStruct(src, dst string, data interface{}, conv func(v inter
 	return ErrNotFound
 }
 
-type Records []*Record
-
-func (f *Records) ValueMap() []map[string]interface{} {
-	r := []map[string]interface{}{}
-	for _, v := range *f {
-		r = append(r, v.ValueMap())
-	}
-	return r
+func (m *Record) Updates() map[string]interface{} {
+	ret1 := m.UpdateValues()
+	ret2 := m.UpdateHasOnes()
+	ret3 := m.UpdateHasManyes()
+	return MergeMap(ret1, ret2, ret3)
 }
 
-func ReadCSV(r io.Reader) ([]map[string]string, error) {
-	reader := csv.NewReader(r)
-	records, err := reader.ReadAll()
-	if err != nil {
-		return nil, err
-	}
-	ret := []map[string]string{}
-	header := records[0]
-	for _, record := range records[1:] {
-		field := map[string]string{}
-		for i, column := range header {
-			field[column] = record[i]
+func (m *Record) UpdateValues() map[string]interface{} {
+	ret := map[string]interface{}{}
+	for key, v := range m.Values {
+		if !v.IsSynced() && v.IsExist() {
+			ret[key] = v.Get()
 		}
-		ret = append(ret, field)
 	}
-	return ret, nil
+	return ret
 }
 
-// func ReadCSV(r io.Reader, factory func() *Record) (Fields, error) {
-// 	reader := csv.NewReader(r)
-// 	records, err := reader.ReadAll()
-// 	if err != nil {
-// 		return nil, err
-// 	}
-// 	fields := Fields{}
-// 	header := records[0]
-// 	for _, record := range records[1:] {
-// 		field := map[string]interface{}{}
-// 		for i, column := range header {
-// 			field[column] = record[i]
-// 		}
-// 		newone, err := NewRecordWithMap(field, factory)
-// 		if err != nil {
-// 			return nil, err
-// 		}
-// 		fields = append(fields, newone)
-// 	}
-// 	return fields, nil
-// }
+func (m *Record) UpdateHasOnes() map[string]interface{} {
+	ret := map[string]interface{}{}
+	for key, v := range m.HasOnes {
+		t := v.Updates()
+		if len(t) > 0 {
+			ret[key] = t
+		}
+	}
+	return ret
+}
+
+func (m *Record) UpdateHasManyes() map[string]interface{} {
+	ret := map[string]interface{}{}
+	for key, v := range m.HasManys {
+		m := []map[string]interface{}{}
+		for _, t := range v {
+			t := t.Updates()
+			if len(t) > 0 {
+				m = append(m, t)
+			}
+		}
+		if len(m) > 0 {
+			ret[key] = m
+		}
+	}
+	return ret
+}

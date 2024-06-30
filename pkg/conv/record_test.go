@@ -1,6 +1,7 @@
 package conv
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -162,4 +163,31 @@ func TestStructCopy(t *testing.T) {
 		assert.Equal(t, "", b.Field1.Value8)
 		assert.Equal(t, "ptr field", b.Field2.Value3)
 	})
+}
+
+func TestRecordUpdates(t *testing.T) {
+	one1 := NewRecord()
+	one1.SetValue("one_value1", 10)
+	one2 := NewRecord()
+	one2.SetValue("one_value1", 10)
+	many1 := NewRecord()
+	many1.SetValue("many_value1", 20)
+	many2 := NewRecord()
+	many2.SetValue("many_value1", 20)
+	rec := NewRecord()
+	rec.SetValue("value1", 100)
+	rec.SetValue("value2", "value2_name")
+	rec.SetValue("value3", 1.234)
+	rec.SetHasOne("value4", one1)
+	rec.SetHasOne("value5", one2)
+	rec.SetHasMany("value6", many1, many2)
+
+	m1 := rec.Updates()
+	fmt.Println(m1)
+
+	rec.Update(".value1", 200)
+	rec.Update(".value4.one_value1", 20)
+	rec.Update(".value6[0].many_value1", 30)
+	m2 := rec.Updates()
+	fmt.Println(m2)
 }

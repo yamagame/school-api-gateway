@@ -55,7 +55,7 @@ func TestLabo(t *testing.T) {
 func TestCreateWithMap(t *testing.T) {
 	var err error
 
-	fp, _ := os.Open("./testdata/test-labo.csv")
+	fp, _ := os.Open("./testdata/create-labo.csv")
 	defer fp.Close()
 	records, err := conv.ReadCSV(fp)
 	assert.NoError(t, err)
@@ -64,6 +64,22 @@ func TestCreateWithMap(t *testing.T) {
 	db := infra.DB()
 	s := NewLabo(repository.NewLabo(db))
 	id, err := s.CreateWithMap(ctx, records)
+	assert.NoError(t, err)
+	assert.NotEqual(t, 0, id)
+}
+
+func TestUpdateWithMap(t *testing.T) {
+	var err error
+
+	fp, _ := os.Open("./testdata/update-labo.csv")
+	defer fp.Close()
+	records, err := conv.ReadCSV(fp)
+	assert.NoError(t, err)
+
+	ctx := context.Background()
+	db := infra.DB()
+	s := NewLabo(repository.NewLabo(db))
+	id, err := s.UpdateWithMap(ctx, records)
 	assert.NoError(t, err)
 	assert.NotEqual(t, 0, id)
 }
