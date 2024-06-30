@@ -1,85 +1,164 @@
 package conv
 
 import (
-	"encoding/json"
-	"fmt"
-	"os"
-	"reflect"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"k8s.io/client-go/util/jsonpath"
-	kjson "sigs.k8s.io/json"
+	"github.com/yamagame/school-api-gateway/pkg/snapshot"
 )
 
 func TestField(t *testing.T) {
-	f := NewRecord()
-	f.SetValue("val", int64(100))
-	field0 := NewRecord()
-	field1 := NewRecord()
-	field2 := NewRecord()
-	f.SetHasOne("field", field0)
-	f.SetHasMany("fields", field1, field2)
+	t.Run("set_and_get", func(t *testing.T) {
+		rec := NewRecord()
+		rec.SetValue("value1", 100)
+		rec.SetValue("value2", "value2_name")
+		rec.SetValue("value3", 1.234)
 
-	field0.SetValue("val1", "hello val1")
-	field1.SetValue("val2", "hello val2")
-	field2.SetValue("val3", "hello val3")
+		value1, err := rec.GetValue("value1")
+		assert.NoError(t, err)
+		assert.Equal(t, 100, value1)
+		value2, err := rec.GetValue("value2")
+		assert.NoError(t, err)
+		assert.Equal(t, "value2_name", value2)
+		value3, err := rec.GetValue("value3")
+		assert.NoError(t, err)
+		assert.Equal(t, 1.234, value3)
 
-	value, err := f.Value(".val")
-	assert.NoError(t, err)
-	assert.Equal(t, int64(100), value.Get())
+		snapshot.Equal(t, rec.ValueMap(), "test1.json")
+		// snapshot.Save(t, rec.ValueMap(), "test1.json")
+	})
+	t.Run("struct_conv", func(t *testing.T) {
+		type Field struct {
+			FieldValue1 string
+			FieldValue2 string
+		}
+		a := &struct {
+			Value1 string
+			Value2 string
+			Field1 Field
+			Field2 *Field
+		}{
+			Value1: "struct_value1",
+			Value2: "struct_value2",
+			Field1: Field{
+				FieldValue1: "field_value1",
+				FieldValue2: "field_value2",
+			},
+			Field2: &Field{
+				FieldValue1: "field_value3",
+				FieldValue2: "field_value4",
+			},
+		}
+		b := &struct {
+			Value3 string
+			Value4 string
+			Value5 string
+			Value6 *string
+			Field3 *Field
+		}{
+			Value3: "struct_value3",
+			Value4: "struct_value4",
+			Field3: &Field{
+				FieldValue1: "field_value5",
+				FieldValue2: "field_value6",
+			},
+		}
 
-	field, err := f.HasOne(".field")
-	assert.NoError(t, err)
-	assert.NotNil(t, field)
+		atob := []struct {
+			apath string
+			bpath string
+			conv  Conv
+		}{
+			{".Value2", ".Value4", nil},
+			{".Field1.FieldValue1", ".Value5", nil},
+			{".Field1.FieldValue1", ".ValueSome", nil},
+			{".Field2.FieldValue2", ".Value6", func(v any) any {
+				return StrPtr(v)
+			}},
+			{".Field1.FieldValue3", ".Value5", nil},
+			{".Value2", ".Field3.FieldValue1", nil},
+		}
 
-	array, err := f.HasMany(".fields")
-	assert.NoError(t, err)
-	assert.NotNil(t, array)
+		for _, c := range atob {
+			CopyField(a, c.apath, b, c.bpath, c.conv)
+		}
 
-	bytes1, err := json.MarshalIndent(f, "", "  ")
-	assert.NoError(t, err)
-	fmt.Println(string(bytes1))
-
-	g := f.Copy()
-	bytes2, err := json.MarshalIndent(g, "", "  ")
-	assert.NoError(t, err)
-	fmt.Println(string(bytes2))
-
-	valueg, err := g.Value(".val")
-	assert.NoError(t, err)
-	assert.Equal(t, int64(100), valueg.Get())
-
-	fieldg, err := g.HasOne(".field")
-	assert.NoError(t, err)
-	assert.NotNil(t, fieldg)
-
-	l := NewRecord()
-	// l.SetValue("val", 100)
-	// field0l := &Record{}
-	// field1l := &Record{}
-	// field2l := &Record{}
-	// l.SetHasOne("field", field0l)
-	// l.SetHasMany("fields", field1l, field2l)
-	err = kjson.UnmarshalCaseSensitivePreserveInts(bytes2, &l)
-	assert.NoError(t, err)
-	bytes3, err := json.MarshalIndent(l, "", "  ")
-	assert.NoError(t, err)
-	fmt.Println(string(bytes3))
-
-	valuel, err := l.Value(".val")
-	assert.NoError(t, err)
-	valuef, err := f.Value(".val")
-	assert.NoError(t, err)
-	assert.Equal(t, valuef.Get(), valuel.Get())
-
-	fieldl, err := l.HasOne(".field")
-	assert.NoError(t, err)
-	assert.NotNil(t, fieldl)
+		CopyField(b, ".Value3", a, ".Value1")
+		assert.Equal(t, "struct_value3", a.Value1)
+		assert.Equal(t, "struct_value2", b.Value4)
+		assert.Equal(t, "field_value1", b.Value5)
+		assert.Equal(t, "field_value4", *b.Value6)
+		assert.Equal(t, "struct_value2", b.Field3.FieldValue1)
+	})
 }
 
-func printValues(jp *jsonpath.JSONPath, values [][]reflect.Value) {
-	for _, val := range values {
-		jp.PrintResults(os.Stdout, val)
-	}
+func TestStructCopy(t *testing.T) {
+	t.Run("struct_copy", func(t *testing.T) {
+		pval := ToPtr(int32(30))
+		type Fielda struct {
+			Value3 string
+			Value4 *string
+			Value5 bool
+			Value6 *string
+		}
+		type Fieldb struct {
+			Value3 string
+			Value4 *string
+			Value5 bool
+			Value6 *string
+		}
+		a := &struct {
+			Value1  int32
+			Value2  int64
+			PtrVal1 *int32
+			Field1  Fielda
+			Field2  *Fielda
+		}{
+			Value1:  100,
+			Value2:  200,
+			PtrVal1: pval,
+			Field1: Fielda{
+				Value3: "hello world",
+				Value5: true,
+				Value6: ToPtr("value6"),
+			},
+			Field2: &Fielda{
+				Value3: "ptr field",
+			},
+		}
+		b := &struct {
+			Value1  int32
+			Value2  int64
+			PtrVal1 *int32
+			Field1  Fieldb
+			Field2  *Fieldb
+		}{
+			Field1: Fieldb{
+				Value3: "",
+				Value4: ToPtr("hello"),
+			},
+			// Field2: &Fieldb{},
+		}
+
+		err := CopyStruct(a, b)
+		assert.NoError(t, err)
+
+		*pval = 10
+
+		// tv := reflect.TypeOf(*a)
+		// for i := 0; i < tv.NumField(); i++ {
+		// 	f := tv.Field(i)
+		// 	CopyField(a, "."+f.Name, b, "."+f.Name)
+		// }
+
+		assert.Equal(t, a.Value1, b.Value1)
+		assert.Equal(t, a.Value2, b.Value2)
+		assert.Equal(t, int32(30), *b.PtrVal1)
+		assert.Equal(t, int32(10), *a.PtrVal1)
+		assert.Equal(t, a.Field1.Value3, b.Field1.Value3)
+		assert.Equal(t, a.Field1.Value5, b.Field1.Value5)
+		assert.Equal(t, "hello", *b.Field1.Value4)
+		assert.Equal(t, "value6", *b.Field1.Value6)
+		assert.Equal(t, "ptr field", b.Field2.Value3)
+	})
 }

@@ -2,11 +2,8 @@ package conv
 
 import (
 	"encoding/csv"
-	"fmt"
 	"io"
 	"reflect"
-
-	"k8s.io/client-go/util/jsonpath"
 )
 
 type Record struct {
@@ -38,9 +35,36 @@ func (m *Record) SetHasMany(key string, records ...*Record) *Record {
 	return m
 }
 
-func (m *Record) Value(key string) (*Value, error) {
+func (m *Record) GetValue(key string) (interface{}, error) {
+	if v, ok := m.Values[key]; ok {
+		if reflect.TypeOf(v) == reflect.TypeOf(&Value{}) {
+			return v.Get(), nil
+		}
+	}
+	return nil, ErrNotFound
+}
+
+func (m *Record) GetHasOne(key string) (*Record, error) {
+	if v, ok := m.HasOnes[key]; ok {
+		if reflect.TypeOf(v) == reflect.TypeOf(&Record{}) {
+			return v, nil
+		}
+	}
+	return nil, ErrNotFound
+}
+
+func (m *Record) GetHasMany(key string) ([]*Record, error) {
+	if v, ok := m.HasManys[key]; ok {
+		if reflect.TypeOf(v) == reflect.TypeOf([]*Record{}) {
+			return v, nil
+		}
+	}
+	return nil, ErrNotFound
+}
+
+func (m *Record) Value(jsonpath string) (*Value, error) {
 	values := m.allValues()
-	if v, err := getVal(values, key); err == nil {
+	if v, err := GetVal(values, jsonpath); err == nil {
 		if reflect.TypeOf(v) == reflect.TypeOf(&Value{}) {
 			value := v.(*Value)
 			return value, nil
@@ -49,9 +73,9 @@ func (m *Record) Value(key string) (*Value, error) {
 	return nil, ErrNotFound
 }
 
-func (m *Record) HasOne(key string) (*Record, error) {
+func (m *Record) HasOne(jsonpath string) (*Record, error) {
 	values := m.allHasOne()
-	if v, err := getVal(values, key); err == nil {
+	if v, err := GetVal(values, jsonpath); err == nil {
 		if reflect.TypeOf(v) == reflect.TypeOf(&Record{}) {
 			field := v.(*Record)
 			return field, nil
@@ -60,9 +84,9 @@ func (m *Record) HasOne(key string) (*Record, error) {
 	return nil, ErrNotFound
 }
 
-func (m *Record) HasMany(key string) ([]*Record, error) {
+func (m *Record) HasMany(jsonpath string) ([]*Record, error) {
 	values := m.allHasMany()
-	if v, err := getVal(values, key); err == nil {
+	if v, err := GetVal(values, jsonpath); err == nil {
 		if reflect.TypeOf(v) == reflect.TypeOf([]*Record{}) {
 			field := v.([]*Record)
 			return field, nil
@@ -71,16 +95,16 @@ func (m *Record) HasMany(key string) ([]*Record, error) {
 	return nil, ErrNotFound
 }
 
-func (m *Record) Set(key string, val interface{}) error {
-	if v, err := m.getVal(key); err == nil {
+func (m *Record) Set(jsonpath string, val interface{}) error {
+	if v, err := m.getVal(jsonpath); err == nil {
 		v.(*Value).Set(val)
 		return nil
 	}
 	return ErrNotFound
 }
 
-func (m *Record) Get(key string) (interface{}, error) {
-	if val, err := m.getVal(key); err == nil {
+func (m *Record) Get(jsonpath string) (interface{}, error) {
+	if val, err := m.getVal(jsonpath); err == nil {
 		return val.(*Value).Get(), nil
 	}
 	return nil, ErrNotFound
@@ -163,51 +187,25 @@ func (m *Record) Copy() *Record {
 	return r
 }
 
-func getVal(data interface{}, template string) (interface{}, error) {
-	jp := jsonpath.New("conv").AllowMissingKeys(true)
-	jp.Parse(fmt.Sprintf("{%s}", template))
-	values, err := jp.FindResults(data)
-	if err != nil {
-		return nil, err
-	}
-	if len(values) > 0 && len(values[0]) > 0 {
-		return values[0][0].Interface(), nil
-	}
-	return nil, ErrNotFound
-}
-
-func setVal(data interface{}, template string, val interface{}) error {
-	jp := jsonpath.New("conv").AllowMissingKeys(true)
-	jp.Parse(fmt.Sprintf("{%s}", template))
-	values, err := jp.FindResults(data)
-	if err != nil {
-		return err
-	}
-	if len(values) > 0 && len(values[0]) > 0 {
-		values[0][0].Set(reflect.ValueOf(val))
-	}
-	return nil
-}
-
 func (m *Record) getVal(template string) (interface{}, error) {
 	data := m.allValues()
-	return getVal(data, template)
+	return GetVal(data, template)
 }
 
 func (m *Record) setVal(template string, val interface{}) error {
 	data := m.allValues()
-	return setVal(data, template, val)
+	return SetVal(data, template, val)
 }
 
 func (m *Record) ToStruct(src, dst string, data interface{}, conv func(v interface{}) interface{}) error {
 	if value, err := m.Value(src); err == nil {
-		return setVal(data, dst, conv(value.Get()))
+		return SetVal(data, dst, conv(value.Get()))
 	}
 	return ErrNotFound
 }
 
 func (m *Record) FromStruct(src, dst string, data interface{}, conv func(v interface{}) interface{}) error {
-	if v, err := getVal(data, src); err == nil {
+	if v, err := GetVal(data, src); err == nil {
 		return m.Set(dst, conv(v))
 	}
 	return ErrNotFound
@@ -247,20 +245,8 @@ func ReadCSV(r io.Reader, factory func(id int32) *Record) (Fields, error) {
 
 func NewFieldWithMap(field map[string]interface{}, factory func(id int32) *Record) (*Record, error) {
 	newone := factory(0)
-	// t := newone
 	for key, val := range field {
 		newone.Set(key, val)
-		// key := NewKey(column)
-		// if key.HasRelation() {
-		// 	for _, col := range key.Fields[:len(key.Fields)-1] {
-		// 		if v, err := t.Has(col); err == nil {
-		// 			t = v
-		// 		}
-		// 	}
-		// }
-		// if value, err := t.Value(key.Last()); err == nil {
-		// 	value.Set(val)
-		// }
 	}
 	return newone, nil
 }

@@ -65,7 +65,7 @@ func (x *Value) Update(val interface{}) error {
 		return ErrInvalidType
 	}
 	if x.protected {
-		return ErrProtected
+		return ErrProtectedValue
 	}
 	x.dirty = true
 	x.value = val
