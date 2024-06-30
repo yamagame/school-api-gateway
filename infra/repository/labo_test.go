@@ -17,18 +17,18 @@ func TestSchool(t *testing.T) {
 	var err error
 	ctx := context.Background()
 	db := infra.DB()
-	repo := NewSchool(db)
-	labo1 := entity.NewLabo(0)
+	repo := NewLabo(db)
+	labo1 := entity.NewLabo()
 	err = labo1.Set(".id", int32(1))
 	assert.NoError(t, err)
 	err = labo1.Set(".name", "サトウ")
 	assert.NoError(t, err)
-	labo2 := entity.NewLabo(0)
+	labo2 := entity.NewLabo()
 	err = labo2.Set(".id", int32(2))
 	assert.NoError(t, err)
 	err = labo2.Set(".name", "シミズ")
 	assert.NoError(t, err)
-	labo3 := entity.NewLabo(0)
+	labo3 := entity.NewLabo()
 	err = labo3.Set(".id", int32(0))
 	assert.NoError(t, err)
 	err = labo3.Set(".name", "スズキ")
@@ -56,9 +56,9 @@ func TestSchool(t *testing.T) {
 		}
 	}
 
-	err = repo.UpdateLabos(ctx, updates)
+	err = repo.Update(ctx, updates)
 	assert.NoError(t, err)
-	err = repo.CreateLabos(ctx, creates)
+	err = repo.Create(ctx, creates)
 	assert.NoError(t, err)
 }
 
@@ -66,8 +66,8 @@ func TestLabos(t *testing.T) {
 	var err error
 	ctx := context.Background()
 	db := infra.DB()
-	repo := NewSchool(db)
-	res, err := repo.ListLabos(ctx, 10, 0)
+	repo := NewLabo(db)
+	res, err := repo.List(ctx, 10, 0)
 	assert.NoError(t, err)
 	fmt.Println(res)
 }

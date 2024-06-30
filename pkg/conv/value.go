@@ -2,6 +2,7 @@ package conv
 
 import (
 	"encoding/json"
+	"fmt"
 	"reflect"
 
 	kjson "sigs.k8s.io/json"
@@ -11,14 +12,16 @@ type Value struct {
 	key       string
 	protected bool
 	value     interface{}
-	dirty     bool
+	exist     bool
+	synced    bool
 }
 
 type valueInternal struct {
 	Key       string
 	Protected bool
 	Value     interface{}
-	Dirty     bool
+	Exist     bool
+	Synced    bool
 }
 
 func NewValue(key string, val interface{}) *Value {
@@ -34,13 +37,18 @@ func (x *Value) Copy() *Value {
 		key:       x.key,
 		protected: x.protected,
 		value:     x.value,
-		dirty:     x.dirty,
+		exist:     x.exist,
+		synced:    x.synced,
 	}
 	return v
 }
 
-func (x *Value) IsChanged() bool {
-	return x.dirty
+func (x *Value) IsExist() bool {
+	return x.exist
+}
+
+func (x *Value) IsSynced() bool {
+	return x.synced
 }
 
 func (x *Value) IsProtected() bool {
@@ -53,21 +61,25 @@ func (x *Value) Get() interface{} {
 
 func (x *Value) Set(val interface{}) error {
 	if reflect.TypeOf(x.value) != reflect.TypeOf(val) {
+		fmt.Printf("%v\n", x)
 		return ErrInvalidType
 	}
-	x.dirty = false
+	x.exist = true
+	x.synced = true
 	x.value = val
 	return nil
 }
 
 func (x *Value) Update(val interface{}) error {
 	if reflect.TypeOf(x.value) != reflect.TypeOf(val) {
+		fmt.Printf("%v\n", x)
 		return ErrInvalidType
 	}
 	if x.protected {
 		return ErrProtectedValue
 	}
-	x.dirty = true
+	x.exist = true
+	x.synced = false
 	x.value = val
 	return nil
 }
@@ -77,7 +89,8 @@ func (x *Value) MarshalJSON() ([]byte, error) {
 		Key:       x.key,
 		Protected: x.protected,
 		Value:     x.Get(),
-		Dirty:     x.dirty,
+		Exist:     x.exist,
+		Synced:    x.synced,
 	})
 }
 
@@ -89,6 +102,7 @@ func (x *Value) UnmarshalJSON(b []byte) error {
 	x.key = aux.Key
 	x.protected = aux.Protected
 	x.value = aux.Value
-	x.dirty = aux.Dirty
+	x.exist = aux.Exist
+	x.synced = aux.Synced
 	return nil
 }

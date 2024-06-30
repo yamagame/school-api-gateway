@@ -2,8 +2,8 @@ package entity
 
 import "github.com/yamagame/school-api-gateway/pkg/conv"
 
-func NewLicnese(id int32) *conv.Record {
+func NewLicnese() *conv.Record {
 	v := conv.NewRecord()
-	v.SetValue("id", id)
+	v.SetValue("id", int32(0))
 	return v
 }

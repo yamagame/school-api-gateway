@@ -9,7 +9,7 @@ import (
 )
 
 func TestPerson(t *testing.T) {
-	person := NewPerson(0)
+	person := NewPerson()
 
 	bytes, err := json.MarshalIndent(person, "", "  ")
 	assert.NoError(t, err)

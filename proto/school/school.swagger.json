@@ -79,6 +79,32 @@
         }
       }
     },
+    "schoolBuilding": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "title": "建物"
+    },
+    "schoolGroup": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "title": "グループ"
+    },
     "schoolLabo": {
       "type": "object",
       "properties": {
@@ -90,13 +116,13 @@
           "type": "string"
         },
         "group": {
-          "type": "string"
+          "$ref": "#/definitions/schoolGroup"
         },
         "program": {
-          "type": "string"
+          "$ref": "#/definitions/schoolProgram"
         },
         "building": {
-          "type": "string"
+          "$ref": "#/definitions/schoolBuilding"
         }
       },
       "title": "研究室の情報"
@@ -131,6 +157,19 @@
         }
       },
       "title": "The response message containing the greetings"
+    },
+    "schoolProgram": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "title": "プログラム"
     }
   }
 }

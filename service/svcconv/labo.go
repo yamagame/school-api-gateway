@@ -1,37 +1,37 @@
 package svcconv
 
 import (
-	"github.com/yamagame/school-api-gateway/infra/infconv"
-	"github.com/yamagame/school-api-gateway/infra/model"
+	"github.com/yamagame/school-api-gateway/entity"
+	"github.com/yamagame/school-api-gateway/pkg/conv"
 	"github.com/yamagame/school-api-gateway/proto/school"
 )
 
-func LaboToProto(in *model.Labo) (*school.Labo, error) {
-	entity, err := infconv.LaboToEntity(in)
-	if err != nil {
-		return nil, err
+func LaboToProto(in *conv.Record) (*school.Labo, error) {
+	out := &school.Labo{
+		Group:    &school.Group{},
+		Program:  &school.Program{},
+		Building: &school.Building{},
 	}
-	out := &school.Labo{}
-	if value, err := entity.Value("id"); err == nil {
-		out.Id = value.Get().(int32)
-	}
-	if value, err := entity.Value("name"); err == nil {
-		out.Name = value.Get().(string)
-	}
-	if group, err := entity.HasOne("group"); err == nil {
-		if value, err := group.Value("name"); err == nil {
-			out.Group = value.Get().(string)
-		}
-	}
-	if program, err := entity.HasOne("program"); err == nil {
-		if value, err := program.Value("name"); err == nil {
-			out.Program = value.Get().(string)
-		}
-	}
-	if building, err := entity.HasOne("building"); err == nil {
-		if value, err := building.Value("name"); err == nil {
-			out.Building = value.Get().(string)
-		}
-	}
+	in.ToStruct(".id", ".Id", out, conv.Raw)
+	in.ToStruct(".name", ".Name", out, conv.Raw)
+	in.ToStruct(".group.id", ".Group.Id", out, conv.Raw)
+	in.ToStruct(".group.name", ".Group.Name", out, conv.Raw)
+	in.ToStruct(".program.id", ".Program.Id", out, conv.Raw)
+	in.ToStruct(".program.name", ".Program.Name", out, conv.Raw)
+	in.ToStruct(".building.id", ".Building.Id", out, conv.Raw)
+	in.ToStruct(".building.name", ".Building.Name", out, conv.Raw)
+	return out, nil
+}
+
+func LaboToEntity(in *school.Labo) (*conv.Record, error) {
+	out := entity.NewLabo()
+	out.FromStruct(".Id", ".id", in, conv.Raw)
+	out.FromStruct(".Name", ".name", in, conv.Raw)
+	out.FromStruct(".Group.Id", ".group.id", in, conv.Raw)
+	out.FromStruct(".Group.Name", ".group.name", in, conv.Raw)
+	out.FromStruct(".Program.Id", ".program.id", in, conv.Raw)
+	out.FromStruct(".Program.Name", ".program.name", in, conv.Raw)
+	out.FromStruct(".Building.Id", ".building.id", in, conv.Raw)
+	out.FromStruct(".Building.Name", ".building.name", in, conv.Raw)
 	return out, nil
 }

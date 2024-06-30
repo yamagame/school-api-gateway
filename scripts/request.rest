@@ -9,7 +9,7 @@ POST http://localhost:8090/v1/school/labos HTTP/1.1
 content-type: application/json
 
 {
-    "page_size": 10
+    "page_size": 3
 }
 
 ###

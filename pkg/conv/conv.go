@@ -13,6 +13,10 @@ func ToPtr[T any](v T) *T {
 	return &a
 }
 
+func FromPtr[T any](v *T) T {
+	return *v
+}
+
 func Raw[T any](v T) T {
 	return v
 }
@@ -23,6 +27,14 @@ func StrPtr(v interface{}) interface{} {
 
 func PtrStr(v interface{}) interface{} {
 	return *v.(*string)
+}
+
+func Int32Ptr(v interface{}) interface{} {
+	return ToPtr(v.(int32))
+}
+
+func PtrInt32(v interface{}) interface{} {
+	return *v.(*int32)
 }
 
 func GetVal(data interface{}, template string) (interface{}, error) {

@@ -18,13 +18,31 @@ service Shool {
   }
 }
 
+// グループ
+message Group {
+  int32 id = 1;
+  string name = 2;
+}
+
+// プログラム
+message Program {
+  int32 id = 1;
+  string name = 2;
+}
+
+// 建物
+message Building {
+  int32 id = 1;
+  string name = 2;
+}
+
 // 研究室の情報
 message Labo {
   int32 id = 1;
   string name = 2;
-  string group = 3;
-  string program = 4;
-  string building = 5;
+  Group group = 3;
+  Program program = 4;
+  Building building = 5;
 }
 
 // The request message containing the user's name

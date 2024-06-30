@@ -13,7 +13,7 @@ import (
 func TestLabo(t *testing.T) {
 	var val interface{}
 	var err error
-	labo := NewLabo(0)
+	labo := NewLabo()
 	val, err = labo.Get(".name")
 	assert.NoError(t, err)
 	assert.Equal(t, "", val)
@@ -28,8 +28,15 @@ func TestLaboCSV(t *testing.T) {
 	fp, _ := os.Open("./testdata/test-labo.csv")
 	defer fp.Close()
 
-	out, err := conv.ReadCSV(fp, NewLabo)
+	records, err := conv.ReadCSV(fp)
 	assert.NoError(t, err)
+
+	out := conv.Records{}
+	for _, record := range records {
+		r, err := conv.NewRecordWithMap(record, NewLabo)
+		assert.NoError(t, err)
+		out = append(out, r)
+	}
 
 	bytes, err := json.MarshalIndent(out.ValueMap(), "", "  ")
 	assert.NoError(t, err)

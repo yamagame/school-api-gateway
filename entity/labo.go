@@ -4,12 +4,12 @@ import (
 	"github.com/yamagame/school-api-gateway/pkg/conv"
 )
 
-func NewLabo(id int32) *conv.Record {
+func NewLabo() *conv.Record {
 	v := conv.NewRecord()
-	v.SetValue("id", id)
+	v.SetValue("id", int32(0))
 	v.SetValue("name", "")
-	v.SetHasOne("group", NewGroup(0))
-	v.SetHasOne("program", NewProgram(0))
-	v.SetHasOne("building", NewBuilding(0))
+	v.SetHasOne("group", NewGroup())
+	v.SetHasOne("program", NewProgram())
+	v.SetHasOne("building", NewBuilding())
 	return v
 }

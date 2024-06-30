@@ -13,8 +13,8 @@ import (
 
 	"github.com/yamagame/school-api-gateway/infra"
 	"github.com/yamagame/school-api-gateway/infra/repository"
-	pbSchool "github.com/yamagame/school-api-gateway/proto/school"
-	"github.com/yamagame/school-api-gateway/service/svcconv"
+	"github.com/yamagame/school-api-gateway/proto/school"
+	"github.com/yamagame/school-api-gateway/service"
 )
 
 var ServerHost = "localhost"
@@ -24,36 +24,6 @@ func init() {
 	if ok {
 		ServerHost = serverhost
 	}
-}
-
-// School サービスの構造体
-type server struct {
-	Repo *repository.School
-}
-
-// ListLabos 研究室の一覧を返す
-func (r *server) ListLabos(ctx context.Context, in *pbSchool.ListLabosRequest) (*pbSchool.ListLabosResponse, error) {
-	pageSize := int32(5)
-	if in.PageSize != nil {
-		pageSize = *in.PageSize
-	}
-	offset := int32(0)
-	if in.Offset != nil {
-		offset = *in.Offset
-	}
-	results, err := r.Repo.ListLabos(ctx, pageSize, offset)
-	if err != nil {
-		return nil, err
-	}
-	var labos []*pbSchool.Labo
-	for _, labo := range results {
-		l, err := svcconv.LaboToProto(labo)
-		if err != nil {
-			return nil, err
-		}
-		labos = append(labos, l)
-	}
-	return &pbSchool.ListLabosResponse{Labos: labos, Offset: pageSize + offset}, err
 }
 
 func main() {
@@ -66,8 +36,8 @@ func main() {
 	// gRPC サーバーオブジェクトを作成する
 	s := grpc.NewServer()
 	// School サービスを接続
-	pbSchool.RegisterShoolServer(s, &server{
-		Repo: repository.NewSchool(infra.DB()),
+	school.RegisterShoolServer(s, &service.Server{
+		LaboService: service.NewLabo(repository.NewLabo(infra.DB())),
 	})
 	// gRPC サーバーを起動
 	log.Println("gRPC を起動 " + ServerHost + ":8080")
@@ -87,7 +57,7 @@ func main() {
 	// ServeMux の作成
 	gwmux := runtime.NewServeMux()
 	// School サービスを gRPC-Gateway に登録
-	err = pbSchool.RegisterShoolHandler(context.Background(), gwmux, conn)
+	err = school.RegisterShoolHandler(context.Background(), gwmux, conn)
 	if err != nil {
 		log.Fatalln("サービスの登録に失敗:", err)
 	}

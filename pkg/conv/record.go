@@ -4,6 +4,7 @@ import (
 	"encoding/csv"
 	"io"
 	"reflect"
+	"strconv"
 )
 
 type Record struct {
@@ -18,6 +19,68 @@ func NewRecord() *Record {
 		HasOnes:  map[string]*Record{},
 		HasManys: map[string][]*Record{},
 	}
+}
+
+func strTo(v interface{}, s string) interface{} {
+	switch reflect.ValueOf(v).Kind() {
+	case reflect.Bool:
+		v, _ := strconv.ParseBool(s)
+		return v
+	case reflect.Int:
+		v, _ := strconv.Atoi(s)
+		return v
+	case reflect.Int64:
+		v, _ := strconv.ParseInt(s, 10, 64)
+		return int64(v)
+	case reflect.Int32:
+		v, _ := strconv.ParseInt(s, 10, 32)
+		return int32(v)
+	case reflect.Int16:
+		v, _ := strconv.ParseInt(s, 10, 16)
+		return int16(v)
+	case reflect.Int8:
+		v, _ := strconv.ParseInt(s, 10, 8)
+		return int8(v)
+	case reflect.Uint:
+		v, _ := strconv.ParseUint(s, 10, 32)
+		return uint(v)
+	case reflect.Uint64:
+		v, _ := strconv.ParseUint(s, 10, 64)
+		return uint64(v)
+	case reflect.Uint32:
+		v, _ := strconv.ParseUint(s, 10, 32)
+		return uint32(v)
+	case reflect.Uint16:
+		v, _ := strconv.ParseUint(s, 10, 16)
+		return uint16(v)
+	case reflect.Uint8:
+		v, _ := strconv.ParseUint(s, 10, 8)
+		return uint8(v)
+	case reflect.Float32:
+		v, _ := strconv.ParseFloat(s, 32)
+		return float32(v)
+	case reflect.Float64:
+		v, _ := strconv.ParseFloat(s, 64)
+		return float64(v)
+	case reflect.String:
+		return s
+	default:
+	}
+	return v
+}
+
+func NewRecordWithMap(field map[string]string, factory func() *Record) (*Record, error) {
+	newone := factory()
+	for key, val := range field {
+		v, err := newone.Get(key)
+		if err != nil {
+			return nil, err
+		}
+		if err := newone.Set(key, strTo(v, val)); err != nil {
+			return nil, err
+		}
+	}
+	return newone, nil
 }
 
 func (m *Record) SetValue(key string, val interface{}) *Record {
@@ -97,8 +160,7 @@ func (m *Record) HasMany(jsonpath string) ([]*Record, error) {
 
 func (m *Record) Set(jsonpath string, val interface{}) error {
 	if v, err := m.getVal(jsonpath); err == nil {
-		v.(*Value).Set(val)
-		return nil
+		return v.(*Value).Set(val)
 	}
 	return ErrNotFound
 }
@@ -206,14 +268,19 @@ func (m *Record) ToStruct(src, dst string, data interface{}, conv func(v interfa
 
 func (m *Record) FromStruct(src, dst string, data interface{}, conv func(v interface{}) interface{}) error {
 	if v, err := GetVal(data, src); err == nil {
-		return m.Set(dst, conv(v))
+		value := reflect.ValueOf(v)
+		if value.Kind() == reflect.Ptr && value.IsNil() {
+			return nil
+		}
+		t := conv(v)
+		return m.Set(dst, t)
 	}
 	return ErrNotFound
 }
 
-type Fields []*Record
+type Records []*Record
 
-func (f *Fields) ValueMap() []map[string]interface{} {
+func (f *Records) ValueMap() []map[string]interface{} {
 	r := []map[string]interface{}{}
 	for _, v := range *f {
 		r = append(r, v.ValueMap())
@@ -221,32 +288,42 @@ func (f *Fields) ValueMap() []map[string]interface{} {
 	return r
 }
 
-func ReadCSV(r io.Reader, factory func(id int32) *Record) (Fields, error) {
+func ReadCSV(r io.Reader) ([]map[string]string, error) {
 	reader := csv.NewReader(r)
 	records, err := reader.ReadAll()
 	if err != nil {
 		return nil, err
 	}
-	fields := Fields{}
+	ret := []map[string]string{}
 	header := records[0]
 	for _, record := range records[1:] {
-		field := map[string]interface{}{}
+		field := map[string]string{}
 		for i, column := range header {
 			field[column] = record[i]
 		}
-		newone, err := NewFieldWithMap(field, factory)
-		if err != nil {
-			return nil, err
-		}
-		fields = append(fields, newone)
+		ret = append(ret, field)
 	}
-	return fields, nil
+	return ret, nil
 }
 
-func NewFieldWithMap(field map[string]interface{}, factory func(id int32) *Record) (*Record, error) {
-	newone := factory(0)
-	for key, val := range field {
-		newone.Set(key, val)
-	}
-	return newone, nil
-}
+// func ReadCSV(r io.Reader, factory func() *Record) (Fields, error) {
+// 	reader := csv.NewReader(r)
+// 	records, err := reader.ReadAll()
+// 	if err != nil {
+// 		return nil, err
+// 	}
+// 	fields := Fields{}
+// 	header := records[0]
+// 	for _, record := range records[1:] {
+// 		field := map[string]interface{}{}
+// 		for i, column := range header {
+// 			field[column] = record[i]
+// 		}
+// 		newone, err := NewRecordWithMap(field, factory)
+// 		if err != nil {
+// 			return nil, err
+// 		}
+// 		fields = append(fields, newone)
+// 	}
+// 	return fields, nil
+// }

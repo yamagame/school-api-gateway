@@ -1,4 +1,4 @@
-name,group.id,program.id,building.id
-佐藤,1,4,7
-清水,2,5,8
-鈴木,3,6,9
+.name,.group.id,.program.id,.building.id,.group.name
+佐藤,1,4,7,A
+清水,2,5,8,A
+鈴木,3,6,9,A

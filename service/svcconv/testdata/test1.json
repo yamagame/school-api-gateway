@@ -1,0 +1,15 @@
+{
+  "name": "name",
+  "group": {
+    "id": 1,
+    "name": "グループ名"
+  },
+  "program": {
+    "id": 2,
+    "name": "プログラム名"
+  },
+  "building": {
+    "id": 3,
+    "name": "建物名"
+  }
+}
