@@ -101,6 +101,7 @@ func TestStructCopy(t *testing.T) {
 			Value5 bool
 			Value6 *string
 			Value7 **string
+			Value8 string `structcopy:"ignore"`
 		}
 		type Fieldb struct {
 			Value3 string
@@ -108,6 +109,7 @@ func TestStructCopy(t *testing.T) {
 			Value5 bool
 			Value6 *string
 			Value7 **string
+			Value8 string
 		}
 		a := &struct {
 			Value1  int32
@@ -124,6 +126,7 @@ func TestStructCopy(t *testing.T) {
 				Value5: true,
 				Value6: ToPtr("value6"),
 				Value7: ToPtr(ToPtr("value7")),
+				Value8: "value8",
 			},
 			Field2: &Fielda{
 				Value3: "ptr field",
@@ -137,12 +140,12 @@ func TestStructCopy(t *testing.T) {
 			Field2  *Fieldb
 		}{
 			Field1: Fieldb{
-				Value3: "",
+				Value3: "no change",
 				Value4: ToPtr("hello"),
 			},
 		}
 
-		err := CopyStruct(a, b)
+		err := StructCopy(a, b)
 		assert.NoError(t, err)
 
 		*pval = 10
@@ -151,11 +154,12 @@ func TestStructCopy(t *testing.T) {
 		assert.Equal(t, a.Value2, b.Value2)
 		assert.Equal(t, int32(30), *b.PtrVal1)
 		assert.Equal(t, int32(10), *a.PtrVal1)
-		assert.Equal(t, a.Field1.Value3, b.Field1.Value3)
+		assert.Equal(t, "hello world", b.Field1.Value3)
 		assert.Equal(t, a.Field1.Value5, b.Field1.Value5)
 		assert.Equal(t, "hello", *b.Field1.Value4)
 		assert.Equal(t, "value6", *b.Field1.Value6)
 		assert.Equal(t, "value7", **b.Field1.Value7)
+		assert.Equal(t, "", b.Field1.Value8)
 		assert.Equal(t, "ptr field", b.Field2.Value3)
 	})
 }

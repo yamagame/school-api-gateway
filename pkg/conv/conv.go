@@ -3,6 +3,7 @@ package conv
 import (
 	"fmt"
 	"reflect"
+	"strings"
 
 	"k8s.io/client-go/util/jsonpath"
 )
@@ -83,8 +84,20 @@ func CopyField(srcdata interface{}, src string, dstdata interface{}, dst string,
 	return ErrNotFound
 }
 
+func getTags(tag string) map[string]string {
+	tags := map[string]string{}
+	a := strings.Split(tag, ";")
+	for _, s := range a {
+		if s != "" {
+			k := strings.TrimSpace(s)
+			tags[k] = ""
+		}
+	}
+	return tags
+}
+
 // 同じ構造の構造体をコピー
-func CopyStruct(srcdata interface{}, dstdata interface{}) error {
+func StructCopy(srcdata interface{}, dstdata interface{}) error {
 	var err error
 	src, isSrcStructure := toReflectValue(srcdata)
 	dst, isDstStructure := toReflectValue(dstdata)
@@ -93,6 +106,10 @@ func CopyStruct(srcdata interface{}, dstdata interface{}) error {
 		dtv := dst.Type()
 		for i := 0; i < stv.NumField(); i++ {
 			sfd := stv.Field(i)
+			tags := getTags(sfd.Tag.Get("structcopy"))
+			if _, ok := tags["ignore"]; ok == true {
+				continue
+			}
 			dfd, exist := dtv.FieldByName(sfd.Name)
 			if !exist {
 				continue
@@ -120,7 +137,7 @@ func CopyStruct(srcdata interface{}, dstdata interface{}) error {
 					srckind := svalue.Elem().Kind()
 					switch srckind {
 					case reflect.Struct:
-						err = CopyStruct(svalue, dvalue)
+						err = StructCopy(svalue, dvalue)
 						if err != nil {
 							return err
 						}
@@ -133,7 +150,7 @@ func CopyStruct(srcdata interface{}, dstdata interface{}) error {
 					return ErrProtectedValue
 				}
 			case reflect.Struct:
-				err = CopyStruct(svalue, dvalue)
+				err = StructCopy(svalue, dvalue)
 				if err != nil {
 					return err
 				}
