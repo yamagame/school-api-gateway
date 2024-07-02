@@ -11,7 +11,6 @@ type Labo struct {
 	Program    Program      `gorm:"comment:プログラム;"`
 	BuildingID *int32       `gorm:"comment:建物ID;"`
 	Building   Building     `gorm:"comment:建物;"`
-	Room       Room         `gorm:"comment:部屋;"`
 	Professors []*Professor `gorm:"many2many:labo_professors; comment:担当教授;"`
 	Students   []*Student   `gorm:"many2many:labo_students; comment:受講生徒;"`
 	Rooms      []*Room      `gorm:"many2many:labo_rooms; comment:教室;"`

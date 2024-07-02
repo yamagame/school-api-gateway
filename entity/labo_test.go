@@ -56,18 +56,12 @@ func TestLaboHasManyCSV(t *testing.T) {
 		return v
 	}
 
-	out := map[string][]map[string]interface{}{}
-	for _, record := range records {
-		key := record[".name"]
-		if _, ok := out[key]; !ok {
-			out[key] = []map[string]interface{}{}
-		}
-		r, err := conv.NewRecordWithMap(record, newMany)
-		assert.NoError(t, err)
-		if v, err := r.GetHasOne("desk"); err == nil {
-			out[key] = append(out[key], v.ValueMap())
-		}
-	}
+	work, err := conv.NewRecordsWithMap(records, newMany)
+	assert.NoError(t, err)
+
+	desks, err := work.MergeRecords("name", "desk", NewLabo)
+	assert.NoError(t, err)
+	out := desks.ValueMap()
 
 	snapshot.Equal(t, out, "test-many.json")
 	// snapshot.Save(t, out, "test-many.json")

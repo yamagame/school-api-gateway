@@ -24,6 +24,11 @@ func (m *Many) ValueMap() []map[string]interface{} {
 	return r
 }
 
+func (m *Many) Append(record *Record) error {
+	m.Records = append(m.Records, record)
+	return nil
+}
+
 func NewRecord() *Record {
 	return &Record{
 		Values:   map[string]*Value{},
