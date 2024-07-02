@@ -6,7 +6,9 @@ import (
 	"github.com/yamagame/school-api-gateway/pkg/conv"
 )
 
-func LaboToInfra(in *conv.Record) (*model.Labo, error) {
+type LaboConv struct{}
+
+func (LaboConv) ToInfra(in *conv.Record) (*model.Labo, error) {
 	out := &model.Labo{}
 	in.ToStruct(".id", ".ID", out, conv.Raw)
 	in.ToStruct(".name", ".Name", out, conv.StrPtr)
@@ -16,10 +18,15 @@ func LaboToInfra(in *conv.Record) (*model.Labo, error) {
 	in.ToStruct(".program.name", ".Program.Name", out, conv.Raw)
 	in.ToStruct(".building.id", ".BuildingID", out, conv.Int32Ptr)
 	in.ToStruct(".building.name", ".Building.Name", out, conv.Raw)
+	if values, err := in.GetHasManyRecords("desk"); err == nil {
+		if desks, err := Desks.ToInfra(values); err == nil {
+			out.Desks = desks
+		}
+	}
 	return out, nil
 }
 
-func LaboToEntity(in *model.Labo) (*conv.Record, error) {
+func (LaboConv) ToEntity(in *model.Labo) (*conv.Record, error) {
 	out := entity.NewLabo()
 	out.FromStruct(".ID", ".id", in, conv.Raw)
 	out.FromStruct(".Name", ".name", in, conv.PtrStr)
@@ -29,5 +36,10 @@ func LaboToEntity(in *model.Labo) (*conv.Record, error) {
 	out.FromStruct(".Program.Name", ".program.name", in, conv.Raw)
 	out.FromStruct(".BuildingID", ".building.id", in, conv.PtrInt32)
 	out.FromStruct(".Building.Name", ".building.name", in, conv.Raw)
+	if len(in.Desks) > 0 {
+		if values, err := Desks.ToEntity(in.Desks); err == nil {
+			out.SetHasManyRecords("desk", values...)
+		}
+	}
 	return out, nil
 }

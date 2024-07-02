@@ -26,9 +26,9 @@ func TestLabo(t *testing.T) {
 			Name: "建物名",
 		},
 	}
-	e, err := infconv.LaboToEntity(m)
+	e, err := infconv.Labo.ToEntity(m)
 	assert.NoError(t, err)
-	s, err := LaboToProto(e)
+	s, err := Labo.ToProto(e)
 	assert.NoError(t, err)
 
 	snapshot.Equal(t, s, "test1.json")

@@ -50,7 +50,7 @@ func (s *Labo) CreateWithMap(ctx context.Context, records []map[string]string) (
 		if err != nil {
 			return zero, err
 		}
-		l, err := infconv.LaboToInfra(labo)
+		l, err := infconv.Labo.ToInfra(labo)
 		if err != nil {
 			return zero, err
 		}
@@ -70,7 +70,7 @@ func (s *Labo) UpdateWithMap(ctx context.Context, records []map[string]string) (
 		if err != nil {
 			return zero, err
 		}
-		l, err := infconv.LaboToInfra(labo)
+		l, err := infconv.Labo.ToInfra(labo)
 		if err != nil {
 			return zero, err
 		}
@@ -149,11 +149,11 @@ func (s *Labo) List(ctx context.Context, limit, offset int32) ([]*school.Labo, e
 func laboToInfra(labos []*school.Labo) ([]*model.Labo, error) {
 	res := []*model.Labo{}
 	for _, labo := range labos {
-		t, err := svcconv.LaboToEntity(labo)
+		t, err := svcconv.Labo.ToEntity(labo)
 		if err != nil {
 			return nil, err
 		}
-		l, err := infconv.LaboToInfra(t)
+		l, err := infconv.Labo.ToInfra(t)
 		if err != nil {
 			return nil, err
 		}
@@ -165,11 +165,11 @@ func laboToInfra(labos []*school.Labo) ([]*model.Labo, error) {
 func laboToProto(labos []*model.Labo) ([]*school.Labo, error) {
 	res := []*school.Labo{}
 	for _, labo := range labos {
-		t, err := infconv.LaboToEntity(labo)
+		t, err := infconv.Labo.ToEntity(labo)
 		if err != nil {
 			return nil, err
 		}
-		l, err := svcconv.LaboToProto(t)
+		l, err := svcconv.Labo.ToProto(t)
 		if err != nil {
 			return nil, err
 		}

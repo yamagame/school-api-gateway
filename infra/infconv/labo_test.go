@@ -1,13 +1,12 @@
 package infconv
 
 import (
-	"encoding/json"
-	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/yamagame/school-api-gateway/infra/model"
 	"github.com/yamagame/school-api-gateway/pkg/conv"
+	"github.com/yamagame/school-api-gateway/pkg/snapshot"
 )
 
 func TestLaboConv(t *testing.T) {
@@ -26,17 +25,18 @@ func TestLaboConv(t *testing.T) {
 		Building: model.Building{
 			Name: "建物名",
 		},
+		Desks: []*model.Desk{
+			{ID: 1, LaboID: 10},
+			{ID: 2, LaboID: 11},
+			{ID: 3, LaboID: 13},
+		},
 	}
-	entity, err := LaboToEntity(in)
+	entity, err := Labo.ToEntity(in)
 	assert.NoError(t, err)
 
-	bytes, err := json.MarshalIndent(entity.ValueMap(), "", "  ")
+	out, err := Labo.ToInfra(entity)
 	assert.NoError(t, err)
-	fmt.Println(string(bytes))
 
-	out, err := LaboToInfra(entity)
-	assert.NoError(t, err)
-	bytes2, err := json.MarshalIndent(out, "", "  ")
-	assert.NoError(t, err)
-	fmt.Println(string(bytes2))
+	snapshot.Equal(t, out, "test1.json")
+	// snapshot.Save(t, out, "test1.json")
 }

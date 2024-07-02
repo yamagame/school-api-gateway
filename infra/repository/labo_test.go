@@ -41,7 +41,7 @@ func TestSchool(t *testing.T) {
 
 	models := []*model.Labo{}
 	for _, entity := range labos {
-		labo, err := infconv.LaboToInfra(entity)
+		labo, err := infconv.Labo.ToInfra(entity)
 		assert.NoError(t, err)
 		models = append(models, labo)
 	}

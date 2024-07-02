@@ -1,0 +1,62 @@
+{
+  "ID": 10,
+  "Name": "名前",
+  "GroupID": 11,
+  "Group": {
+    "ID": 0,
+    "Name": "グループ名",
+    "CreatedAt": null,
+    "UpdatedAt": null
+  },
+  "ProgramID": 12,
+  "Program": {
+    "ID": 0,
+    "Name": "プログラム名",
+    "CreatedAt": null,
+    "UpdatedAt": null
+  },
+  "BuildingID": 12,
+  "Building": {
+    "ID": 0,
+    "Name": "建物名",
+    "Floors": 0,
+    "Aliases": null,
+    "CreatedAt": null,
+    "UpdatedAt": null
+  },
+  "Room": {
+    "ID": 0,
+    "Name": "",
+    "BuildingID": 0,
+    "Building": {
+      "ID": 0,
+      "Name": "",
+      "Floors": 0,
+      "Aliases": null,
+      "CreatedAt": null,
+      "UpdatedAt": null
+    },
+    "Floor": 0,
+    "CreatedAt": null,
+    "UpdatedAt": null
+  },
+  "Professors": null,
+  "Students": null,
+  "Rooms": null,
+  "Desks": [
+    {
+      "ID": 1,
+      "LaboID": 10
+    },
+    {
+      "ID": 2,
+      "LaboID": 11
+    },
+    {
+      "ID": 3,
+      "LaboID": 13
+    }
+  ],
+  "CreatedAt": null,
+  "UpdatedAt": null
+}

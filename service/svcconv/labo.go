@@ -6,7 +6,10 @@ import (
 	"github.com/yamagame/school-api-gateway/proto/school"
 )
 
-func LaboToProto(in *conv.Record) (*school.Labo, error) {
+type LaboConv struct {
+}
+
+func (LaboConv) ToProto(in *conv.Record) (*school.Labo, error) {
 	out := &school.Labo{
 		Group:    &school.Group{},
 		Program:  &school.Program{},
@@ -23,7 +26,7 @@ func LaboToProto(in *conv.Record) (*school.Labo, error) {
 	return out, nil
 }
 
-func LaboToEntity(in *school.Labo) (*conv.Record, error) {
+func (LaboConv) ToEntity(in *school.Labo) (*conv.Record, error) {
 	out := entity.NewLabo()
 	out.FromStruct(".Id", ".id", in, conv.Raw)
 	out.FromStruct(".Name", ".name", in, conv.Raw)

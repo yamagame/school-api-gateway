@@ -2,6 +2,14 @@ package conv
 
 type Records []*Record
 
+func NewRecords() *Records {
+	return &Records{}
+}
+
+func (f *Records) Append(record *Record) {
+	*f = append(*f, record)
+}
+
 func (f *Records) ValueMap() []map[string]interface{} {
 	r := []map[string]interface{}{}
 	for _, v := range *f {

@@ -180,7 +180,7 @@ func TestRecordUpdates(t *testing.T) {
 	rec.SetValue("value3", 1.234)
 	rec.SetHasOne("value4", one1)
 	rec.SetHasOne("value5", one2)
-	rec.SetHasMany("value6", many1, many2)
+	rec.SetHasManyRecords("value6", many1, many2)
 
 	m1 := rec.Updates()
 	fmt.Println(m1)

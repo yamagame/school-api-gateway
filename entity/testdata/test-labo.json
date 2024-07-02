@@ -1,0 +1,53 @@
+[
+  {
+    "building": {
+      "id": 7,
+      "name": ""
+    },
+    "desk": [],
+    "group": {
+      "id": 1,
+      "name": "A"
+    },
+    "id": 0,
+    "name": "佐藤",
+    "program": {
+      "id": 4,
+      "name": ""
+    }
+  },
+  {
+    "building": {
+      "id": 8,
+      "name": ""
+    },
+    "desk": [],
+    "group": {
+      "id": 2,
+      "name": "A"
+    },
+    "id": 0,
+    "name": "清水",
+    "program": {
+      "id": 5,
+      "name": ""
+    }
+  },
+  {
+    "building": {
+      "id": 9,
+      "name": ""
+    },
+    "desk": [],
+    "group": {
+      "id": 3,
+      "name": "A"
+    },
+    "id": 0,
+    "name": "鈴木",
+    "program": {
+      "id": 6,
+      "name": ""
+    }
+  }
+]

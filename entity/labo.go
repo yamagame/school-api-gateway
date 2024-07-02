@@ -11,5 +11,6 @@ func NewLabo() *conv.Record {
 	v.SetHasOne("group", NewGroup())
 	v.SetHasOne("program", NewProgram())
 	v.SetHasOne("building", NewBuilding())
+	v.SetHasMany("desk", NewDesk())
 	return v
 }
