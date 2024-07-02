@@ -6,17 +6,19 @@ import (
 )
 
 type Record struct {
-	Error    error
-	Values   map[string]*Value
-	HasOnes  map[string]*Record
-	HasManys map[string]*Many
+	Error     error
+	Values    map[string]*Value
+	BelongTos map[string]*Record
+	HasOnes   map[string]*Record
+	HasManys  map[string]*Many
 }
 
 func NewRecord() *Record {
 	return &Record{
-		Values:   map[string]*Value{},
-		HasOnes:  map[string]*Record{},
-		HasManys: map[string]*Many{},
+		Values:    map[string]*Value{},
+		BelongTos: map[string]*Record{},
+		HasOnes:   map[string]*Record{},
+		HasManys:  map[string]*Many{},
 	}
 }
 
@@ -97,6 +99,14 @@ func (m *Record) SetValue(key string, val interface{}) *Record {
 	return m
 }
 
+func (m *Record) SetBelongTo(key string, record *Record) *Record {
+	if m.Error != nil {
+		return m
+	}
+	m.BelongTos[key] = record
+	return m
+}
+
 func (m *Record) SetHasOne(key string, record *Record) *Record {
 	if m.Error != nil {
 		return m
@@ -127,6 +137,15 @@ func (m *Record) GetValue(key string) (interface{}, error) {
 	if v, ok := m.Values[key]; ok {
 		if reflect.TypeOf(v) == reflect.TypeOf(&Value{}) {
 			return v.Get(), nil
+		}
+	}
+	return nil, ErrNotFound
+}
+
+func (m *Record) GetBelongTo(key string) (*Record, error) {
+	if v, ok := m.BelongTos[key]; ok {
+		if reflect.TypeOf(v) == reflect.TypeOf(&Record{}) {
+			return v, nil
 		}
 	}
 	return nil, ErrNotFound
@@ -225,6 +244,9 @@ func (m *Record) ValueMap() map[string]interface{} {
 	for key, v := range m.Values {
 		ret[key] = v.Get()
 	}
+	for key, v := range m.BelongTos {
+		ret[key] = v.ValueMap()
+	}
 	for key, v := range m.HasOnes {
 		ret[key] = v.ValueMap()
 	}
@@ -242,6 +264,9 @@ func (m *Record) allValues() map[string]interface{} {
 	ret := map[string]interface{}{}
 	for key, v := range m.Values {
 		ret[key] = v
+	}
+	for key, v := range m.BelongTos {
+		ret[key] = v.allValues()
 	}
 	for key, v := range m.HasOnes {
 		ret[key] = v.allValues()
@@ -261,6 +286,9 @@ func (m *Record) allHasOne() map[string]interface{} {
 	for key, v := range m.Values {
 		ret[key] = v
 	}
+	for key, v := range m.BelongTos {
+		ret[key] = v
+	}
 	for key, v := range m.HasOnes {
 		ret[key] = v
 	}
@@ -278,6 +306,9 @@ func (m *Record) allMany() map[string]interface{} {
 	ret := map[string]interface{}{}
 	for key, v := range m.Values {
 		ret[key] = v
+	}
+	for key, v := range m.BelongTos {
+		ret[key] = v.allMany()
 	}
 	for key, v := range m.HasOnes {
 		ret[key] = v.allMany()
@@ -350,9 +381,10 @@ func (m *Record) FromStruct(src, dst string, data interface{}, conv func(v inter
 
 func (m *Record) Updates() map[string]interface{} {
 	ret1 := m.UpdateValues()
-	ret2 := m.UpdateHasOnes()
-	ret3 := m.UpdateHasManyes()
-	return MergeMap(ret1, ret2, ret3)
+	ret2 := m.UpdateBelongTos()
+	ret3 := m.UpdateHasOnes()
+	ret4 := m.UpdateHasManyes()
+	return MergeMap(ret1, ret2, ret3, ret4)
 }
 
 func (m *Record) UpdateValues() map[string]interface{} {
@@ -360,6 +392,17 @@ func (m *Record) UpdateValues() map[string]interface{} {
 	for key, v := range m.Values {
 		if !v.IsSynced() && v.IsExist() {
 			ret[key] = v.Get()
+		}
+	}
+	return ret
+}
+
+func (m *Record) UpdateBelongTos() map[string]interface{} {
+	ret := map[string]interface{}{}
+	for key, v := range m.BelongTos {
+		t := v.Updates()
+		if len(t) > 0 {
+			ret[key] = t
 		}
 	}
 	return ret

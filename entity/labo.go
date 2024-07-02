@@ -8,9 +8,9 @@ func NewLabo() *conv.Record {
 	v := conv.NewRecord().
 		SetValue("id", int32(0)).
 		SetValue("name", "").
-		SetHasOne("group", NewGroup()).
-		SetHasOne("program", NewProgram()).
-		SetHasOne("building", NewBuilding()).
+		SetBelongTo("group", NewGroup()).
+		SetBelongTo("program", NewProgram()).
+		SetBelongTo("building", NewBuilding()).
 		SetHasMany("desk", NewDesk())
 	return v
 }
