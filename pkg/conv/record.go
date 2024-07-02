@@ -356,26 +356,35 @@ func (m *Record) setVal(template string, val interface{}) error {
 	return SetVal(data, template, val)
 }
 
-func (m *Record) ToStruct(src, dst string, data interface{}, conv func(v interface{}) interface{}) error {
+func (m *Record) ToStruct(src, dst string, data interface{}, conv func(v interface{}) interface{}) *Record {
+	if m.Error != nil {
+		return m
+	}
 	if value, err := m.Value(src); err == nil {
 		if value.IsExist() {
-			return SetVal(data, dst, conv(value.Get()))
+			m.Error = SetVal(data, dst, conv(value.Get()))
 		}
-		return nil
+		return m
 	}
-	return ErrNotFound
+	m.Error = ErrNotFound
+	return m
 }
 
-func (m *Record) FromStruct(src, dst string, data interface{}, conv func(v interface{}) interface{}) error {
+func (m *Record) FromStruct(src, dst string, data interface{}, conv func(v interface{}) interface{}) *Record {
+	if m.Error != nil {
+		return m
+	}
 	if v, err := GetVal(data, src); err == nil {
 		value := reflect.ValueOf(v)
 		if value.Kind() == reflect.Ptr && value.IsNil() {
 			return nil
 		}
 		t := conv(v)
-		return m.Set(dst, t).Error
+		m.Error = m.Set(dst, t).Error
+		return m
 	}
-	return ErrNotFound
+	m.Error = ErrNotFound
+	return m
 }
 
 func (m *Record) Updates() map[string]interface{} {

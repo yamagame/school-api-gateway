@@ -24,22 +24,6 @@
     "CreatedAt": null,
     "UpdatedAt": null
   },
-  "Room": {
-    "ID": 0,
-    "Name": "",
-    "BuildingID": 0,
-    "Building": {
-      "ID": 0,
-      "Name": "",
-      "Floors": 0,
-      "Aliases": null,
-      "CreatedAt": null,
-      "UpdatedAt": null
-    },
-    "Floor": 0,
-    "CreatedAt": null,
-    "UpdatedAt": null
-  },
   "Professors": null,
   "Students": null,
   "Rooms": null,
