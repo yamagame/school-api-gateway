@@ -1,6 +1,7 @@
 package conv
 
 type Many struct {
+	Error   error
 	Model   *Record
 	Records []*Record
 }
@@ -13,14 +14,20 @@ func (m *Many) ValueMap() []map[string]interface{} {
 	return r
 }
 
-func (m *Many) Append(record *Record) error {
-	m.Records = append(m.Records, record)
-	return nil
+func (m *Many) Append(records ...*Record) *Many {
+	if m.Error != nil {
+		return m
+	}
+	m.Records = append(m.Records, records...)
+	return m
 }
 
-func (m *Many) Clear() error {
+func (m *Many) Clear() *Many {
+	if m.Error != nil {
+		return m
+	}
 	m.Records = []*Record{}
-	return nil
+	return m
 }
 
 func (m *Many) NewOne() *Record {

@@ -14,5 +14,5 @@ func NewPerson() *conv.Record {
 		SetValue("address", NewAddress()).
 		SetValue("student", NewStudent()).
 		SetValue("professor", NewProfessor()).
-		SetHasMany("licenses", NewLicnese())
+		SetHasMany("licenses", conv.NewMany(NewLicnese()))
 }

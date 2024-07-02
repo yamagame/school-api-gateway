@@ -11,6 +11,6 @@ func NewLabo() *conv.Record {
 		SetBelongTo("group", NewGroup()).
 		SetBelongTo("program", NewProgram()).
 		SetBelongTo("building", NewBuilding()).
-		SetHasMany("desk", NewDesk())
+		SetHasMany("desk", conv.NewMany(NewDesk()))
 	return v
 }

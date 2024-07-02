@@ -115,11 +115,11 @@ func (m *Record) SetHasOne(key string, record *Record) *Record {
 	return m
 }
 
-func (m *Record) SetHasMany(key string, record *Record) *Record {
+func (m *Record) SetHasMany(key string, many *Many) *Record {
 	if m.Error != nil {
 		return m
 	}
-	m.HasManys[key] = NewMany(record)
+	m.HasManys[key] = many
 	return m
 }
 
@@ -128,7 +128,7 @@ func (m *Record) SetHasManyRecords(key string, records ...*Record) *Record {
 		return m
 	}
 	if v, ok := m.HasManys[key]; ok {
-		v.Records = records
+		v.Append(records...)
 	}
 	return m
 }
@@ -335,8 +335,7 @@ func (m *Record) Copy() *Record {
 			for _, v := range m.Records {
 				values = append(values, v.Copy())
 			}
-			r.SetHasMany(key, m.Model.Copy())
-			r.SetHasManyRecords(key, values...)
+			r.SetHasMany(key, NewMany(m.Model.Copy()).Append(values...))
 		}
 	}
 	return r
