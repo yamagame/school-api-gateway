@@ -10,8 +10,10 @@ type LaboConv struct{}
 
 func (LaboConv) ToInfra(in *conv.Record) (*model.Labo, error) {
 	out := &model.Labo{}
-	if err := in.ToStruct(".id", ".ID", out, conv.Raw).
+	if err := in.
+		ToStruct(".id", ".ID", out, conv.Raw).
 		ToStruct(".name", ".Name", out, conv.StrPtr).
+		ToStruct(".url", ".URL", out, conv.StrPtr).
 		ToStruct(".group.id", ".GroupID", out, conv.Int32Ptr).
 		ToStruct(".group.name", ".Group.Name", out, conv.Raw).
 		ToStruct(".program.id", ".ProgramID", out, conv.Int32Ptr).
@@ -30,8 +32,10 @@ func (LaboConv) ToInfra(in *conv.Record) (*model.Labo, error) {
 
 func (LaboConv) ToEntity(in *model.Labo) (*conv.Record, error) {
 	out := entity.NewLabo()
-	if err := out.FromStruct(".ID", ".id", in, conv.Raw).
+	if err := out.
+		FromStruct(".ID", ".id", in, conv.Raw).
 		FromStruct(".Name", ".name", in, conv.PtrStr).
+		FromStruct(".URL", ".url", in, conv.PtrStr).
 		FromStruct(".GroupID", ".group.id", in, conv.PtrInt32).
 		FromStruct(".Group.Name", ".group.name", in, conv.Raw).
 		FromStruct(".ProgramID", ".program.id", in, conv.PtrInt32).

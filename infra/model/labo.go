@@ -5,6 +5,7 @@ import "time"
 type Labo struct {
 	ID         int32        `gorm:"primary; comment:主キーの標準フィールド;"`
 	Name       *string      `gorm:"type:varchar(255); comment:研究室の名前;"`
+	URL        *string      `gorm:"type:varchar(255); comment:研究室のURL;"`
 	GroupID    *int32       `gorm:"comment:専門領域ID;"`
 	Group      Group        `gorm:"comment:専門領域;"`
 	ProgramID  *int32       `gorm:"comment:プログラムID;"`

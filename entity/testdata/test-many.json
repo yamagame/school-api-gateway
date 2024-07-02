@@ -27,7 +27,8 @@
     "program": {
       "id": 0,
       "name": ""
-    }
+    },
+    "url": ""
   },
   {
     "building": {
@@ -57,7 +58,8 @@
     "program": {
       "id": 0,
       "name": ""
-    }
+    },
+    "url": ""
   },
   {
     "building": {
@@ -87,6 +89,7 @@
     "program": {
       "id": 0,
       "name": ""
-    }
+    },
+    "url": ""
   }
 ]

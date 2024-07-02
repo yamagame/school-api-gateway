@@ -8,6 +8,7 @@ func NewLabo() *conv.Record {
 	v := conv.NewRecord().
 		SetValue("id", int32(0)).
 		SetValue("name", "").
+		SetValue("url", "").
 		SetBelongTo("group", NewGroup()).
 		SetBelongTo("program", NewProgram()).
 		SetBelongTo("building", NewBuilding()).

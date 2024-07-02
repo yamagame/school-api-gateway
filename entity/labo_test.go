@@ -86,3 +86,17 @@ func TestLaboHasManyCSV(t *testing.T) {
 	snapshot.Equal(t, out, "test-many.json")
 	// snapshot.Save(t, out, "test-many.json")
 }
+
+func TestLaboFillCSV(t *testing.T) {
+	// テストデータ準備
+	fp, _ := os.Open("./testdata/test-fill.csv")
+	defer fp.Close()
+
+	records, err := conv.ReadCSV(fp)
+	assert.NoError(t, err)
+
+	out := records
+
+	snapshot.Equal(t, out, "test-fill.json")
+	// snapshot.Save(t, out, "test-fill.json")
+}
