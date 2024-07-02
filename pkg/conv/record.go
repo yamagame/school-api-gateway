@@ -11,24 +11,6 @@ type Record struct {
 	HasManys map[string]*Many
 }
 
-type Many struct {
-	Model   *Record
-	Records []*Record
-}
-
-func (m *Many) ValueMap() []map[string]interface{} {
-	r := []map[string]interface{}{}
-	for _, v := range m.Records {
-		r = append(r, v.ValueMap())
-	}
-	return r
-}
-
-func (m *Many) Append(record *Record) error {
-	m.Records = append(m.Records, record)
-	return nil
-}
-
 func NewRecord() *Record {
 	return &Record{
 		Values:   map[string]*Value{},
@@ -176,7 +158,7 @@ func (m *Record) Value(jsonpath string) (*Value, error) {
 }
 
 func (m *Record) HasOne(jsonpath string) (*Record, error) {
-	values := m.allValues()
+	values := m.allHasOne()
 	if v, err := GetVal(values, jsonpath); err == nil {
 		if reflect.TypeOf(v) == reflect.TypeOf(&Record{}) {
 			field := v.(*Record)
@@ -186,12 +168,12 @@ func (m *Record) HasOne(jsonpath string) (*Record, error) {
 	return nil, ErrNotFound
 }
 
-func (m *Record) HasMany(jsonpath string) ([]*Record, error) {
-	values := m.allValues()
+func (m *Record) HasMany(jsonpath string) (*Many, error) {
+	values := m.allMany()
 	if v, err := GetVal(values, jsonpath); err == nil {
 		if reflect.TypeOf(v) == reflect.TypeOf(&Many{}) {
 			field := v.(*Many)
-			return field.Records, nil
+			return field, nil
 		}
 	}
 	return nil, ErrNotFound
@@ -212,8 +194,11 @@ func (m *Record) Update(jsonpath string, val interface{}) error {
 }
 
 func (m *Record) Get(jsonpath string) (interface{}, error) {
-	if val, err := m.getVal(jsonpath); err == nil {
-		return val.(*Value).Get(), nil
+	if v, err := m.getVal(jsonpath); err == nil {
+		if reflect.TypeOf(v) == reflect.TypeOf(&Value{}) {
+			return v.(*Value).Get(), nil
+		}
+		return v, nil
 	}
 	return nil, ErrNotFound
 }
@@ -254,6 +239,38 @@ func (m *Record) allValues() map[string]interface{} {
 	return ret
 }
 
+func (m *Record) allHasOne() map[string]interface{} {
+	ret := map[string]interface{}{}
+	for key, v := range m.Values {
+		ret[key] = v
+	}
+	for key, v := range m.HasOnes {
+		ret[key] = v
+	}
+	for key, v := range m.HasManys {
+		m := []map[string]interface{}{}
+		for _, t := range v.Records {
+			m = append(m, t.allHasOne())
+		}
+		ret[key] = m
+	}
+	return ret
+}
+
+func (m *Record) allMany() map[string]interface{} {
+	ret := map[string]interface{}{}
+	for key, v := range m.Values {
+		ret[key] = v
+	}
+	for key, v := range m.HasOnes {
+		ret[key] = v.allMany()
+	}
+	for key, v := range m.HasManys {
+		ret[key] = v
+	}
+	return ret
+}
+
 func (m *Record) Copy() *Record {
 	r := NewRecord()
 	values := m.allValues()
@@ -279,6 +296,11 @@ func (m *Record) Copy() *Record {
 
 func (m *Record) getVal(template string) (interface{}, error) {
 	data := m.allValues()
+	return GetVal(data, template)
+}
+
+func (m *Record) getMany(template string) (interface{}, error) {
+	data := m.allMany()
 	return GetVal(data, template)
 }
 

@@ -18,41 +18,80 @@ func NewRecordsWithMap(records []map[string]string, factory func() *Record) (*Re
 	return work, nil
 }
 
+func (f *Records) Take(jsonpath string, val interface{}) (*Record, error) {
+	for _, record := range *f {
+		got, err := record.Get(jsonpath)
+		if err != nil {
+			return nil, err
+		}
+		if got == val {
+			return record, nil
+		}
+	}
+	return nil, ErrNotFound
+}
+
+func (f *Records) Find(jsonpath string, val interface{}) ([]*Record, error) {
+	ret := []*Record{}
+	for _, record := range *f {
+		got, err := record.Get(jsonpath)
+		if err != nil {
+			return nil, err
+		}
+		if got == val {
+			ret = append(ret, record)
+		}
+	}
+	return ret, nil
+}
+
+func (f *Records) Uniq(jsonpath string) ([]interface{}, error) {
+	isExist := func(ret []interface{}, val interface{}) bool {
+		for _, r := range ret {
+			if r == val {
+				return true
+			}
+		}
+		return false
+	}
+	ret := []interface{}{}
+	for _, record := range *f {
+		got, err := record.Get(jsonpath)
+		if err != nil {
+			return nil, err
+		}
+		if !isExist(ret, got) {
+			ret = append(ret, got)
+		}
+	}
+	return ret, nil
+}
+
 func (f *Records) Append(record *Record) {
 	*f = append(*f, record)
 }
 
-func (f *Records) PickRecords(key, valkey string) ([]string, map[string]*Records, error) {
-	keys := []string{}
-	ret := map[string]*Records{}
-	for _, record := range *f {
-		if v, err := record.GetValue(key); err == nil {
-			key := v.(string)
-			if _, ok := ret[key]; !ok {
-				ret[key] = NewRecords()
-				keys = append(keys, key)
-			}
-			if f, err := record.GetHasOne(valkey); err == nil {
-				ret[key].Append(f)
-			}
+func (f *Records) MergeRecords(records *Records, pkpath, valpath string) error {
+	for _, record := range *records {
+		pk, err := record.Get(pkpath)
+		if err != nil {
+			return err
 		}
-	}
-	return keys, ret, nil
-}
-
-func (f *Records) MergeRecords(headkey, bodykey string, factory func() *Record) (*Records, error) {
-	keys, body, err := f.PickRecords(headkey, bodykey)
-	if err != nil {
-		return nil, err
-	}
-	records := NewRecords()
-	for _, key := range keys {
-		record := factory()
-		record.SetValue(headkey, key)
-		record.SetHasManyRecords(bodykey, *body[key]...)
+		record, err := record.HasOne(valpath)
+		if err != nil {
+			return err
+		}
+		target, err := f.Take(pkpath, pk)
+		if err != nil {
+			return err
+		}
+		records, err := target.HasMany(valpath)
+		if err != nil {
+			return err
+		}
 		records.Append(record)
 	}
-	return records, nil
+	return nil
 }
 
 func (f *Records) ValueMap() []map[string]interface{} {

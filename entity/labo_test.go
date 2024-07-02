@@ -21,6 +21,17 @@ func TestLabo(t *testing.T) {
 	val, err = labo.Get(".name")
 	assert.NoError(t, err)
 	assert.Equal(t, "名前", val)
+
+	desks, err := labo.HasMany(".desk")
+	assert.NoError(t, err)
+
+	desks.NewOne().Set(".id", int32(11))
+	desks.NewOne().Set(".id", int32(12))
+	desks.NewOne().Set(".id", int32(13))
+
+	out := labo.ValueMap()
+	snapshot.Equal(t, out, "test-labo1.json")
+	// snapshot.Save(t, out, "test-labo1.json")
 }
 
 func TestLaboCSV(t *testing.T) {
@@ -43,6 +54,7 @@ func TestLaboCSV(t *testing.T) {
 }
 
 func TestLaboHasManyCSV(t *testing.T) {
+	// テストデータ準備
 	fp, _ := os.Open("./testdata/test-many.csv")
 	defer fp.Close()
 
@@ -55,13 +67,24 @@ func TestLaboHasManyCSV(t *testing.T) {
 		v.SetHasOne("desk", NewDesk())
 		return v
 	}
-
 	work, err := conv.NewRecordsWithMap(records, newMany)
 	assert.NoError(t, err)
 
-	desks, err := work.MergeRecords("name", "desk", NewLabo)
+	// laboテーブル準備
+	names, err := work.Uniq(".name")
 	assert.NoError(t, err)
-	out := desks.ValueMap()
+	labos := conv.NewRecords()
+	for _, name := range names {
+		labo := NewLabo()
+		labo.Set(".name", name)
+		labos.Append(labo)
+	}
+
+	// マージ
+	err = labos.MergeRecords(work, ".name", ".desk")
+	assert.NoError(t, err)
+
+	out := labos.ValueMap()
 
 	snapshot.Equal(t, out, "test-many.json")
 	// snapshot.Save(t, out, "test-many.json")

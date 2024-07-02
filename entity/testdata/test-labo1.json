@@ -1,0 +1,30 @@
+{
+  "building": {
+    "id": 0,
+    "name": ""
+  },
+  "desk": [
+    {
+      "id": 11,
+      "labo_id": 0
+    },
+    {
+      "id": 12,
+      "labo_id": 0
+    },
+    {
+      "id": 13,
+      "labo_id": 0
+    }
+  ],
+  "group": {
+    "id": 0,
+    "name": ""
+  },
+  "id": 0,
+  "name": "名前",
+  "program": {
+    "id": 0,
+    "name": ""
+  }
+}
