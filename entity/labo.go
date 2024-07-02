@@ -5,12 +5,12 @@ import (
 )
 
 func NewLabo() *conv.Record {
-	v := conv.NewRecord()
-	v.SetValue("id", int32(0))
-	v.SetValue("name", "")
-	v.SetHasOne("group", NewGroup())
-	v.SetHasOne("program", NewProgram())
-	v.SetHasOne("building", NewBuilding())
-	v.SetHasMany("desk", NewDesk())
+	v := conv.NewRecord().
+		SetValue("id", int32(0)).
+		SetValue("name", "").
+		SetHasOne("group", NewGroup()).
+		SetHasOne("program", NewProgram()).
+		SetHasOne("building", NewBuilding()).
+		SetHasMany("desk", NewDesk())
 	return v
 }

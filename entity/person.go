@@ -7,13 +7,12 @@ import (
 )
 
 func NewPerson() *conv.Record {
-	v := conv.NewRecord()
-	v.SetValue("id", int32(0))
-	v.SetValue("name", "")
-	v.SetValue("birthday", time.Now())
-	v.SetValue("address", NewAddress())
-	v.SetValue("student", NewStudent())
-	v.SetValue("professor", NewProfessor())
-	v.SetHasMany("licenses", NewLicnese())
-	return v
+	return conv.NewRecord().
+		SetValue("id", int32(0)).
+		SetValue("name", "").
+		SetValue("birthday", time.Now()).
+		SetValue("address", NewAddress()).
+		SetValue("student", NewStudent()).
+		SetValue("professor", NewProfessor()).
+		SetHasMany("licenses", NewLicnese())
 }

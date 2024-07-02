@@ -6,6 +6,7 @@ import (
 )
 
 type Record struct {
+	Error    error
 	Values   map[string]*Value
 	HasOnes  map[string]*Record
 	HasManys map[string]*Many
@@ -81,7 +82,7 @@ func NewRecordWithMap(field map[string]string, factory func() *Record) (*Record,
 		if err != nil {
 			return nil, err
 		}
-		if err := newone.Set(key, strTo(v, val)); err != nil {
+		if err := newone.Set(key, strTo(v, val)).Error; err != nil {
 			return nil, err
 		}
 	}
@@ -89,21 +90,33 @@ func NewRecordWithMap(field map[string]string, factory func() *Record) (*Record,
 }
 
 func (m *Record) SetValue(key string, val interface{}) *Record {
+	if m.Error != nil {
+		return m
+	}
 	m.Values[key] = NewValue(key, val)
 	return m
 }
 
 func (m *Record) SetHasOne(key string, record *Record) *Record {
+	if m.Error != nil {
+		return m
+	}
 	m.HasOnes[key] = record
 	return m
 }
 
 func (m *Record) SetHasMany(key string, record *Record) *Record {
+	if m.Error != nil {
+		return m
+	}
 	m.HasManys[key] = NewMany(record)
 	return m
 }
 
 func (m *Record) SetHasManyRecords(key string, records ...*Record) *Record {
+	if m.Error != nil {
+		return m
+	}
 	if v, ok := m.HasManys[key]; ok {
 		v.Records = records
 	}
@@ -179,18 +192,22 @@ func (m *Record) HasMany(jsonpath string) (*Many, error) {
 	return nil, ErrNotFound
 }
 
-func (m *Record) Set(jsonpath string, val interface{}) error {
+func (m *Record) Set(jsonpath string, val interface{}) *Record {
 	if v, err := m.getVal(jsonpath); err == nil {
-		return v.(*Value).Set(val)
+		m.Error = v.(*Value).Set(val)
+	} else {
+		m.Error = ErrNotFound
 	}
-	return ErrNotFound
+	return m
 }
 
-func (m *Record) Update(jsonpath string, val interface{}) error {
+func (m *Record) Update(jsonpath string, val interface{}) *Record {
 	if v, err := m.getVal(jsonpath); err == nil {
-		return v.(*Value).Update(val)
+		m.Error = v.(*Value).Update(val)
+	} else {
+		m.Error = ErrNotFound
 	}
-	return ErrNotFound
+	return m
 }
 
 func (m *Record) Get(jsonpath string) (interface{}, error) {
@@ -326,7 +343,7 @@ func (m *Record) FromStruct(src, dst string, data interface{}, conv func(v inter
 			return nil
 		}
 		t := conv(v)
-		return m.Set(dst, t)
+		return m.Set(dst, t).Error
 	}
 	return ErrNotFound
 }

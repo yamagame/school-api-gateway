@@ -3,8 +3,7 @@ package entity
 import "github.com/yamagame/school-api-gateway/pkg/conv"
 
 func NewGroup() *conv.Record {
-	v := conv.NewRecord()
-	v.SetValue("id", int32(0))
-	v.SetValue("name", "")
-	return v
+	return conv.NewRecord().
+		SetValue("id", int32(0)).
+		SetValue("name", "")
 }

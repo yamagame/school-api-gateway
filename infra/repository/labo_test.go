@@ -19,19 +19,19 @@ func TestSchool(t *testing.T) {
 	db := infra.DB()
 	repo := NewLabo(db)
 	labo1 := entity.NewLabo()
-	err = labo1.Set(".id", int32(1))
+	err = labo1.Set(".id", int32(1)).Error
 	assert.NoError(t, err)
-	err = labo1.Set(".name", "サトウ")
+	err = labo1.Set(".name", "サトウ").Error
 	assert.NoError(t, err)
 	labo2 := entity.NewLabo()
-	err = labo2.Set(".id", int32(2))
+	err = labo2.Set(".id", int32(2)).Error
 	assert.NoError(t, err)
-	err = labo2.Set(".name", "シミズ")
+	err = labo2.Set(".name", "シミズ").Error
 	assert.NoError(t, err)
 	labo3 := entity.NewLabo()
-	err = labo3.Set(".id", int32(0))
+	err = labo3.Set(".id", int32(0)).Error
 	assert.NoError(t, err)
-	err = labo3.Set(".name", "スズキ")
+	err = labo3.Set(".name", "スズキ").Error
 	assert.NoError(t, err)
 	labos := []*conv.Record{
 		labo1,

@@ -16,7 +16,7 @@ func TestLabo(t *testing.T) {
 	val, err = labo.Get(".name")
 	assert.NoError(t, err)
 	assert.Equal(t, "", val)
-	err = labo.Set(".name", "名前")
+	err = labo.Set(".name", "名前").Error
 	assert.NoError(t, err)
 	val, err = labo.Get(".name")
 	assert.NoError(t, err)
@@ -62,10 +62,9 @@ func TestLaboHasManyCSV(t *testing.T) {
 	assert.NoError(t, err)
 
 	newMany := func() *conv.Record {
-		v := conv.NewRecord()
-		v.SetValue("name", "")
-		v.SetHasOne("desk", NewDesk())
-		return v
+		return conv.NewRecord().
+			SetValue("name", "").
+			SetHasOne("desk", NewDesk())
 	}
 	work, err := conv.NewRecordsWithMap(records, newMany)
 	assert.NoError(t, err)
@@ -75,9 +74,7 @@ func TestLaboHasManyCSV(t *testing.T) {
 	assert.NoError(t, err)
 	labos := conv.NewRecords()
 	for _, name := range names {
-		labo := NewLabo()
-		labo.Set(".name", name)
-		labos.Append(labo)
+		labos.Append(NewLabo().Set(".name", name))
 	}
 
 	// マージ
