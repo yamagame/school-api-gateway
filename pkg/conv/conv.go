@@ -8,6 +8,21 @@ import (
 	"k8s.io/client-go/util/jsonpath"
 )
 
+func Exist[T comparable](src []T, val T) bool {
+	for _, v := range src {
+		if v == val {
+			return true
+		}
+	}
+	return false
+}
+
+func Copy[T any](src []T) []T {
+	v := make([]T, len(src))
+	copy(v, src)
+	return v
+}
+
 func ToPtr[T any](v T) *T {
 	a := v
 	return &a

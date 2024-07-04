@@ -30,6 +30,17 @@ func (m *Many) Clear() *Many {
 	return m
 }
 
+func (m *Many) Copy() *Many {
+	r := &Many{}
+	r.Error = m.Error
+	r.Model = m.Model.Copy()
+	r.Records = []*Record{}
+	for _, v := range m.Records {
+		r.Records = append(r.Records, v.Copy())
+	}
+	return r
+}
+
 func (m *Many) NewOne() *Record {
 	r := m.Model.Copy()
 	m.Records = append(m.Records, r)

@@ -8,12 +8,17 @@ import (
 	kjson "sigs.k8s.io/json"
 )
 
+const (
+	PRIMARY = "PRIMARY"
+)
+
 type Value struct {
 	key       string
 	protected bool
 	value     interface{}
 	exist     bool
 	synced    bool
+	primary   bool
 }
 
 type valueInternal struct {
@@ -22,13 +27,15 @@ type valueInternal struct {
 	Value     interface{}
 	Exist     bool
 	Synced    bool
+	Primary   bool
 }
 
-func NewValue(key string, val interface{}) *Value {
+func NewValue(key string, val interface{}, options ...string) *Value {
 	return &Value{
 		key:       key,
 		protected: false,
 		value:     val,
+		primary:   Exist(options, PRIMARY),
 	}
 }
 
@@ -39,8 +46,13 @@ func (x *Value) Copy() *Value {
 		value:     x.value,
 		exist:     x.exist,
 		synced:    x.synced,
+		primary:   x.primary,
 	}
 	return v
+}
+
+func (x *Value) IsPrimary() bool {
+	return x.primary
 }
 
 func (x *Value) IsExist() bool {

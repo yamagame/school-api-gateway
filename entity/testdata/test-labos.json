@@ -1,0 +1,95 @@
+[
+  {
+    "building": {
+      "id": 0,
+      "name": ""
+    },
+    "desk": [
+      {
+        "id": 1,
+        "labo_id": 0
+      },
+      {
+        "id": 2,
+        "labo_id": 0
+      },
+      {
+        "id": 3,
+        "labo_id": 0
+      }
+    ],
+    "group": {
+      "id": 0,
+      "name": ""
+    },
+    "id": 0,
+    "name": "佐藤",
+    "program": {
+      "id": 0,
+      "name": ""
+    },
+    "url": "https://www.sato-labo.com"
+  },
+  {
+    "building": {
+      "id": 0,
+      "name": ""
+    },
+    "desk": [
+      {
+        "id": 4,
+        "labo_id": 0
+      },
+      {
+        "id": 5,
+        "labo_id": 0
+      },
+      {
+        "id": 6,
+        "labo_id": 0
+      }
+    ],
+    "group": {
+      "id": 0,
+      "name": ""
+    },
+    "id": 0,
+    "name": "清水",
+    "program": {
+      "id": 0,
+      "name": ""
+    },
+    "url": "https://www.shimizu-labo.com"
+  },
+  {
+    "building": {
+      "id": 0,
+      "name": ""
+    },
+    "desk": [
+      {
+        "id": 7,
+        "labo_id": 0
+      },
+      {
+        "id": 9,
+        "labo_id": 0
+      },
+      {
+        "id": 9,
+        "labo_id": 0
+      }
+    ],
+    "group": {
+      "id": 0,
+      "name": ""
+    },
+    "id": 0,
+    "name": "鈴木",
+    "program": {
+      "id": 0,
+      "name": ""
+    },
+    "url": "https://www.suzuki-labo.com"
+  }
+]

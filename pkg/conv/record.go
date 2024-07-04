@@ -91,11 +91,21 @@ func NewRecordWithMap(field map[string]string, factory func() *Record) (*Record,
 	return newone, nil
 }
 
-func (m *Record) SetValue(key string, val interface{}) *Record {
+func (m *Record) PrimaryKeys() []string {
+	r := []string{}
+	for k, v := range m.Values {
+		if v.IsPrimary() {
+			r = append(r, k)
+		}
+	}
+	return r
+}
+
+func (m *Record) SetValue(key string, val interface{}, options ...string) *Record {
 	if m.Error != nil {
 		return m
 	}
-	m.Values[key] = NewValue(key, val)
+	m.Values[key] = NewValue(key, val, options...)
 	return m
 }
 
@@ -321,24 +331,42 @@ func (m *Record) allMany() map[string]interface{} {
 
 func (m *Record) Copy() *Record {
 	r := NewRecord()
-	values := m.allValues()
-	for key, val := range values {
-		switch reflect.TypeOf(val) {
-		case reflect.TypeOf(&Value{}):
-			r.Values[key] = val.(*Value).Copy()
-		case reflect.TypeOf(&Record{}):
-			field := val.(*Record).Copy()
-			r.SetHasOne(key, field)
-		case reflect.TypeOf(&Many{}):
-			m := val.(*Many)
-			values := []*Record{}
-			for _, v := range m.Records {
-				values = append(values, v.Copy())
-			}
-			r.SetHasMany(key, NewMany(m.Model.Copy()).Append(values...))
-		}
+	if m.Error != nil {
+		r.Error = m.Error
+		return r
+	}
+	for key, v := range m.Values {
+		r.Values[key] = v.Copy()
+	}
+	for key, v := range m.BelongTos {
+		r.BelongTos[key] = v.Copy()
+	}
+	for key, v := range m.HasOnes {
+		r.HasOnes[key] = v.Copy()
+	}
+	for key, v := range m.HasManys {
+		r.HasManys[key] = v.Copy()
 	}
 	return r
+}
+
+func (m *Record) NewRecords(records []map[string]string) *Records {
+	work := NewRecords(m.Copy())
+	if m.Error != nil {
+		work.Error = m.Error
+		return work
+	}
+	for _, record := range records {
+		r, err := NewRecordWithMap(record, func() *Record {
+			return m.Copy()
+		})
+		if err != nil {
+			work.Error = err
+			return work
+		}
+		work.Append(r)
+	}
+	return work
 }
 
 func (m *Record) getVal(template string) (interface{}, error) {

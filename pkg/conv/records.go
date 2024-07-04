@@ -1,25 +1,26 @@
 package conv
 
-type Records []*Record
+import (
+	"fmt"
 
-func NewRecords() *Records {
-	return &Records{}
+	"golang.org/x/exp/maps"
+)
+
+type Records struct {
+	Error   error
+	model   *Record
+	records []*Record
 }
 
-func NewRecordsWithMap(records []map[string]string, factory func() *Record) (*Records, error) {
-	work := NewRecords()
-	for _, record := range records {
-		desk, err := NewRecordWithMap(record, factory)
-		if err != nil {
-			return nil, err
-		}
-		work.Append(desk)
+func NewRecords(model *Record) *Records {
+	return &Records{
+		model:   model,
+		records: []*Record{},
 	}
-	return work, nil
 }
 
 func (f *Records) Take(jsonpath string, val interface{}) (*Record, error) {
-	for _, record := range *f {
+	for _, record := range f.records {
 		got, err := record.Get(jsonpath)
 		if err != nil {
 			return nil, err
@@ -33,7 +34,7 @@ func (f *Records) Take(jsonpath string, val interface{}) (*Record, error) {
 
 func (f *Records) Find(jsonpath string, val interface{}) ([]*Record, error) {
 	ret := []*Record{}
-	for _, record := range *f {
+	for _, record := range f.records {
 		got, err := record.Get(jsonpath)
 		if err != nil {
 			return nil, err
@@ -55,7 +56,7 @@ func (f *Records) Uniq(jsonpath string) ([]interface{}, error) {
 		return false
 	}
 	ret := []interface{}{}
-	for _, record := range *f {
+	for _, record := range f.records {
 		got, err := record.Get(jsonpath)
 		if err != nil {
 			return nil, err
@@ -68,35 +69,12 @@ func (f *Records) Uniq(jsonpath string) ([]interface{}, error) {
 }
 
 func (f *Records) Append(record *Record) {
-	*f = append(*f, record)
-}
-
-func (f *Records) MergeRecords(records *Records, pkpath, valpath string) error {
-	for _, record := range *records {
-		pk, err := record.Get(pkpath)
-		if err != nil {
-			return err
-		}
-		record, err := record.HasOne(valpath)
-		if err != nil {
-			return err
-		}
-		target, err := f.Take(pkpath, pk)
-		if err != nil {
-			return err
-		}
-		records, err := target.HasMany(valpath)
-		if err != nil {
-			return err
-		}
-		records.Append(record)
-	}
-	return nil
+	f.records = append(f.records, record)
 }
 
 func (f *Records) ValueMap() []map[string]interface{} {
 	r := []map[string]interface{}{}
-	for _, v := range *f {
+	for _, v := range f.records {
 		r = append(r, v.ValueMap())
 	}
 	return r
@@ -104,7 +82,7 @@ func (f *Records) ValueMap() []map[string]interface{} {
 
 func (f *Records) Updates() []map[string]interface{} {
 	r := []map[string]interface{}{}
-	for _, v := range *f {
+	for _, v := range f.records {
 		r = append(r, v.Updates())
 	}
 	return r
@@ -112,7 +90,7 @@ func (f *Records) Updates() []map[string]interface{} {
 
 func (f *Records) UpdateValues() []map[string]interface{} {
 	r := []map[string]interface{}{}
-	for _, v := range *f {
+	for _, v := range f.records {
 		r = append(r, v.UpdateValues())
 	}
 	return r
@@ -120,7 +98,7 @@ func (f *Records) UpdateValues() []map[string]interface{} {
 
 func (f *Records) UpdateHasOnes() []map[string]interface{} {
 	r := []map[string]interface{}{}
-	for _, v := range *f {
+	for _, v := range f.records {
 		r = append(r, v.UpdateHasOnes())
 	}
 	return r
@@ -128,8 +106,96 @@ func (f *Records) UpdateHasOnes() []map[string]interface{} {
 
 func (f *Records) UpdateHasManyes() []map[string]interface{} {
 	r := []map[string]interface{}{}
-	for _, v := range *f {
+	for _, v := range f.records {
 		r = append(r, v.UpdateHasManyes())
 	}
 	return r
+}
+
+func (f *Records) MergeValue(records *Records, pkpath, valpath string) *Records {
+	for _, record := range records.records {
+		pk, err := record.Get(pkpath)
+		if err != nil {
+			f.Error = err
+			return f
+		}
+		target, err := f.Take(pkpath, pk)
+		if err != nil {
+			f.Error = err
+			return f
+		}
+		val, err := record.Get(valpath)
+		if err != nil {
+			f.Error = err
+			return f
+		}
+		target.Set(valpath, val)
+	}
+	return f
+}
+
+func (f *Records) MergeHasMany(records *Records, pkpath, valpath string) *Records {
+	for _, record := range records.records {
+		pk, err := record.Get(pkpath)
+		if err != nil {
+			f.Error = err
+			return f
+		}
+		record, err := record.HasOne(valpath)
+		if err != nil {
+			f.Error = err
+			return f
+		}
+		target, err := f.Take(pkpath, pk)
+		if err != nil {
+			f.Error = err
+			return f
+		}
+		records, err := target.HasMany(valpath)
+		if err != nil {
+			f.Error = err
+			return f
+		}
+		records.Append(record)
+	}
+	return f
+}
+
+func (f *Records) Convert(model *Record) *Records {
+	if f.Error != nil {
+		return f
+	}
+
+	newrecords := NewRecords(model.Copy())
+
+	pkeys := f.model.PrimaryKeys()
+	if len(pkeys) == 0 {
+		newrecords.Error = ErrNotFoundPrimaryKey
+		return newrecords
+	}
+	primkey := fmt.Sprintf(".%s", pkeys[0])
+
+	valuekeys := maps.Keys(f.model.Values)
+	hasonekeys := maps.Keys(f.model.HasOnes)
+
+	values, err := f.Uniq(primkey)
+	if err != nil {
+		f.Error = err
+		return f
+	}
+	for _, pkey := range values {
+		newrecords.Append(model.Copy().Set(primkey, pkey))
+	}
+	// マージ
+	for _, vkey := range valuekeys {
+		if err = newrecords.MergeValue(f, primkey, fmt.Sprintf(".%s", vkey)).Error; err != nil {
+			return newrecords
+		}
+	}
+	for _, mkey := range hasonekeys {
+		if err = newrecords.MergeHasMany(f, primkey, fmt.Sprintf(".%s", mkey)).Error; err != nil {
+			return newrecords
+		}
+	}
+	return newrecords
 }

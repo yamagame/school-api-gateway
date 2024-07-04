@@ -6,7 +6,7 @@ import (
 
 func NewLabo() *conv.Record {
 	v := conv.NewRecord().
-		SetValue("id", int32(0)).
+		SetValue("id", int32(0), conv.PRIMARY).
 		SetValue("name", "").
 		SetValue("url", "").
 		SetBelongTo("group", NewGroup()).

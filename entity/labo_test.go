@@ -45,7 +45,7 @@ func TestLaboCSV(t *testing.T) {
 	for _, record := range records {
 		r, err := conv.NewRecordWithMap(record, NewLabo)
 		assert.NoError(t, err)
-		o = append(o, r)
+		o.Append(r)
 	}
 	out := o.ValueMap()
 
@@ -61,25 +61,12 @@ func TestLaboHasManyCSV(t *testing.T) {
 	records, err := conv.ReadCSV(fp)
 	assert.NoError(t, err)
 
-	newMany := func() *conv.Record {
-		return conv.NewRecord().
-			SetValue("name", "").
-			SetHasOne("desk", NewDesk())
-	}
-	work, err := conv.NewRecordsWithMap(records, newMany)
-	assert.NoError(t, err)
-
-	// laboテーブル準備
-	names, err := work.Uniq(".name")
-	assert.NoError(t, err)
-	labos := conv.NewRecords()
-	for _, name := range names {
-		labos.Append(NewLabo().Set(".name", name))
-	}
-
-	// マージ
-	err = labos.MergeRecords(work, ".name", ".desk")
-	assert.NoError(t, err)
+	labos := conv.NewRecord().
+		SetValue("name", "", conv.PRIMARY).
+		SetHasOne("desk", NewDesk()).
+		NewRecords(records).
+		Convert(NewLabo())
+	assert.NoError(t, labos.Error)
 
 	out := labos.ValueMap()
 
@@ -95,8 +82,19 @@ func TestLaboFillCSV(t *testing.T) {
 	records, err := conv.ReadCSV(fp)
 	assert.NoError(t, err)
 
-	out := records
+	snapshot.Equal(t, records, "test-fill.json")
+	// snapshot.Save(t, records, "test-fill.json")
 
-	snapshot.Equal(t, out, "test-fill.json")
-	// snapshot.Save(t, out, "test-fill.json")
+	labos := conv.NewRecord().
+		SetValue("name", "", conv.PRIMARY).
+		SetValue("url", "").
+		SetHasOne("desk", NewDesk()).
+		NewRecords(records).
+		Convert(NewLabo())
+	assert.NoError(t, labos.Error)
+
+	out := labos.ValueMap()
+
+	snapshot.Equal(t, out, "test-labos.json")
+	// snapshot.Save(t, out, "test-labos.json")
 }

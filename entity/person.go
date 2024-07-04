@@ -8,7 +8,7 @@ import (
 
 func NewPerson() *conv.Record {
 	return conv.NewRecord().
-		SetValue("id", int32(0)).
+		SetValue("id", int32(0), conv.PRIMARY).
 		SetValue("name", "").
 		SetValue("birthday", time.Now()).
 		SetValue("address", NewAddress()).
