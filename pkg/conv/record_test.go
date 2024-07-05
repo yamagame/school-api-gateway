@@ -1,7 +1,6 @@
 package conv
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -180,14 +179,19 @@ func TestRecordUpdates(t *testing.T) {
 	rec.SetValue("value3", 1.234)
 	rec.SetHasOne("value4", one1)
 	rec.SetHasOne("value5", one2)
-	rec.SetHasManyRecords("value6", many1, many2)
+	rec.SetHasMany("value6", NewMany(many1).Append(many1, many2))
+
+	snapshot.Equal(t, rec.ValueMap(), "update-test1.json")
+	// snapshot.Save(t, rec.ValueMap(), "update-test1.json")
 
 	m1 := rec.Updates()
-	fmt.Println(m1)
+	snapshot.Equal(t, m1, "update-test2.json")
+	// snapshot.Save(t, m1, "update-test2.json")
 
 	rec.Update(".value1", 200)
 	rec.Update(".value4.one_value1", 20)
 	rec.Update(".value6[0].many_value1", 30)
 	m2 := rec.Updates()
-	fmt.Println(m2)
+	snapshot.Equal(t, m2, "update-test3.json")
+	// snapshot.Save(t, m2, "update-test3.json")
 }

@@ -2,7 +2,6 @@ package repository
 
 import (
 	"context"
-	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -11,6 +10,7 @@ import (
 	"github.com/yamagame/school-api-gateway/infra/infconv"
 	"github.com/yamagame/school-api-gateway/infra/model"
 	"github.com/yamagame/school-api-gateway/pkg/conv"
+	"github.com/yamagame/school-api-gateway/pkg/snapshot"
 )
 
 func TestSchool(t *testing.T) {
@@ -62,12 +62,19 @@ func TestSchool(t *testing.T) {
 	assert.NoError(t, err)
 }
 
-func TestLabos(t *testing.T) {
+func TestLabosInfraToEntity(t *testing.T) {
 	var err error
 	ctx := context.Background()
 	db := infra.DB()
 	repo := NewLabo(db)
 	res, err := repo.List(ctx, 10, 0)
 	assert.NoError(t, err)
-	fmt.Println(res)
+
+	labos, err := infconv.Labos.ToEntity(res)
+	assert.NoError(t, err)
+
+	out := labos.ValueMap()
+
+	snapshot.Equal(t, out, "test-labos.json")
+	// snapshot.Save(t, out, "test-labos.json")
 }

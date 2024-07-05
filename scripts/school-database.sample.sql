@@ -68,6 +68,10 @@ SELECT *
 FROM `desks`;
 
 -- レコードの表示
+SELECT *
+FROM `chairs`;
+
+-- レコードの表示
 SELECT labos.id, labos.name, groups.name, programs.name
 FROM `labos`
 JOIN `groups` ON groups.id = labos.group_id

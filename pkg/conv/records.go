@@ -19,6 +19,10 @@ func NewRecords(model *Record) *Records {
 	}
 }
 
+func (f *Records) Records() []*Record {
+	return f.records
+}
+
 func (f *Records) Take(jsonpath string, val interface{}) (*Record, error) {
 	for _, record := range f.records {
 		got, err := record.Get(jsonpath)
@@ -68,8 +72,12 @@ func (f *Records) Uniq(jsonpath string) ([]interface{}, error) {
 	return ret, nil
 }
 
-func (f *Records) Append(record *Record) {
-	f.records = append(f.records, record)
+func (f *Records) Append(record ...*Record) *Records {
+	if f.Error != nil {
+		return f
+	}
+	f.records = append(f.records, record...)
+	return f
 }
 
 func (f *Records) ValueMap() []map[string]interface{} {
@@ -156,7 +164,9 @@ func (f *Records) MergeHasMany(records *Records, pkpath, valpath string) *Record
 			f.Error = err
 			return f
 		}
-		records.Append(record)
+		if record.IsExist() {
+			records.Append(record)
+		}
 	}
 	return f
 }

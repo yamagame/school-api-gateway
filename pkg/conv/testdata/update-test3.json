@@ -1,0 +1,11 @@
+{
+  "value1": 200,
+  "value4": {
+    "one_value1": 20
+  },
+  "value6": [
+    {
+      "many_value1": 30
+    }
+  ]
+}

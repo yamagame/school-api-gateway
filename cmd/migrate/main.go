@@ -27,4 +27,5 @@ func main() {
 	_ = db.AutoMigrate(&model.School{})
 	_ = db.AutoMigrate(&model.Student{})
 	_ = db.AutoMigrate(&model.Desk{})
+	_ = db.AutoMigrate(&model.Chair{})
 }

@@ -15,7 +15,8 @@ type Labo struct {
 	Professors []*Professor `gorm:"many2many:labo_professors; comment:担当教授;"`
 	Students   []*Student   `gorm:"many2many:labo_students; comment:受講生徒;"`
 	Rooms      []*Room      `gorm:"many2many:labo_rooms; comment:教室;"`
-	Desks      []*Desk      `gorm:"comment:テーブル;"`
+	Desks      []*Desk      `gorm:"comment:研究室のテーブル;"`
+	Chairs     []*Chair     `gorm:"comment:研究室の椅子;"`
 	CreatedAt  *time.Time   `gorm:"comment:GORMによって自動的に管理される作成時間;"`
 	UpdatedAt  *time.Time   `gorm:"comment:GORMによって自動的に管理される更新時間;"`
 }

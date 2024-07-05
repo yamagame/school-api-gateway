@@ -89,6 +89,7 @@ func TestLaboFillCSV(t *testing.T) {
 		SetValue("name", "", conv.PRIMARY).
 		SetValue("url", "").
 		SetHasOne("desk", NewDesk()).
+		SetHasOne("chair", NewChair()).
 		NewRecords(records).
 		Convert(NewLabo())
 	assert.NoError(t, labos.Error)

@@ -22,13 +22,6 @@ func NewRecord() *Record {
 	}
 }
 
-func NewMany(model *Record) *Many {
-	return &Many{
-		Model:   model,
-		Records: []*Record{},
-	}
-}
-
 func strTo(v interface{}, s string) interface{} {
 	switch reflect.ValueOf(v).Kind() {
 	case reflect.Bool:
@@ -84,6 +77,9 @@ func NewRecordWithMap(field map[string]string, factory func() *Record) (*Record,
 		if err != nil {
 			return nil, err
 		}
+		if val == "-" {
+			continue
+		}
 		if err := newone.Set(key, strTo(v, val)).Error; err != nil {
 			return nil, err
 		}
@@ -133,12 +129,12 @@ func (m *Record) SetHasMany(key string, many *Many) *Record {
 	return m
 }
 
-func (m *Record) SetHasManyRecords(key string, records ...*Record) *Record {
+func (m *Record) SetHasManyRecords(key string, records *Records) *Record {
 	if m.Error != nil {
 		return m
 	}
 	if v, ok := m.HasManys[key]; ok {
-		v.Append(records...)
+		v.Append(records.Records()...)
 	}
 	return m
 }
@@ -179,10 +175,12 @@ func (m *Record) GetHasMany(key string) (*Many, error) {
 	return nil, ErrNotFound
 }
 
-func (m *Record) GetHasManyRecords(key string) ([]*Record, error) {
+func (m *Record) GetHasManyRecords(key string) (*Records, error) {
 	if v, ok := m.HasManys[key]; ok {
 		if reflect.TypeOf(v) == reflect.TypeOf(&Many{}) {
-			return v.Records, nil
+			r := NewRecords(v.Model.Copy())
+			r.Append(v.Records...)
+			return r, nil
 		}
 	}
 	return nil, ErrNotFound
@@ -405,7 +403,7 @@ func (m *Record) FromStruct(src, dst string, data interface{}, conv func(v inter
 	if v, err := GetVal(data, src); err == nil {
 		value := reflect.ValueOf(v)
 		if value.Kind() == reflect.Ptr && value.IsNil() {
-			return nil
+			return m
 		}
 		t := conv(v)
 		m.Error = m.Set(dst, t).Error
@@ -470,4 +468,30 @@ func (m *Record) UpdateHasManyes() map[string]interface{} {
 		}
 	}
 	return ret
+}
+
+func (m *Record) IsExist() bool {
+	for _, v := range m.Values {
+		if v.IsExist() {
+			return true
+		}
+	}
+	for _, v := range m.BelongTos {
+		if v.IsExist() {
+			return true
+		}
+	}
+	for _, v := range m.HasOnes {
+		if v.IsExist() {
+			return true
+		}
+	}
+	for _, m := range m.HasManys {
+		for _, v := range m.Records {
+			if v.IsExist() {
+				return true
+			}
+		}
+	}
+	return false
 }

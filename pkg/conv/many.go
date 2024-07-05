@@ -6,6 +6,13 @@ type Many struct {
 	Records []*Record
 }
 
+func NewMany(model *Record) *Many {
+	return &Many{
+		Model:   model,
+		Records: []*Record{},
+	}
+}
+
 func (m *Many) ValueMap() []map[string]interface{} {
 	r := []map[string]interface{}{}
 	for _, v := range m.Records {

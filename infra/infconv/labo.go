@@ -46,7 +46,7 @@ func (LaboConv) ToEntity(in *model.Labo) (*conv.Record, error) {
 	}
 	if len(in.Desks) > 0 {
 		if values, err := Desks.ToEntity(in.Desks); err == nil {
-			out.SetHasManyRecords("desk", values...)
+			out.SetHasManyRecords("desk", values)
 		}
 	}
 	return out, nil

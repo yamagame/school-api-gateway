@@ -1,0 +1,19 @@
+{
+  "value1": 100,
+  "value2": "value2_name",
+  "value3": 1.234,
+  "value4": {
+    "one_value1": 10
+  },
+  "value5": {
+    "one_value1": 10
+  },
+  "value6": [
+    {
+      "many_value1": 20
+    },
+    {
+      "many_value1": 20
+    }
+  ]
+}

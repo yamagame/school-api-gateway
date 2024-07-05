@@ -1,0 +1,192 @@
+[
+  {
+    "building": {
+      "id": 1,
+      "name": "A棟"
+    },
+    "chair": [],
+    "desk": [],
+    "group": {
+      "id": 1,
+      "name": "Ⅰ類（情報系）"
+    },
+    "id": 1,
+    "name": "サトウ",
+    "program": {
+      "id": 1,
+      "name": "01.メディア情報学プログラム"
+    },
+    "url": ""
+  },
+  {
+    "building": {
+      "id": 2,
+      "name": "B棟"
+    },
+    "chair": [],
+    "desk": [],
+    "group": {
+      "id": 2,
+      "name": "Ⅱ類（融合系）"
+    },
+    "id": 2,
+    "name": "シミズ",
+    "program": {
+      "id": 2,
+      "name": "02.経営・社会情報学プログラム"
+    },
+    "url": ""
+  },
+  {
+    "building": {
+      "id": 3,
+      "name": "C棟"
+    },
+    "chair": [],
+    "desk": [],
+    "group": {
+      "id": 3,
+      "name": "Ⅲ類（理工系）"
+    },
+    "id": 3,
+    "name": "鈴木",
+    "program": {
+      "id": 3,
+      "name": "03.情報数理工学プログラム"
+    },
+    "url": ""
+  },
+  {
+    "building": {
+      "id": 4,
+      "name": "D棟"
+    },
+    "chair": [],
+    "desk": [],
+    "group": {
+      "id": 1,
+      "name": "Ⅰ類（情報系）"
+    },
+    "id": 4,
+    "name": "高橋",
+    "program": {
+      "id": 4,
+      "name": "04.コンピュータサイエンスプログラム"
+    },
+    "url": ""
+  },
+  {
+    "building": {
+      "id": 5,
+      "name": "E棟"
+    },
+    "chair": [],
+    "desk": [],
+    "group": {
+      "id": 2,
+      "name": "Ⅱ類（融合系）"
+    },
+    "id": 5,
+    "name": "田中",
+    "program": {
+      "id": 5,
+      "name": "05.デザイン思考・データサイエンスプログラム"
+    },
+    "url": ""
+  },
+  {
+    "building": {
+      "id": 6,
+      "name": "F棟"
+    },
+    "chair": [],
+    "desk": [],
+    "group": {
+      "id": 3,
+      "name": "Ⅲ類（理工系）"
+    },
+    "id": 6,
+    "name": "渡辺",
+    "program": {
+      "id": 6,
+      "name": "06.セキュリティ情報学プログラム"
+    },
+    "url": ""
+  },
+  {
+    "building": {
+      "id": 7,
+      "name": "G棟"
+    },
+    "chair": [],
+    "desk": [],
+    "group": {
+      "id": 1,
+      "name": "Ⅰ類（情報系）"
+    },
+    "id": 7,
+    "name": "伊藤",
+    "program": {
+      "id": 7,
+      "name": "07.情報通信工学プログラム"
+    },
+    "url": ""
+  },
+  {
+    "building": {
+      "id": 8,
+      "name": "H棟"
+    },
+    "chair": [],
+    "desk": [],
+    "group": {
+      "id": 2,
+      "name": "Ⅱ類（融合系）"
+    },
+    "id": 8,
+    "name": "山本",
+    "program": {
+      "id": 8,
+      "name": "08.電子情報学プログラム"
+    },
+    "url": ""
+  },
+  {
+    "building": {
+      "id": 9,
+      "name": "I棟"
+    },
+    "chair": [],
+    "desk": [],
+    "group": {
+      "id": 3,
+      "name": "Ⅲ類（理工系）"
+    },
+    "id": 9,
+    "name": "中村",
+    "program": {
+      "id": 9,
+      "name": "09.計測・制御システムプログラム"
+    },
+    "url": ""
+  },
+  {
+    "building": {
+      "id": 10,
+      "name": "J棟"
+    },
+    "chair": [],
+    "desk": [],
+    "group": {
+      "id": 1,
+      "name": "Ⅰ類（情報系）"
+    },
+    "id": 10,
+    "name": "小林",
+    "program": {
+      "id": 10,
+      "name": "10.先端ロボティクスプログラム"
+    },
+    "url": ""
+  }
+]

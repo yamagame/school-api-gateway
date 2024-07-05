@@ -1,6 +1,7 @@
 {
   "ID": 10,
   "Name": "名前",
+  "URL": null,
   "GroupID": 11,
   "Group": {
     "ID": 0,
@@ -41,6 +42,7 @@
       "LaboID": 13
     }
   ],
+  "Chairs": null,
   "CreatedAt": null,
   "UpdatedAt": null
 }
