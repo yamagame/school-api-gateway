@@ -8,6 +8,12 @@ import (
 
 type DeskConv struct{}
 
+var Desk = DeskConv{}
+
+var Desks = Convs[model.Desk, DeskConv]{
+	conv: Desk,
+}
+
 func (DeskConv) ToInfra(in *conv.Record) (*model.Desk, error) {
 	out := &model.Desk{}
 	if err := in.

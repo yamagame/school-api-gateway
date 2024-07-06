@@ -8,6 +8,12 @@ import (
 
 type LaboConv struct{}
 
+var Labo = LaboConv{}
+
+var Labos = Convs[model.Labo, LaboConv]{
+	conv: Labo,
+}
+
 func (LaboConv) ToInfra(in *conv.Record) (*model.Labo, error) {
 	out := &model.Labo{}
 	if err := in.
