@@ -367,6 +367,12 @@ func (m *Record) NewRecords(records []map[string]string) *Records {
 	return work
 }
 
+func (m *Record) Func() func() *Record {
+	return func() *Record {
+		return m.Copy()
+	}
+}
+
 func (m *Record) getVal(template string) (interface{}, error) {
 	data := m.allValues()
 	return GetVal(data, template)
