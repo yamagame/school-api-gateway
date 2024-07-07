@@ -1,0 +1,59 @@
+[
+  {
+    "building": {
+      "id": 0,
+      "name": ""
+    },
+    "chair": [],
+    "desk": [],
+    "group": {
+      "id": 0,
+      "name": ""
+    },
+    "id": 1,
+    "name": "サトウ1",
+    "program": {
+      "id": 0,
+      "name": ""
+    },
+    "url": "http://sato.com"
+  },
+  {
+    "building": {
+      "id": 0,
+      "name": ""
+    },
+    "chair": [],
+    "desk": [],
+    "group": {
+      "id": 0,
+      "name": ""
+    },
+    "id": 2,
+    "name": "シミズ2",
+    "program": {
+      "id": 0,
+      "name": ""
+    },
+    "url": ""
+  },
+  {
+    "building": {
+      "id": 0,
+      "name": ""
+    },
+    "chair": [],
+    "desk": [],
+    "group": {
+      "id": 0,
+      "name": ""
+    },
+    "id": 0,
+    "name": "スズキ3",
+    "program": {
+      "id": 0,
+      "name": ""
+    },
+    "url": "http://zuzuki.com"
+  }
+]

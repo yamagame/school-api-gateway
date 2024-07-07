@@ -388,13 +388,17 @@ func (m *Record) setVal(template string, val interface{}) error {
 	return SetVal(data, template, val)
 }
 
-func (m *Record) ToStruct(src, dst string, data interface{}, conv func(v interface{}) interface{}) *Record {
+func (m *Record) ToStruct(src, dst string, out interface{}, convs ...func(v interface{}, in ...interface{}) interface{}) *Record {
 	if m.Error != nil {
 		return m
 	}
 	if value, err := m.Value(src); err == nil {
 		if value.IsExist() {
-			m.Error = SetVal(data, dst, conv(value.Get()))
+			v := value.Get()
+			for _, conv := range convs {
+				v = conv(v, m)
+			}
+			m.Error = SetVal(out, dst, v)
 		}
 		return m
 	}
@@ -402,17 +406,19 @@ func (m *Record) ToStruct(src, dst string, data interface{}, conv func(v interfa
 	return m
 }
 
-func (m *Record) FromStruct(src, dst string, data interface{}, conv func(v interface{}) interface{}) *Record {
+func (m *Record) FromStruct(src, dst string, in interface{}, convs ...func(v interface{}, in ...interface{}) interface{}) *Record {
 	if m.Error != nil {
 		return m
 	}
-	if v, err := GetVal(data, src); err == nil {
+	if v, err := GetVal(in, src); err == nil {
 		value := reflect.ValueOf(v)
 		if value.Kind() == reflect.Ptr && value.IsNil() {
 			return m
 		}
-		t := conv(v)
-		m.Error = m.Set(dst, t).Error
+		for _, conv := range convs {
+			v = conv(v, in)
+		}
+		m.Error = m.Set(dst, v).Error
 		return m
 	}
 	m.Error = ErrNotFound

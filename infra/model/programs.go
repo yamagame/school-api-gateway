@@ -1,6 +1,10 @@
 package model
 
-import "time"
+import (
+	"time"
+
+	"github.com/yamagame/school-api-gateway/pkg/conv"
+)
 
 type Program struct {
 	ID        int32      `gorm:"primary; comment:主キーの標準フィールド;"`
@@ -24,3 +28,13 @@ type Program struct {
 // 13.光工学プログラム
 // 14.物理工学プログラム
 // 15.化学生命工学プログラム
+
+type Programs struct {
+	*conv.Variables[Program]
+}
+
+func NewPrograms(variables ...*Program) *Programs {
+	return &Programs{
+		Variables: conv.NewVariables(variables...),
+	}
+}

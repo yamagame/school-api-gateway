@@ -1,6 +1,10 @@
 package model
 
-import "time"
+import (
+	"time"
+
+	"github.com/yamagame/school-api-gateway/pkg/conv"
+)
 
 type Area struct {
 	ID        int32      `gorm:"primary; comment:主キーの標準フィールド;"`
@@ -11,3 +15,13 @@ type Area struct {
 
 // 東地区
 // 西地区
+
+type Areas struct {
+	*conv.Variables[Area]
+}
+
+func NewAreas(variables ...*Area) *Areas {
+	return &Areas{
+		Variables: conv.NewVariables(variables...),
+	}
+}

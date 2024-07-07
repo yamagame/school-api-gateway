@@ -1,6 +1,10 @@
 package model
 
-import "time"
+import (
+	"time"
+
+	"github.com/yamagame/school-api-gateway/pkg/conv"
+)
 
 type Group struct {
 	ID        int32      `gorm:"primary; comment:主キーの標準フィールド;"`
@@ -12,3 +16,13 @@ type Group struct {
 // Ⅰ類（情報系）
 // Ⅱ類（融合系）
 // Ⅲ類（理工系）
+
+type Groups struct {
+	*conv.Variables[Group]
+}
+
+func NewGroups(variables ...*Group) *Groups {
+	return &Groups{
+		Variables: conv.NewVariables(variables...),
+	}
+}

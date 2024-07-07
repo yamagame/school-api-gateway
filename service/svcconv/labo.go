@@ -15,26 +15,27 @@ func (LaboConv) ToProto(in *conv.Record) (*school.Labo, error) {
 		Program:  &school.Program{},
 		Building: &school.Building{},
 	}
-	in.ToStruct(".id", ".Id", out, conv.Raw)
-	in.ToStruct(".name", ".Name", out, conv.Raw)
-	in.ToStruct(".group.id", ".Group.Id", out, conv.Raw)
-	in.ToStruct(".group.name", ".Group.Name", out, conv.Raw)
-	in.ToStruct(".program.id", ".Program.Id", out, conv.Raw)
-	in.ToStruct(".program.name", ".Program.Name", out, conv.Raw)
-	in.ToStruct(".building.id", ".Building.Id", out, conv.Raw)
-	in.ToStruct(".building.name", ".Building.Name", out, conv.Raw)
+	in.
+		ToStruct(".id", ".Id", out).
+		ToStruct(".name", ".Name", out).
+		ToStruct(".group.id", ".Group.Id", out).
+		ToStruct(".group.name", ".Group.Name", out).
+		ToStruct(".program.id", ".Program.Id", out).
+		ToStruct(".program.name", ".Program.Name", out).
+		ToStruct(".building.id", ".Building.Id", out).
+		ToStruct(".building.name", ".Building.Name", out)
 	return out, nil
 }
 
 func (LaboConv) ToEntity(in *school.Labo) (*conv.Record, error) {
-	out := entity.NewLabo()
-	out.FromStruct(".Id", ".id", in, conv.Raw)
-	out.FromStruct(".Name", ".name", in, conv.Raw)
-	out.FromStruct(".Group.Id", ".group.id", in, conv.Raw)
-	out.FromStruct(".Group.Name", ".group.name", in, conv.Raw)
-	out.FromStruct(".Program.Id", ".program.id", in, conv.Raw)
-	out.FromStruct(".Program.Name", ".program.name", in, conv.Raw)
-	out.FromStruct(".Building.Id", ".building.id", in, conv.Raw)
-	out.FromStruct(".Building.Name", ".building.name", in, conv.Raw)
+	out := entity.NewLabo().
+		FromStruct(".Id", ".id", in).
+		FromStruct(".Name", ".name", in).
+		FromStruct(".Group.Id", ".group.id", in).
+		FromStruct(".Group.Name", ".group.name", in).
+		FromStruct(".Program.Id", ".program.id", in).
+		FromStruct(".Program.Name", ".program.name", in).
+		FromStruct(".Building.Id", ".building.id", in).
+		FromStruct(".Building.Name", ".building.name", in)
 	return out, nil
 }

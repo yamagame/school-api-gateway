@@ -1,6 +1,10 @@
 package model
 
-import "time"
+import (
+	"time"
+
+	"github.com/yamagame/school-api-gateway/pkg/conv"
+)
 
 type Role struct {
 	ID        int32      `gorm:"primary; comment:主キーの標準フィールド;"`
@@ -12,3 +16,13 @@ type Role struct {
 // 事務
 // 教授
 // 補助
+
+type Roles struct {
+	*conv.Variables[Role]
+}
+
+func NewRoles(variables ...*Role) *Roles {
+	return &Roles{
+		Variables: conv.NewVariables(variables...),
+	}
+}

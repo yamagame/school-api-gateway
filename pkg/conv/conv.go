@@ -36,19 +36,19 @@ func Raw[T any](v T) T {
 	return v
 }
 
-func StrPtr(v interface{}) interface{} {
+func StrPtr(v interface{}, _ ...interface{}) interface{} {
 	return ToPtr(v.(string))
 }
 
-func PtrStr(v interface{}) interface{} {
+func PtrStr(v interface{}, _ ...interface{}) interface{} {
 	return *v.(*string)
 }
 
-func Int32Ptr(v interface{}) interface{} {
+func Int32Ptr(v interface{}, _ ...interface{}) interface{} {
 	return ToPtr(v.(int32))
 }
 
-func PtrInt32(v interface{}) interface{} {
+func PtrInt32(v interface{}, _ ...interface{}) interface{} {
 	return *v.(*int32)
 }
 

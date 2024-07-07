@@ -1,6 +1,10 @@
 package model
 
-import "time"
+import (
+	"time"
+
+	"github.com/yamagame/school-api-gateway/pkg/conv"
+)
 
 type Labo struct {
 	ID         int32        `gorm:"primary; comment:主キーの標準フィールド;"`
@@ -19,4 +23,14 @@ type Labo struct {
 	Chairs     []*Chair     `gorm:"comment:研究室の椅子;"`
 	CreatedAt  *time.Time   `gorm:"comment:GORMによって自動的に管理される作成時間;"`
 	UpdatedAt  *time.Time   `gorm:"comment:GORMによって自動的に管理される更新時間;"`
+}
+
+type Labos struct {
+	*conv.Variables[Labo]
+}
+
+func NewLabos(variables ...*Labo) *Labos {
+	return &Labos{
+		Variables: conv.NewVariables(variables...),
+	}
 }

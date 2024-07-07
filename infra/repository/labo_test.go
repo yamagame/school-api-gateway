@@ -2,6 +2,7 @@ package repository
 
 import (
 	"context"
+	"os"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -13,52 +14,36 @@ import (
 	"github.com/yamagame/school-api-gateway/pkg/snapshot"
 )
 
-func TestSchool(t *testing.T) {
+func TestCreateUpdate(t *testing.T) {
 	var err error
 	ctx := context.Background()
 	db := infra.DB()
 	repo := NewLabo(db)
-	labo1 := entity.NewLabo()
-	err = labo1.Set(".id", int32(1)).Error
-	assert.NoError(t, err)
-	err = labo1.Set(".name", "サトウ").Error
-	assert.NoError(t, err)
-	labo2 := entity.NewLabo()
-	err = labo2.Set(".id", int32(2)).Error
-	assert.NoError(t, err)
-	err = labo2.Set(".name", "シミズ").Error
-	assert.NoError(t, err)
-	labo3 := entity.NewLabo()
-	err = labo3.Set(".id", int32(0)).Error
-	assert.NoError(t, err)
-	err = labo3.Set(".name", "スズキ").Error
-	assert.NoError(t, err)
-	labos := []*conv.Record{
-		labo1,
-		labo2,
-		labo3,
-	}
 
-	models := []*model.Labo{}
-	for _, entity := range labos {
-		labo, err := infconv.Labo.ToInfra(entity)
-		assert.NoError(t, err)
-		models = append(models, labo)
-	}
+	labos := &conv.Records{}
+	labos.Append(
+		entity.NewLabo().
+			Set(".id", int32(1)).
+			Set(".name", "サトウ1").
+			Set(".url", "http://sato.com"),
+		entity.NewLabo().
+			Set(".id", int32(2)).
+			Set(".name", "シミズ2"),
+		entity.NewLabo().
+			Set(".id", int32(0)).
+			Set(".name", "スズキ3").
+			Set(".url", "http://zuzuki.com"),
+	)
 
-	creates := []*model.Labo{}
-	updates := []*model.Labo{}
-	for _, labo := range models {
-		if labo.ID == 0 {
-			creates = append(creates, labo)
-		} else {
-			updates = append(updates, labo)
-		}
-	}
+	out := labos.ValueMap()
 
-	err = repo.Update(ctx, updates)
+	// snapshot.Equal(t, out, "create-update.json")
+	snapshot.Save(t, out, "create-update.json")
+
+	models, err := infconv.Labos.ToInfra(labos)
 	assert.NoError(t, err)
-	err = repo.Create(ctx, creates)
+
+	err = repo.Upsert(ctx, model.NewLabos(models...))
 	assert.NoError(t, err)
 }
 
@@ -67,14 +52,30 @@ func TestLabosInfraToEntity(t *testing.T) {
 	ctx := context.Background()
 	db := infra.DB()
 	repo := NewLabo(db)
-	res, err := repo.List(ctx, 10, 0)
-	assert.NoError(t, err)
+	res := repo.List(ctx, 10, 0)
+	assert.NoError(t, res.Error)
 
-	labos, err := infconv.Labos.ToEntity(res)
+	labos, err := infconv.Labos.ToEntity(res.Records)
 	assert.NoError(t, err)
 
 	out := labos.ValueMap()
 
 	snapshot.Equal(t, out, "test-labos.json")
 	// snapshot.Save(t, out, "test-labos.json")
+}
+
+func TestCreateFromCSV(t *testing.T) {
+	fp, _ := os.Open("./testdata/create-labos.csv")
+	defer fp.Close()
+
+	records, err := conv.ReadCSV(fp)
+	assert.NoError(t, err)
+
+	labos := entity.NewLabo().
+		NewRecords(records)
+
+	out := labos.ValueMap()
+
+	// snapshot.Equal(t, out, "create-labos.json")
+	snapshot.Save(t, out, "create-labos.json")
 }

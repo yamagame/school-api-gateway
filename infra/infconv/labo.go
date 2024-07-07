@@ -17,15 +17,15 @@ var Labos = Convs[model.Labo, LaboConv]{
 func (LaboConv) ToInfra(in *conv.Record) (*model.Labo, error) {
 	out := &model.Labo{}
 	if err := in.
-		ToStruct(".id", ".ID", out, conv.Raw).
+		ToStruct(".id", ".ID", out).
 		ToStruct(".name", ".Name", out, conv.StrPtr).
 		ToStruct(".url", ".URL", out, conv.StrPtr).
 		ToStruct(".group.id", ".GroupID", out, conv.Int32Ptr).
-		ToStruct(".group.name", ".Group.Name", out, conv.Raw).
+		ToStruct(".group.name", ".Group.Name", out).
 		ToStruct(".program.id", ".ProgramID", out, conv.Int32Ptr).
-		ToStruct(".program.name", ".Program.Name", out, conv.Raw).
+		ToStruct(".program.name", ".Program.Name", out).
 		ToStruct(".building.id", ".BuildingID", out, conv.Int32Ptr).
-		ToStruct(".building.name", ".Building.Name", out, conv.Raw).Error; err != nil {
+		ToStruct(".building.name", ".Building.Name", out).Error; err != nil {
 		return nil, err
 	}
 	if values, err := in.GetHasManyRecords("desk"); err == nil {
@@ -39,15 +39,15 @@ func (LaboConv) ToInfra(in *conv.Record) (*model.Labo, error) {
 func (LaboConv) ToEntity(in *model.Labo) (*conv.Record, error) {
 	out := entity.NewLabo()
 	if err := out.
-		FromStruct(".ID", ".id", in, conv.Raw).
+		FromStruct(".ID", ".id", in).
 		FromStruct(".Name", ".name", in, conv.PtrStr).
 		FromStruct(".URL", ".url", in, conv.PtrStr).
 		FromStruct(".GroupID", ".group.id", in, conv.PtrInt32).
-		FromStruct(".Group.Name", ".group.name", in, conv.Raw).
+		FromStruct(".Group.Name", ".group.name", in).
 		FromStruct(".ProgramID", ".program.id", in, conv.PtrInt32).
-		FromStruct(".Program.Name", ".program.name", in, conv.Raw).
+		FromStruct(".Program.Name", ".program.name", in).
 		FromStruct(".BuildingID", ".building.id", in, conv.PtrInt32).
-		FromStruct(".Building.Name", ".building.name", in, conv.Raw).Error; err != nil {
+		FromStruct(".Building.Name", ".building.name", in).Error; err != nil {
 		return nil, err
 	}
 	if len(in.Desks) > 0 {

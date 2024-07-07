@@ -1,6 +1,10 @@
 package model
 
-import "time"
+import (
+	"time"
+
+	"github.com/yamagame/school-api-gateway/pkg/conv"
+)
 
 type Person struct {
 	ID        int32      `gorm:"primary; comment:主キーの標準フィールド;"`
@@ -10,7 +14,17 @@ type Person struct {
 	Role      Role       `gorm:"comment:役割;"`
 	AddressID int32      `gorm:"comment::住所ID;"`
 	Address   Address    `gorm:"comment::住所;"`
-	Licenses  []License  `gorm:"comment::資格;"`
+	People    []License  `gorm:"comment::資格;"`
 	CreatedAt *time.Time `gorm:"comment:GORMによって自動的に管理される作成時間;"`
 	UpdatedAt *time.Time `gorm:"comment:GORMによって自動的に管理される更新時間;"`
+}
+
+type People struct {
+	*conv.Variables[Person]
+}
+
+func NewPeople(variables ...*Person) *People {
+	return &People{
+		Variables: conv.NewVariables(variables...),
+	}
 }

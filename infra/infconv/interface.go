@@ -13,7 +13,9 @@ type Convs[M any, B ConvInterface[M]] struct {
 
 func (c Convs[M, B]) ToInfra(in *conv.Records) ([]*M, error) {
 	r := []*M{}
-	for _, v := range in.Records() {
+	it := in.NewIterator()
+	for it.HasNext() {
+		v := it.Next()
 		t, err := c.conv.ToInfra(v)
 		if err != nil {
 			return nil, err

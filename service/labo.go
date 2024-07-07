@@ -33,18 +33,16 @@ func NewLabo(repo repository.LaboInterface) *Labo {
 }
 
 func (s *Labo) Create(ctx context.Context) (int32, error) {
-	labos := []*model.Labo{
-		{},
-	}
+	labos := model.NewLabos(&model.Labo{})
 	if err := s.labo.Create(ctx, labos); err != nil {
 		return 0, err
 	}
-	return labos[0].ID, nil
+	return labos.First().ID, nil
 }
 
 func (s *Labo) CreateWithMap(ctx context.Context, records []map[string]string) (int32, error) {
 	zero := int32(0)
-	labos := []*model.Labo{}
+	labos := model.NewLabos()
 	for _, record := range records {
 		labo, err := conv.NewRecordWithMap(record, entity.NewLabo)
 		if err != nil {
@@ -54,17 +52,17 @@ func (s *Labo) CreateWithMap(ctx context.Context, records []map[string]string) (
 		if err != nil {
 			return zero, err
 		}
-		labos = append(labos, l)
+		labos.Append(l)
 	}
 	if err := s.labo.Create(ctx, labos); err != nil {
 		return 0, err
 	}
-	return labos[0].ID, nil
+	return labos.First().ID, nil
 }
 
 func (s *Labo) UpdateWithMap(ctx context.Context, records []map[string]string) (int32, error) {
 	zero := int32(0)
-	labos := []*model.Labo{}
+	labos := model.NewLabos()
 	for _, record := range records {
 		labo, err := conv.NewRecordWithMap(record, entity.NewLabo)
 		if err != nil {
@@ -74,19 +72,19 @@ func (s *Labo) UpdateWithMap(ctx context.Context, records []map[string]string) (
 		if err != nil {
 			return zero, err
 		}
-		labos = append(labos, l)
+		labos.Append(l)
 	}
 	if err := s.labo.Update(ctx, labos); err != nil {
 		return 0, err
 	}
-	return labos[0].ID, nil
+	return labos.First().ID, nil
 }
 
 func (s *Labo) Find(ctx context.Context, id int32) (*school.Labo, error) {
 	var zero *school.Labo
-	results, err := s.labo.Find(ctx, []int32{id})
-	if err != nil {
-		return zero, err
+	results := s.labo.Find(ctx, []int32{id})
+	if results.Error != nil {
+		return zero, results.Error
 	}
 	labos, err := laboToProto(results)
 	if err != nil {
@@ -104,21 +102,21 @@ func (s *Labo) Update(ctx context.Context, in *school.Labo) (int32, error) {
 	if err != nil {
 		return zero, err
 	}
-	if len(labos) > 0 {
+	if len(labos.Records) > 0 {
 		err = s.labo.Update(ctx, labos)
 		if err != nil {
 			return zero, err
 		}
-		return labos[0].ID, nil
+		return labos.First().ID, nil
 	}
 	return zero, ErrNotFound
 }
 
 func (s *Labo) Copy(ctx context.Context, id int32) (int32, error) {
 	zero := int32(0)
-	results, err := s.labo.Find(ctx, []int32{id})
-	if err != nil {
-		return zero, err
+	results := s.labo.Find(ctx, []int32{id})
+	if results.Error != nil {
+		return zero, results.Error
 	}
 	in, err := laboToProto(results)
 	if err != nil {
@@ -133,20 +131,20 @@ func (s *Labo) Copy(ctx context.Context, id int32) (int32, error) {
 		if err := s.labo.Create(ctx, labos); err != nil {
 			return 0, err
 		}
-		return labos[0].ID, nil
+		return labos.First().ID, nil
 	}
 	return zero, ErrNotFound
 }
 
 func (s *Labo) List(ctx context.Context, limit, offset int32) ([]*school.Labo, error) {
-	results, err := s.labo.List(ctx, limit, offset)
-	if err != nil {
-		return nil, err
+	results := s.labo.List(ctx, limit, offset)
+	if results.Error != nil {
+		return nil, results.Error
 	}
 	return laboToProto(results)
 }
 
-func laboToInfra(labos []*school.Labo) ([]*model.Labo, error) {
+func laboToInfra(labos []*school.Labo) (*model.Labos, error) {
 	res := []*model.Labo{}
 	for _, labo := range labos {
 		t, err := svcconv.Labo.ToEntity(labo)
@@ -159,12 +157,14 @@ func laboToInfra(labos []*school.Labo) ([]*model.Labo, error) {
 		}
 		res = append(res, l)
 	}
-	return res, nil
+	return model.NewLabos(res...), nil
 }
 
-func laboToProto(labos []*model.Labo) ([]*school.Labo, error) {
+func laboToProto(labos *model.Labos) ([]*school.Labo, error) {
 	res := []*school.Labo{}
-	for _, labo := range labos {
+	it := labos.NewIterator()
+	for it.HasNext() {
+		labo := it.Next()
 		t, err := infconv.Labo.ToEntity(labo)
 		if err != nil {
 			return nil, err

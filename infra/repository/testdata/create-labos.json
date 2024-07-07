@@ -1,0 +1,21 @@
+[
+  {
+    "building": {
+      "id": 0,
+      "name": ""
+    },
+    "chair": [],
+    "desk": [],
+    "group": {
+      "id": 0,
+      "name": ""
+    },
+    "id": 0,
+    "name": "テスト",
+    "program": {
+      "id": 0,
+      "name": ""
+    },
+    "url": ""
+  }
+]

@@ -17,8 +17,8 @@ var Desks = Convs[model.Desk, DeskConv]{
 func (DeskConv) ToInfra(in *conv.Record) (*model.Desk, error) {
 	out := &model.Desk{}
 	if err := in.
-		ToStruct(".id", ".ID", out, conv.Raw).
-		ToStruct(".labo_id", ".LaboID", out, conv.Raw).Error; err != nil {
+		ToStruct(".id", ".ID", out).
+		ToStruct(".labo_id", ".LaboID", out).Error; err != nil {
 		return nil, err
 	}
 	return out, nil
@@ -27,8 +27,8 @@ func (DeskConv) ToInfra(in *conv.Record) (*model.Desk, error) {
 func (DeskConv) ToEntity(in *model.Desk) (*conv.Record, error) {
 	out := entity.NewDesk()
 	if err := out.
-		FromStruct(".ID", ".id", in, conv.Raw).
-		FromStruct(".LaboID", ".labo_id", in, conv.Raw).Error; err != nil {
+		FromStruct(".ID", ".id", in).
+		FromStruct(".LaboID", ".labo_id", in).Error; err != nil {
 		return nil, err
 	}
 	return out, nil

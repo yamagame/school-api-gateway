@@ -209,3 +209,7 @@ func (f *Records) Convert(model *Record) *Records {
 	}
 	return newrecords
 }
+
+func (f *Records) NewIterator() *Iterator[Record] {
+	return NewIterator(f.records)
+}
