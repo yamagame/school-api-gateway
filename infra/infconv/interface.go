@@ -11,7 +11,10 @@ type Convs[M any, B ConvInterface[M]] struct {
 	conv B
 }
 
-func (c Convs[M, B]) ToInfra(in *conv.Records) ([]*M, error) {
+func (c Convs[M, B]) ToInfra(in *conv.Records, err error) ([]*M, error) {
+	if err != nil {
+		return nil, err
+	}
 	r := []*M{}
 	it := in.NewIterator()
 	for it.HasNext() {
@@ -26,6 +29,9 @@ func (c Convs[M, B]) ToInfra(in *conv.Records) ([]*M, error) {
 }
 
 func (c Convs[M, B]) ToEntity(in []*M) (*conv.Records, error) {
+	if len(in) == 0 {
+		return nil, conv.ErrEmptyArray
+	}
 	r := &conv.Records{}
 	for _, v := range in {
 		t, err := c.conv.ToEntity(v)

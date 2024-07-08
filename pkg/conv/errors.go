@@ -9,4 +9,5 @@ var (
 	ErrNotStruct          = fmt.Errorf("構造体ではありません")
 	ErrDifferentStruct    = fmt.Errorf("構造体が異なります")
 	ErrNotFoundPrimaryKey = fmt.Errorf("プライマリキーが見つかりません")
+	ErrEmptyArray         = fmt.Errorf("配列が空です")
 )

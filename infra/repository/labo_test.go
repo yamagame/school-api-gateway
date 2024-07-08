@@ -40,7 +40,7 @@ func TestCreateUpdate(t *testing.T) {
 	// snapshot.Equal(t, out, "create-update.json")
 	snapshot.Save(t, out, "create-update.json")
 
-	models, err := infconv.Labos.ToInfra(labos)
+	models, err := infconv.Labos.ToInfra(labos, nil)
 	assert.NoError(t, err)
 
 	err = repo.Upsert(ctx, model.NewLabos(models...))

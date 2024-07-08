@@ -28,10 +28,8 @@ func (LaboConv) ToInfra(in *conv.Record) (*model.Labo, error) {
 		ToStruct(".building.name", ".Building.Name", out).Error; err != nil {
 		return nil, err
 	}
-	if values, err := in.GetHasManyRecords("desk"); err == nil {
-		if desks, err := Desks.ToInfra(values); err == nil {
-			out.Desks = desks
-		}
+	if desks, err := Desks.ToInfra(in.GetHasManyRecords("desk")); err == nil {
+		out.Desks = desks
 	}
 	return out, nil
 }
@@ -50,10 +48,8 @@ func (LaboConv) ToEntity(in *model.Labo) (*conv.Record, error) {
 		FromStruct(".Building.Name", ".building.name", in).Error; err != nil {
 		return nil, err
 	}
-	if len(in.Desks) > 0 {
-		if values, err := Desks.ToEntity(in.Desks); err == nil {
-			out.SetHasManyRecords("desk", values)
-		}
+	if values, err := Desks.ToEntity(in.Desks); err == nil {
+		out.SetHasManyRecords("desk", values)
 	}
 	return out, nil
 }
