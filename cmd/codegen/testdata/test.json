@@ -1,0 +1,26 @@
+[
+  {
+    "filename": "labos.go",
+    "class": "Labo",
+    "classes": "Labos",
+    "attributes": [
+      {
+        "name": "ID",
+        "type": "int32",
+        "comment": "gorm:\"primary; comment:主キーの標準フィールド;\""
+      }
+    ]
+  },
+  {
+    "filename": "desks.go",
+    "class": "Desk",
+    "classes": "Desks",
+    "attributes": [
+      {
+        "name": "ID",
+        "type": "int32",
+        "comment": "gorm:\"primary; comment:主キーの標準フィールド;\""
+      }
+    ]
+  }
+]
