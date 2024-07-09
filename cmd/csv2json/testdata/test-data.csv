@@ -1,0 +1,5 @@
+.filename,.class,.classes,.desk[].name,.attributes[].name,.attributes[].type,.attributes[].comment
+labos.go  ,Labo,Labos,名前1,ID1,int32,"gorm:""primary; comment:主キーの標準フィールド;"""
+,,,-,Name1,*string,"gorm:""type:varchar(255); comment:研究室の名前;"""
+desk.go,Desk,Deskss,名前2,ID2,int32,"gorm:""primary; comment:主キーの標準フィールド;"""
+,,,-,Name2,*string,"gorm:""type:varchar(255); comment:研究室の名前;"""

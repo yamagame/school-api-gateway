@@ -1,0 +1,46 @@
+[
+  {
+    ".attributes": [
+      {
+        ".comment": "gorm:\"primary; comment:主キーの標準フィールド;\"",
+        ".name": "ID1",
+        ".type": "int32"
+      },
+      {
+        ".comment": "gorm:\"type:varchar(255); comment:研究室の名前;\"",
+        ".name": "Name1",
+        ".type": "*string"
+      }
+    ],
+    ".class": "Labo",
+    ".classes": "Labos",
+    ".desk": [
+      {
+        ".name": "名前1"
+      }
+    ],
+    ".filename": "labos.go"
+  },
+  {
+    ".attributes": [
+      {
+        ".comment": "gorm:\"primary; comment:主キーの標準フィールド;\"",
+        ".name": "ID2",
+        ".type": "int32"
+      },
+      {
+        ".comment": "gorm:\"type:varchar(255); comment:研究室の名前;\"",
+        ".name": "Name2",
+        ".type": "*string"
+      }
+    ],
+    ".class": "Desk",
+    ".classes": "Deskss",
+    ".desk": [
+      {
+        ".name": "名前2"
+      }
+    ],
+    ".filename": "desk.go"
+  }
+]
