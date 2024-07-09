@@ -1,6 +1,8 @@
 package infconv
 
-import "github.com/yamagame/school-api-gateway/pkg/conv"
+import (
+	"github.com/yamagame/school-api-gateway/pkg/conv"
+)
 
 type ConvInterface[M any] interface {
 	ToInfra(*conv.Record) (*M, error)
@@ -41,4 +43,23 @@ func (c Convs[M, B]) ToEntity(in []*M) (*conv.Records, error) {
 		r.Append(t)
 	}
 	return r, nil
+}
+
+type valiables[T any] interface {
+	Append(records ...*T) *conv.Variables[T]
+}
+
+func (c Convs[M, B]) ToInfraWithMap(records []map[string]string, out valiables[M], factory func() *conv.Record) error {
+	for _, record := range records {
+		val, err := conv.NewRecordWithMap(record, factory)
+		if err != nil {
+			return err
+		}
+		l, err := c.conv.ToInfra(val)
+		if err != nil {
+			return err
+		}
+		out.Append(l)
+	}
+	return nil
 }

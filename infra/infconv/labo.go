@@ -6,15 +6,15 @@ import (
 	"github.com/yamagame/school-api-gateway/pkg/conv"
 )
 
-type LaboConv struct{}
+type LaboType struct{}
 
-var Labo = LaboConv{}
+var Labo = LaboType{}
 
-var Labos = Convs[model.Labo, LaboConv]{
+var Labos = Convs[model.Labo, LaboType]{
 	conv: Labo,
 }
 
-func (LaboConv) ToInfra(in *conv.Record) (*model.Labo, error) {
+func (LaboType) ToInfra(in *conv.Record) (*model.Labo, error) {
 	out := &model.Labo{}
 	if err := in.
 		ToStruct(".id", ".ID", out).
@@ -34,7 +34,7 @@ func (LaboConv) ToInfra(in *conv.Record) (*model.Labo, error) {
 	return out, nil
 }
 
-func (LaboConv) ToEntity(in *model.Labo) (*conv.Record, error) {
+func (LaboType) ToEntity(in *model.Labo) (*conv.Record, error) {
 	out := entity.NewLabo()
 	if err := out.
 		FromStruct(".ID", ".id", in).

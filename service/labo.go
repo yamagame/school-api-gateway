@@ -7,7 +7,6 @@ import (
 	"github.com/yamagame/school-api-gateway/infra/infconv"
 	"github.com/yamagame/school-api-gateway/infra/model"
 	"github.com/yamagame/school-api-gateway/infra/repository"
-	"github.com/yamagame/school-api-gateway/pkg/conv"
 	"github.com/yamagame/school-api-gateway/proto/school"
 	"github.com/yamagame/school-api-gateway/service/svcconv"
 )
@@ -23,18 +22,18 @@ type LaboInterface interface {
 }
 
 type Labo struct {
-	labo repository.LaboInterface
+	laborepo repository.LaboInterface
 }
 
 func NewLabo(repo repository.LaboInterface) *Labo {
 	return &Labo{
-		labo: repo,
+		laborepo: repo,
 	}
 }
 
 func (s *Labo) Create(ctx context.Context) (int32, error) {
 	labos := model.NewLabos(&model.Labo{})
-	if err := s.labo.Create(ctx, labos); err != nil {
+	if err := s.laborepo.Create(ctx, labos); err != nil {
 		return 0, err
 	}
 	return labos.First().ID, nil
@@ -42,19 +41,12 @@ func (s *Labo) Create(ctx context.Context) (int32, error) {
 
 func (s *Labo) CreateWithMap(ctx context.Context, records []map[string]string) (int32, error) {
 	zero := int32(0)
-	labos := model.NewLabos()
-	for _, record := range records {
-		labo, err := conv.NewRecordWithMap(record, entity.NewLabo)
-		if err != nil {
-			return zero, err
-		}
-		l, err := infconv.Labo.ToInfra(labo)
-		if err != nil {
-			return zero, err
-		}
-		labos.Append(l)
+	labos := &model.Labos{}
+	err := infconv.Labos.ToInfraWithMap(records, labos, entity.NewLabo)
+	if err != nil {
+		return zero, err
 	}
-	if err := s.labo.Create(ctx, labos); err != nil {
+	if err := s.laborepo.Create(ctx, labos); err != nil {
 		return 0, err
 	}
 	return labos.First().ID, nil
@@ -62,19 +54,12 @@ func (s *Labo) CreateWithMap(ctx context.Context, records []map[string]string) (
 
 func (s *Labo) UpdateWithMap(ctx context.Context, records []map[string]string) (int32, error) {
 	zero := int32(0)
-	labos := model.NewLabos()
-	for _, record := range records {
-		labo, err := conv.NewRecordWithMap(record, entity.NewLabo)
-		if err != nil {
-			return zero, err
-		}
-		l, err := infconv.Labo.ToInfra(labo)
-		if err != nil {
-			return zero, err
-		}
-		labos.Append(l)
+	labos := &model.Labos{}
+	err := infconv.Labos.ToInfraWithMap(records, labos, entity.NewLabo)
+	if err != nil {
+		return zero, err
 	}
-	if err := s.labo.Update(ctx, labos); err != nil {
+	if err := s.laborepo.Update(ctx, labos); err != nil {
 		return 0, err
 	}
 	return labos.First().ID, nil
@@ -82,7 +67,7 @@ func (s *Labo) UpdateWithMap(ctx context.Context, records []map[string]string) (
 
 func (s *Labo) Find(ctx context.Context, id int32) (*school.Labo, error) {
 	var zero *school.Labo
-	results := s.labo.Find(ctx, []int32{id})
+	results := s.laborepo.Find(ctx, []int32{id})
 	if results.Error != nil {
 		return zero, results.Error
 	}
@@ -103,7 +88,7 @@ func (s *Labo) Update(ctx context.Context, in *school.Labo) (int32, error) {
 		return zero, err
 	}
 	if len(labos.Records) > 0 {
-		err = s.labo.Update(ctx, labos)
+		err = s.laborepo.Update(ctx, labos)
 		if err != nil {
 			return zero, err
 		}
@@ -114,7 +99,7 @@ func (s *Labo) Update(ctx context.Context, in *school.Labo) (int32, error) {
 
 func (s *Labo) Copy(ctx context.Context, id int32) (int32, error) {
 	zero := int32(0)
-	results := s.labo.Find(ctx, []int32{id})
+	results := s.laborepo.Find(ctx, []int32{id})
 	if results.Error != nil {
 		return zero, results.Error
 	}
@@ -128,7 +113,7 @@ func (s *Labo) Copy(ctx context.Context, id int32) (int32, error) {
 		if err != nil {
 			return zero, err
 		}
-		if err := s.labo.Create(ctx, labos); err != nil {
+		if err := s.laborepo.Create(ctx, labos); err != nil {
 			return 0, err
 		}
 		return labos.First().ID, nil
@@ -137,7 +122,7 @@ func (s *Labo) Copy(ctx context.Context, id int32) (int32, error) {
 }
 
 func (s *Labo) List(ctx context.Context, limit, offset int32) ([]*school.Labo, error) {
-	results := s.labo.List(ctx, limit, offset)
+	results := s.laborepo.List(ctx, limit, offset)
 	if results.Error != nil {
 		return nil, results.Error
 	}
