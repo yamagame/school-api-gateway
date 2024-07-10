@@ -1,4 +1,4 @@
-.name,.url,.desk.id,.chair.id
+.name,.url,.desk[].id,.chair[].id
 佐藤,https://www.sato-labo.com,1,2
 ,,2,
 ,,3,-

@@ -42,8 +42,8 @@ func (r *Labo) UpsertInBatches(ctx context.Context, labos *model.Labos, columns 
 
 func (r *Labo) Upsert(ctx context.Context, labos *model.Labos) error {
 	var err error
-	creates := &model.Labos{}
-	updates := &model.Labos{}
+	creates := model.NewLabos()
+	updates := model.NewLabos()
 	it := labos.NewIterator()
 	for it.HasNext() {
 		labo := it.Next()

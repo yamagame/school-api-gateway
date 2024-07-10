@@ -1,4 +1,7 @@
-.name,.group.id,.program.id,.building.id,.group.name
-佐藤,1,4,7,A
-清水,2,5,8,A
-鈴木,3,6,9,A
+.name,.group.id,.program.id,.building.id,.group.name,.desk[].id,.chair[].id
+佐藤,1,4,7,A,1,1
+,,,,,2,2
+清水,2,5,8,A,1,1
+,,,,,2,2
+鈴木,3,6,9,A,1,1
+,,,,,2,2

@@ -1,4 +1,4 @@
-.name,.desk.id
+.name,.desk[].id
 佐藤,1
 ,2
 ,3

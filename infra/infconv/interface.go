@@ -49,13 +49,10 @@ type valiables[T any] interface {
 	Append(records ...*T) *conv.Variables[T]
 }
 
-func (c Convs[M, B]) ToInfraWithMap(records []map[string]string, out valiables[M], factory func() *conv.Record) error {
-	for _, record := range records {
-		val, err := conv.NewRecordWithMap(record, factory)
-		if err != nil {
-			return err
-		}
-		l, err := c.conv.ToInfra(val)
+func (c Convs[M, B]) ToInfraWithMap(in []map[string]interface{}, out valiables[M], factory func() *conv.Record) error {
+	records := factory().NewRecords(in)
+	for _, record := range records.Records() {
+		l, err := c.conv.ToInfra(record)
 		if err != nil {
 			return err
 		}

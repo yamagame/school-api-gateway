@@ -4,8 +4,26 @@
       "id": 7,
       "name": ""
     },
-    "chair": [],
-    "desk": [],
+    "chair": [
+      {
+        "id": 1,
+        "labo_id": 0
+      },
+      {
+        "id": 2,
+        "labo_id": 0
+      }
+    ],
+    "desk": [
+      {
+        "id": 1,
+        "labo_id": 0
+      },
+      {
+        "id": 2,
+        "labo_id": 0
+      }
+    ],
     "group": {
       "id": 1,
       "name": "A"
@@ -23,8 +41,26 @@
       "id": 8,
       "name": ""
     },
-    "chair": [],
-    "desk": [],
+    "chair": [
+      {
+        "id": 1,
+        "labo_id": 0
+      },
+      {
+        "id": 2,
+        "labo_id": 0
+      }
+    ],
+    "desk": [
+      {
+        "id": 1,
+        "labo_id": 0
+      },
+      {
+        "id": 2,
+        "labo_id": 0
+      }
+    ],
     "group": {
       "id": 2,
       "name": "A"
@@ -42,8 +78,26 @@
       "id": 9,
       "name": ""
     },
-    "chair": [],
-    "desk": [],
+    "chair": [
+      {
+        "id": 1,
+        "labo_id": 0
+      },
+      {
+        "id": 2,
+        "labo_id": 0
+      }
+    ],
+    "desk": [
+      {
+        "id": 1,
+        "labo_id": 0
+      },
+      {
+        "id": 2,
+        "labo_id": 0
+      }
+    ],
     "group": {
       "id": 3,
       "name": "A"

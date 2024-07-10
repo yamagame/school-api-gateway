@@ -13,8 +13,8 @@ import (
 
 type LaboInterface interface {
 	Create(ctx context.Context) (int32, error)
-	CreateWithMap(ctx context.Context, records []map[string]string) (int32, error)
-	UpdateWithMap(ctx context.Context, records []map[string]string) (int32, error)
+	CreateWithMap(ctx context.Context, records []map[string]interface{}) (int32, error)
+	UpdateWithMap(ctx context.Context, records []map[string]interface{}) (int32, error)
 	Find(ctx context.Context, id int32) (*school.Labo, error)
 	Update(ctx context.Context, labo *school.Labo) (int32, error)
 	Copy(ctx context.Context, id int32) (int32, error)
@@ -39,9 +39,9 @@ func (s *Labo) Create(ctx context.Context) (int32, error) {
 	return labos.First().ID, nil
 }
 
-func (s *Labo) CreateWithMap(ctx context.Context, records []map[string]string) (int32, error) {
+func (s *Labo) CreateWithMap(ctx context.Context, records []map[string]interface{}) (int32, error) {
 	zero := int32(0)
-	labos := &model.Labos{}
+	labos := model.NewLabos()
 	err := infconv.Labos.ToInfraWithMap(records, labos, entity.NewLabo)
 	if err != nil {
 		return zero, err
@@ -52,9 +52,9 @@ func (s *Labo) CreateWithMap(ctx context.Context, records []map[string]string) (
 	return labos.First().ID, nil
 }
 
-func (s *Labo) UpdateWithMap(ctx context.Context, records []map[string]string) (int32, error) {
+func (s *Labo) UpdateWithMap(ctx context.Context, records []map[string]interface{}) (int32, error) {
 	zero := int32(0)
-	labos := &model.Labos{}
+	labos := model.NewLabos()
 	err := infconv.Labos.ToInfraWithMap(records, labos, entity.NewLabo)
 	if err != nil {
 		return zero, err
@@ -130,7 +130,7 @@ func (s *Labo) List(ctx context.Context, limit, offset int32) ([]*school.Labo, e
 }
 
 func laboToInfra(labos []*school.Labo) (*model.Labos, error) {
-	res := []*model.Labo{}
+	res := model.NewLabos()
 	for _, labo := range labos {
 		t, err := svcconv.Labo.ToEntity(labo)
 		if err != nil {
@@ -140,9 +140,9 @@ func laboToInfra(labos []*school.Labo) (*model.Labos, error) {
 		if err != nil {
 			return nil, err
 		}
-		res = append(res, l)
+		res.Append(l)
 	}
-	return model.NewLabos(res...), nil
+	return res, nil
 }
 
 func laboToProto(labos *model.Labos) ([]*school.Labo, error) {

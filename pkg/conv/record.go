@@ -70,21 +70,36 @@ func strTo(v interface{}, s string) interface{} {
 	return v
 }
 
-func NewRecordWithMap(field map[string]string, factory func() *Record) (*Record, error) {
-	newone := factory()
+func NewRecordWithMap(field map[string]interface{}, factory func() *Record) (*Record, error) {
+	record := factory()
 	for key, val := range field {
-		v, err := newone.Get(key)
+		v, err := record.Get(key)
 		if err != nil {
 			return nil, err
 		}
 		if val == "-" {
 			continue
 		}
-		if err := newone.Set(key, strTo(v, val)).Error; err != nil {
-			return nil, err
+		if s, ok := val.(string); ok {
+			if err := record.Set(key, strTo(v, s)).Error; err != nil {
+				return nil, err
+			}
+		} else if a, ok := val.([]map[string]interface{}); ok {
+			many, err := record.HasMany(key)
+			if err != nil {
+				return nil, err
+			}
+			factory := many.Model.Func()
+			for _, v := range a {
+				r, err := NewRecordWithMap(v, factory)
+				if err != nil {
+					return nil, err
+				}
+				many.Append(r)
+			}
 		}
 	}
-	return newone, nil
+	return record, nil
 }
 
 func (m *Record) PrimaryKeys() []string {
@@ -348,7 +363,7 @@ func (m *Record) Copy() *Record {
 	return r
 }
 
-func (m *Record) NewRecords(records []map[string]string) *Records {
+func (m *Record) NewRecords(records []map[string]interface{}) *Records {
 	work := NewRecords(m.Copy())
 	if m.Error != nil {
 		work.Error = m.Error
