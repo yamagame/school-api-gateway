@@ -31,11 +31,13 @@ func (LaboType) ToInfra(in *conv.Record) (*model.Labo, error) {
 		IfExist(".building", func(v *conv.Record) {
 			v.ToStruct(".building.id", ".BuildingID", out, conv.Int32Ptr).
 				ToStruct(".building.name", ".Building.Name", out)
+		}).
+		IfExist(".desk", func(v *conv.Record) {
+			if desks, err := Desks.ToInfra(v.GetHasManyRecords("desk")); err == nil {
+				out.Desks = desks
+			}
 		}).Error; err != nil {
 		return nil, err
-	}
-	if desks, err := Desks.ToInfra(in.GetHasManyRecords("desk")); err == nil {
-		out.Desks = desks
 	}
 	return out, nil
 }
@@ -63,11 +65,13 @@ func (LaboType) ToEntity(in *model.Labo) (*conv.Record, error) {
 		}).
 		IfNotNil(".Building", in, func(v *conv.Record) {
 			v.FromStruct(".Building.Name", ".building.name", in)
+		}).
+		IfNotNil(".Desks", in, func(v *conv.Record) {
+			if values, err := Desks.ToEntity(in.Desks); err == nil {
+				v.SetHasManyRecords("desk", values)
+			}
 		}).Error; err != nil {
 		return nil, err
-	}
-	if values, err := Desks.ToEntity(in.Desks); err == nil {
-		out.SetHasManyRecords("desk", values)
 	}
 	return out, nil
 }

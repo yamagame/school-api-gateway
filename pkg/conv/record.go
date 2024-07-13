@@ -457,7 +457,8 @@ func (m *Record) IfNotNil(jpath string, in interface{}, cb func(v *Record)) *Rec
 }
 
 func (m *Record) IfExist(jpath string, cb func(v *Record)) *Record {
-	if v, err := GetVal(m, jpath); err == nil {
+	data := m.allValues()
+	if v, err := GetVal(data, jpath); err == nil {
 		if reflect.TypeOf(v) == reflect.TypeOf(&Record{}) {
 			value := v.(*Record)
 			if value.IsExist() {
