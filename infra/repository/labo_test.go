@@ -37,8 +37,8 @@ func TestCreateUpdate(t *testing.T) {
 
 	out := labos.ValueMap()
 
-	// snapshot.Equal(t, out, "create-update.json")
-	snapshot.Save(t, out, "create-update.json")
+	snapshot.Equal(t, out, "create-update.json")
+	// snapshot.Save(t, out, "create-update.json")
 
 	models, err := infconv.Labos.ToInfra(labos, nil)
 	assert.NoError(t, err)
@@ -76,6 +76,6 @@ func TestCreateFromCSV(t *testing.T) {
 
 	out := labos.ValueMap()
 
-	// snapshot.Equal(t, out, "create-labos.json")
-	snapshot.Save(t, out, "create-labos.json")
+	snapshot.Equal(t, out, "create-labos.json")
+	// snapshot.Save(t, out, "create-labos.json")
 }
