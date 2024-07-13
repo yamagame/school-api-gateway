@@ -2,6 +2,7 @@ package conv
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"reflect"
 
@@ -74,7 +75,7 @@ func (x *Value) Get() interface{} {
 func (x *Value) Set(val interface{}) error {
 	if reflect.TypeOf(x.value) != reflect.TypeOf(val) {
 		fmt.Printf("%v\n", x)
-		return ErrInvalidType
+		return errors.Join(ErrInvalidType, fmt.Errorf("Set val: %v", val))
 	}
 	x.exist = true
 	x.synced = true
@@ -85,7 +86,7 @@ func (x *Value) Set(val interface{}) error {
 func (x *Value) Update(val interface{}) error {
 	if reflect.TypeOf(x.value) != reflect.TypeOf(val) {
 		fmt.Printf("%v\n", x)
-		return ErrInvalidType
+		return errors.Join(ErrInvalidType, fmt.Errorf("Update val: %v", val))
 	}
 	if x.protected {
 		return ErrProtectedValue

@@ -41,13 +41,9 @@ func TestLaboCSV(t *testing.T) {
 	records, err := conv.ReadCSV(fp)
 	assert.NoError(t, err)
 
-	o := conv.NewRecords(NewLabo())
-	for _, record := range records {
-		r, err := conv.NewRecordWithMap(record, NewLabo)
-		assert.NoError(t, err)
-		o.Append(r)
-	}
-	out := o.ValueMap()
+	labos := NewLabo().
+		NewRecords(records)
+	out := labos.ValueMap()
 
 	snapshot.Equal(t, out, "test-labo.json")
 	// snapshot.Save(t, out, "test-labo.json")

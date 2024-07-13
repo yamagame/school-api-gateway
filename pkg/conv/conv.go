@@ -59,8 +59,10 @@ func GetVal(data interface{}, template string) (interface{}, error) {
 	if err != nil {
 		return nil, err
 	}
-	if len(values) > 0 && len(values[0]) > 0 {
-		return values[0][0].Interface(), nil
+	if len(values) > 0 {
+		if len(values[0]) > 0 {
+			return values[0][0].Interface(), nil
+		}
 	}
 	return nil, ErrNotFound
 }

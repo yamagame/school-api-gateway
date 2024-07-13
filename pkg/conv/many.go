@@ -21,6 +21,15 @@ func (m *Many) ValueMap() []map[string]interface{} {
 	return r
 }
 
+func (m *Many) IsExist() bool {
+	for _, v := range m.Records {
+		if v.IsExist() {
+			return true
+		}
+	}
+	return false
+}
+
 func (m *Many) Append(records ...*Record) *Many {
 	if m.Error != nil {
 		return m

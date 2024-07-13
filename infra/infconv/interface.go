@@ -13,9 +13,9 @@ type Convs[M any, B ConvInterface[M]] struct {
 	conv B
 }
 
-func (c Convs[M, B]) ToInfra(in *conv.Records, err error) ([]*M, error) {
-	if err != nil {
-		return nil, err
+func (c Convs[M, B]) ToInfra(in *conv.Records, errs ...error) ([]*M, error) {
+	if len(errs) > 0 && errs[0] != nil {
+		return nil, errs[0]
 	}
 	r := []*M{}
 	it := in.NewIterator()

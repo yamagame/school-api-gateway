@@ -1,6 +1,8 @@
 package conv
 
 import (
+	"errors"
+	"fmt"
 	"reflect"
 	"strconv"
 )
@@ -417,7 +419,7 @@ func (m *Record) ToStruct(src, dst string, out interface{}, convs ...func(v inte
 		}
 		return m
 	}
-	m.Error = ErrNotFound
+	m.Error = errors.Join(ErrNotFound, fmt.Errorf("ToStruct src: %s, dst: %s", src, dst))
 	return m
 }
 
@@ -436,7 +438,40 @@ func (m *Record) FromStruct(src, dst string, in interface{}, convs ...func(v int
 		m.Error = m.Set(dst, v).Error
 		return m
 	}
-	m.Error = ErrNotFound
+	m.Error = errors.Join(ErrNotFound, fmt.Errorf("FromStruct src: %s, dst: %s", src, dst))
+	return m
+}
+
+func (m *Record) IfNotNil(jpath string, in interface{}, cb func(v *Record)) *Record {
+	var err error
+	if v, err := GetVal(in, jpath); err == nil {
+		value := reflect.ValueOf(v)
+		if value.Kind() == reflect.Ptr && value.IsNil() {
+			return m
+		}
+		cb(m)
+		return m
+	}
+	m.Error = err
+	return m
+}
+
+func (m *Record) IfExist(jpath string, cb func(v *Record)) *Record {
+	if v, err := GetVal(m, jpath); err == nil {
+		if reflect.TypeOf(v) == reflect.TypeOf(&Record{}) {
+			value := v.(*Record)
+			if value.IsExist() {
+				cb(m)
+			}
+		} else if reflect.TypeOf(v) == reflect.TypeOf(&Many{}) {
+			value := v.(*Many)
+			if value.IsExist() {
+				cb(m)
+			}
+		} else {
+			cb(m)
+		}
+	}
 	return m
 }
 

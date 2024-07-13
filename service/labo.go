@@ -2,6 +2,8 @@ package service
 
 import (
 	"context"
+	"errors"
+	"fmt"
 
 	"github.com/yamagame/school-api-gateway/entity"
 	"github.com/yamagame/school-api-gateway/infra/infconv"
@@ -39,28 +41,30 @@ func (s *Labo) Create(ctx context.Context) (int32, error) {
 	return labos.First().ID, nil
 }
 
-func (s *Labo) CreateWithMap(ctx context.Context, records []map[string]interface{}) (int32, error) {
+func (s *Labo) CreateWithMap(ctx context.Context, in []map[string]interface{}) (int32, error) {
 	zero := int32(0)
-	labos := model.NewLabos()
-	err := infconv.Labos.ToInfraWithMap(records, labos, entity.NewLabo)
+	entities := entity.NewLabo().NewRecords(in)
+	records, err := infconv.Labos.ToInfra(entities)
 	if err != nil {
 		return zero, err
 	}
+	labos := model.NewLabos(records...)
 	if err := s.laborepo.Create(ctx, labos); err != nil {
-		return 0, err
+		return zero, err
 	}
 	return labos.First().ID, nil
 }
 
-func (s *Labo) UpdateWithMap(ctx context.Context, records []map[string]interface{}) (int32, error) {
+func (s *Labo) UpdateWithMap(ctx context.Context, in []map[string]interface{}) (int32, error) {
 	zero := int32(0)
-	labos := model.NewLabos()
-	err := infconv.Labos.ToInfraWithMap(records, labos, entity.NewLabo)
+	entities := entity.NewLabo().NewRecords(in)
+	records, err := infconv.Labos.ToInfra(entities, nil)
 	if err != nil {
 		return zero, err
 	}
+	labos := model.NewLabos(records...)
 	if err := s.laborepo.Update(ctx, labos); err != nil {
-		return 0, err
+		return zero, err
 	}
 	return labos.First().ID, nil
 }
@@ -78,7 +82,7 @@ func (s *Labo) Find(ctx context.Context, id int32) (*school.Labo, error) {
 	if len(labos) > 0 {
 		return labos[0], nil
 	}
-	return zero, ErrNotFound
+	return zero, errors.Join(ErrNotFound, fmt.Errorf("Find id: %d", id))
 }
 
 func (s *Labo) Update(ctx context.Context, in *school.Labo) (int32, error) {

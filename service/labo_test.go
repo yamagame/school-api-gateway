@@ -2,11 +2,11 @@ package service
 
 import (
 	"context"
-	"fmt"
 	"os"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"github.com/yamagame/school-api-gateway/infra"
 	"github.com/yamagame/school-api-gateway/infra/repository"
 	"github.com/yamagame/school-api-gateway/pkg/conv"
@@ -16,40 +16,48 @@ import (
 func TestLabo(t *testing.T) {
 	var err error
 	ctx := context.Background()
+
+	// サービスを作成
 	db := infra.DB()
-	s := NewLabo(repository.NewLabo(db))
-	id, err := s.Create(ctx)
-	assert.NoError(t, err)
-	assert.NotEqual(t, 0, id)
-	fmt.Println(id)
+	svc := NewLabo(repository.NewLabo(db))
+
+	// 1レコード作成
+	id, err := svc.Create(ctx)
+	require.NoError(t, err)
+	require.NotEqual(t, 0, id)
 
 	laboname := "テスト研究室"
 	copyname := "テスト研究室コピー"
 
-	id2, err := s.Update(ctx, &school.Labo{
+	// プライマリキーでカラムを更新
+	id2, err := svc.Update(ctx, &school.Labo{
 		Id:   id,
 		Name: laboname,
 	})
-	assert.NoError(t, err)
-	assert.Equal(t, id, id2)
+	require.NoError(t, err)
+	require.Equal(t, id, id2)
 
-	labo, err := s.Find(ctx, id2)
-	assert.NoError(t, err)
-	assert.Equal(t, laboname, labo.Name)
+	// プライマリキーで検索
+	labo, err := svc.Find(ctx, id2)
+	require.NoError(t, err)
+	require.Equal(t, laboname, labo.Name)
 
-	id3, err := s.Copy(ctx, id2)
-	assert.NoError(t, err)
+	// プライマリキーでコピー
+	id3, err := svc.Copy(ctx, id2)
+	require.NoError(t, err)
+	require.NotEqual(t, 0, id3)
 
-	_, err = s.Update(ctx, &school.Labo{
+	// プライマリキーでカラムを更新
+	_, err = svc.Update(ctx, &school.Labo{
 		Id:   id3,
 		Name: copyname,
 	})
-	assert.NoError(t, err)
-	assert.Equal(t, id, id2)
+	require.NoError(t, err)
 
-	labo3, err := s.Find(ctx, id3)
-	assert.NoError(t, err)
-	assert.Equal(t, copyname, labo3.Name)
+	// プライマリキーで検索
+	labo3, err := svc.Find(ctx, id3)
+	require.NoError(t, err)
+	require.Equal(t, copyname, labo3.Name)
 }
 
 func TestCreateWithMap(t *testing.T) {
@@ -62,8 +70,8 @@ func TestCreateWithMap(t *testing.T) {
 
 	ctx := context.Background()
 	db := infra.DB()
-	s := NewLabo(repository.NewLabo(db))
-	id, err := s.CreateWithMap(ctx, records)
+	svc := NewLabo(repository.NewLabo(db))
+	id, err := svc.CreateWithMap(ctx, records)
 	assert.NoError(t, err)
 	assert.NotEqual(t, 0, id)
 }
@@ -78,8 +86,8 @@ func TestUpdateWithMap(t *testing.T) {
 
 	ctx := context.Background()
 	db := infra.DB()
-	s := NewLabo(repository.NewLabo(db))
-	id, err := s.UpdateWithMap(ctx, records)
+	svc := NewLabo(repository.NewLabo(db))
+	id, err := svc.UpdateWithMap(ctx, records)
 	assert.NoError(t, err)
 	assert.NotEqual(t, 0, id)
 }
