@@ -34,7 +34,7 @@ func TestLaboConv(t *testing.T) {
 	irmodel, err := Labo.ToIRModel(in)
 	assert.NoError(t, err)
 
-	out, err := Labo.ToInfra(irmodel)
+	out, err := Labo.ToStruct(irmodel)
 	assert.NoError(t, err)
 
 	snapshot.Equal(t, out, "test1.json")

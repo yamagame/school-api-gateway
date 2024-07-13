@@ -1,19 +1,15 @@
-package infconv
-
-import (
-	"github.com/yamagame/school-api-gateway/pkg/conv"
-)
+package conv
 
 type ConvInterface[M any] interface {
-	ToInfra(*conv.Record) (*M, error)
-	ToIRModel(*M) (*conv.Record, error)
+	ToStruct(*Record) (*M, error)
+	ToIRModel(*M) (*Record, error)
 }
 
 type Convs[M any, B ConvInterface[M]] struct {
-	conv B
+	Conv B
 }
 
-func (c Convs[M, B]) ToInfra(in *conv.Records, errs ...error) ([]*M, error) {
+func (c Convs[M, B]) ToStruct(in *Records, errs ...error) ([]*M, error) {
 	if len(errs) > 0 && errs[0] != nil {
 		return nil, errs[0]
 	}
@@ -21,7 +17,7 @@ func (c Convs[M, B]) ToInfra(in *conv.Records, errs ...error) ([]*M, error) {
 	it := in.NewIterator()
 	for it.HasNext() {
 		v := it.Next()
-		t, err := c.conv.ToInfra(v)
+		t, err := c.Conv.ToStruct(v)
 		if err != nil {
 			return nil, err
 		}
@@ -30,13 +26,13 @@ func (c Convs[M, B]) ToInfra(in *conv.Records, errs ...error) ([]*M, error) {
 	return r, nil
 }
 
-func (c Convs[M, B]) ToIRModel(in []*M) (*conv.Records, error) {
+func (c Convs[M, B]) ToIRModel(in []*M) (*Records, error) {
 	if len(in) == 0 {
-		return nil, conv.ErrEmptyArray
+		return nil, ErrEmptyArray
 	}
-	r := &conv.Records{}
+	r := &Records{}
 	for _, v := range in {
-		t, err := c.conv.ToIRModel(v)
+		t, err := c.Conv.ToIRModel(v)
 		if err != nil {
 			return nil, err
 		}
@@ -46,13 +42,13 @@ func (c Convs[M, B]) ToIRModel(in []*M) (*conv.Records, error) {
 }
 
 type valiables[T any] interface {
-	Append(records ...*T) *conv.Variables[T]
+	Append(records ...*T) *Variables[T]
 }
 
-func (c Convs[M, B]) ToInfraWithMap(in []map[string]interface{}, out valiables[M], factory func() *conv.Record) error {
+func (c Convs[M, B]) ToStructWithMap(in []map[string]interface{}, out valiables[M], factory func() *Record) error {
 	records := factory().NewRecords(in)
 	for _, record := range records.Records() {
-		l, err := c.conv.ToInfra(record)
+		l, err := c.Conv.ToStruct(record)
 		if err != nil {
 			return err
 		}

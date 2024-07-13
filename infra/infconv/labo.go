@@ -10,11 +10,11 @@ type LaboType struct{}
 
 var Labo = LaboType{}
 
-var Labos = Convs[model.Labo, LaboType]{
-	conv: Labo,
+var Labos = conv.Convs[model.Labo, LaboType]{
+	Conv: Labo,
 }
 
-func (LaboType) ToInfra(in *conv.Record) (*model.Labo, error) {
+func (LaboType) ToStruct(in *conv.Record) (*model.Labo, error) {
 	out := &model.Labo{}
 	if err := in.
 		ToStruct(".id", ".ID", out).
@@ -33,7 +33,7 @@ func (LaboType) ToInfra(in *conv.Record) (*model.Labo, error) {
 				ToStruct(".building.name", ".Building.Name", out)
 		}).
 		IfExist(".desk", func(v *conv.Record) {
-			if desks, err := Desks.ToInfra(v.GetHasManyRecords("desk")); err == nil {
+			if desks, err := Desks.ToStruct(v.GetHasManyRecords("desk")); err == nil {
 				out.Desks = desks
 			}
 		}).Error; err != nil {
@@ -49,22 +49,16 @@ func (LaboType) ToIRModel(in *model.Labo) (*conv.Record, error) {
 		FromStruct(".Name", ".name", in, conv.PtrStr).
 		FromStruct(".URL", ".url", in, conv.PtrStr).
 		IfNotNil(".GroupID", in, func(v *conv.Record) {
-			v.FromStruct(".GroupID", ".group.id", in, conv.PtrInt32)
-		}).
-		IfNotNil(".Group", in, func(v *conv.Record) {
-			v.FromStruct(".Group.Name", ".group.name", in)
+			v.FromStruct(".GroupID", ".group.id", in, conv.PtrInt32).
+				FromStruct(".Group.Name", ".group.name", in)
 		}).
 		IfNotNil(".ProgramID", in, func(v *conv.Record) {
-			v.FromStruct(".ProgramID", ".program.id", in, conv.PtrInt32)
-		}).
-		IfNotNil(".Program", in, func(v *conv.Record) {
-			v.FromStruct(".Program.Name", ".program.name", in)
+			v.FromStruct(".ProgramID", ".program.id", in, conv.PtrInt32).
+				FromStruct(".Program.Name", ".program.name", in)
 		}).
 		IfNotNil(".BuildingID", in, func(v *conv.Record) {
-			v.FromStruct(".BuildingID", ".building.id", in, conv.PtrInt32)
-		}).
-		IfNotNil(".Building", in, func(v *conv.Record) {
-			v.FromStruct(".Building.Name", ".building.name", in)
+			v.FromStruct(".BuildingID", ".building.id", in, conv.PtrInt32).
+				FromStruct(".Building.Name", ".building.name", in)
 		}).
 		IfNotNil(".Desks", in, func(v *conv.Record) {
 			if values, err := Desks.ToIRModel(in.Desks); err == nil {

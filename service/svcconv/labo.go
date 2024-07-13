@@ -8,10 +8,16 @@ import (
 	"github.com/yamagame/school-api-gateway/proto/school"
 )
 
-type LaboConv struct {
+type LaboType struct {
 }
 
-func (c LaboConv) ToProto(in *conv.Record) (*school.Labo, error) {
+var Labo = LaboType{}
+
+var Labos = conv.Convs[school.Labo, LaboType]{
+	Conv: Labo,
+}
+
+func (c LaboType) ToStruct(in *conv.Record) (*school.Labo, error) {
 	out := &school.Labo{}
 	in.
 		ToStruct(".id", ".Id", out).
@@ -34,7 +40,7 @@ func (c LaboConv) ToProto(in *conv.Record) (*school.Labo, error) {
 	return out, nil
 }
 
-func (c LaboConv) ToIRModel(in *school.Labo) (*conv.Record, error) {
+func (c LaboType) ToIRModel(in *school.Labo) (*conv.Record, error) {
 	out := irmodel.NewLabo().
 		FromStruct(".Id", ".id", in).
 		FromStruct(".Name", ".name", in).
@@ -53,36 +59,22 @@ func (c LaboConv) ToIRModel(in *school.Labo) (*conv.Record, error) {
 	return out, nil
 }
 
-func (c LaboConv) ProtoToInfra(labos []*school.Labo) (*model.Labos, error) {
-	res := model.NewLabos()
-	for _, labo := range labos {
-		t, err := c.ToIRModel(labo)
-		if err != nil {
-			return nil, err
-		}
-		l, err := infconv.Labo.ToInfra(t)
-		if err != nil {
-			return nil, err
-		}
-		res.Append(l)
+func (c LaboType) ProtoToInfra(labos []*school.Labo) (*model.Labos, error) {
+	irmodels, err := Labos.ToIRModel(labos)
+	if err != nil {
+		return nil, err
 	}
-	return res, nil
+	records, err := infconv.Labos.ToStruct(irmodels)
+	if err != nil {
+		return nil, err
+	}
+	return model.NewLabos(records...), nil
 }
 
-func (c LaboConv) InfraToProto(labos *model.Labos) ([]*school.Labo, error) {
-	res := []*school.Labo{}
-	it := labos.NewIterator()
-	for it.HasNext() {
-		labo := it.Next()
-		t, err := infconv.Labo.ToIRModel(labo)
-		if err != nil {
-			return nil, err
-		}
-		l, err := c.ToProto(t)
-		if err != nil {
-			return nil, err
-		}
-		res = append(res, l)
+func (c LaboType) InfraToProto(labos *model.Labos) ([]*school.Labo, error) {
+	irmodels, err := infconv.Labos.ToIRModel(labos.Records)
+	if err != nil {
+		return nil, err
 	}
-	return res, nil
+	return Labos.ToStruct(irmodels)
 }

@@ -10,11 +10,11 @@ type DeskType struct{}
 
 var Desk = DeskType{}
 
-var Desks = Convs[model.Desk, DeskType]{
-	conv: Desk,
+var Desks = conv.Convs[model.Desk, DeskType]{
+	Conv: Desk,
 }
 
-func (DeskType) ToInfra(in *conv.Record) (*model.Desk, error) {
+func (DeskType) ToStruct(in *conv.Record) (*model.Desk, error) {
 	out := &model.Desk{}
 	if err := in.
 		ToStruct(".id", ".ID", out).

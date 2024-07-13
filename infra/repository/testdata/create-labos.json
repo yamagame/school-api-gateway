@@ -10,8 +10,46 @@
       "id": 0,
       "name": ""
     },
+    "id": 1,
+    "name": "サトウ",
+    "program": {
+      "id": 0,
+      "name": ""
+    },
+    "url": ""
+  },
+  {
+    "building": {
+      "id": 0,
+      "name": ""
+    },
+    "chair": [],
+    "desk": [],
+    "group": {
+      "id": 0,
+      "name": ""
+    },
+    "id": 2,
+    "name": "シミズ",
+    "program": {
+      "id": 0,
+      "name": ""
+    },
+    "url": ""
+  },
+  {
+    "building": {
+      "id": 0,
+      "name": ""
+    },
+    "chair": [],
+    "desk": [],
+    "group": {
+      "id": 0,
+      "name": ""
+    },
     "id": 0,
-    "name": "テスト",
+    "name": "スズキ",
     "program": {
       "id": 0,
       "name": ""

@@ -457,19 +457,43 @@ func (m *Record) IfNotNil(jpath string, in interface{}, cb func(v *Record)) *Rec
 }
 
 func (m *Record) IfExist(jpath string, cb func(v *Record)) *Record {
-	data := m.allValues()
-	if v, err := GetVal(data, jpath); err == nil {
+	var isExist func(v interface{}) bool
+	isExist = func(v interface{}) bool {
 		if reflect.TypeOf(v) == reflect.TypeOf(&Record{}) {
 			value := v.(*Record)
 			if value.IsExist() {
-				cb(m)
+				return true
 			}
 		} else if reflect.TypeOf(v) == reflect.TypeOf(&Many{}) {
 			value := v.(*Many)
 			if value.IsExist() {
-				cb(m)
+				return true
 			}
-		} else {
+		} else if reflect.TypeOf(v) == reflect.TypeOf(&Value{}) {
+			value := v.(*Value)
+			if value.IsExist() {
+				return true
+			}
+		} else if reflect.TypeOf(v) == reflect.TypeOf([]map[string]interface{}{}) {
+			values := v.([]map[string]interface{})
+			for _, q := range values {
+				if isExist(q) {
+					return true
+				}
+			}
+		} else if reflect.TypeOf(v) == reflect.TypeOf(map[string]interface{}{}) {
+			values := v.(map[string]interface{})
+			for _, q := range values {
+				if isExist(q) {
+					return true
+				}
+			}
+		}
+		return false
+	}
+	data := m.allValues()
+	if v, err := GetVal(data, jpath); err == nil {
+		if isExist(v) {
 			cb(m)
 		}
 	}

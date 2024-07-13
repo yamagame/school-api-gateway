@@ -2,6 +2,7 @@ package repository
 
 import (
 	"context"
+	"fmt"
 	"os"
 	"testing"
 
@@ -12,39 +13,42 @@ import (
 	"github.com/yamagame/school-api-gateway/irmodel"
 	"github.com/yamagame/school-api-gateway/pkg/conv"
 	"github.com/yamagame/school-api-gateway/pkg/snapshot"
+	"gorm.io/gorm"
 )
 
 func TestCreateUpdate(t *testing.T) {
-	var err error
 	ctx := context.Background()
 	db := infra.DB()
-	repo := NewLabo(db)
+	db.Transaction(func(tx *gorm.DB) error {
+		repo := NewLabo(tx)
 
-	labos := &conv.Records{}
-	labos.Append(
-		irmodel.NewLabo().
-			Set(".id", int32(1)).
-			Set(".name", "サトウ1").
-			Set(".url", "http://sato.com"),
-		irmodel.NewLabo().
-			Set(".id", int32(2)).
-			Set(".name", "シミズ2"),
-		irmodel.NewLabo().
-			Set(".id", int32(0)).
-			Set(".name", "スズキ3").
-			Set(".url", "http://zuzuki.com"),
-	)
+		labos := &conv.Records{}
+		labos.Append(
+			irmodel.NewLabo().
+				Set(".id", int32(1)).
+				Set(".name", "サトウ1").
+				Set(".url", "http://sato.com"),
+			irmodel.NewLabo().
+				Set(".id", int32(2)).
+				Set(".name", "シミズ2"),
+			irmodel.NewLabo().
+				Set(".id", int32(0)).
+				Set(".name", "スズキ3").
+				Set(".url", "http://zuzuki.com"),
+		)
 
-	out := labos.ValueMap()
+		out := labos.ValueMap()
 
-	snapshot.Equal(t, out, "create-update.json")
-	// snapshot.Save(t, out, "create-update.json")
+		snapshot.Equal(t, out, "create-update.json")
+		// snapshot.Save(t, out, "create-update.json")
 
-	models, err := infconv.Labos.ToInfra(labos, nil)
-	assert.NoError(t, err)
+		models, err := infconv.Labos.ToStruct(labos, nil)
+		assert.NoError(t, err)
 
-	err = repo.Upsert(ctx, model.NewLabos(models...))
-	assert.NoError(t, err)
+		err = repo.Upsert(ctx, model.NewLabos(models...))
+		assert.NoError(t, err)
+		return fmt.Errorf("restore")
+	})
 }
 
 func TestLabosInfraToIRModel(t *testing.T) {

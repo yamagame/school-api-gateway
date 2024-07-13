@@ -44,7 +44,7 @@ func (s *Labo) Create(ctx context.Context) (int32, error) {
 func (s *Labo) CreateWithMap(ctx context.Context, in []map[string]interface{}) (int32, error) {
 	zero := int32(0)
 	entities := irmodel.NewLabo().NewRecords(in)
-	records, err := infconv.Labos.ToInfra(entities)
+	records, err := infconv.Labos.ToStruct(entities)
 	if err != nil {
 		return zero, err
 	}
@@ -58,7 +58,7 @@ func (s *Labo) CreateWithMap(ctx context.Context, in []map[string]interface{}) (
 func (s *Labo) UpdateWithMap(ctx context.Context, in []map[string]interface{}) (int32, error) {
 	zero := int32(0)
 	entities := irmodel.NewLabo().NewRecords(in)
-	records, err := infconv.Labos.ToInfra(entities, nil)
+	records, err := infconv.Labos.ToStruct(entities, nil)
 	if err != nil {
 		return zero, err
 	}
