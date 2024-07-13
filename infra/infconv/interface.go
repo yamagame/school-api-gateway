@@ -6,7 +6,7 @@ import (
 
 type ConvInterface[M any] interface {
 	ToInfra(*conv.Record) (*M, error)
-	ToEntity(*M) (*conv.Record, error)
+	ToIRModel(*M) (*conv.Record, error)
 }
 
 type Convs[M any, B ConvInterface[M]] struct {
@@ -30,13 +30,13 @@ func (c Convs[M, B]) ToInfra(in *conv.Records, errs ...error) ([]*M, error) {
 	return r, nil
 }
 
-func (c Convs[M, B]) ToEntity(in []*M) (*conv.Records, error) {
+func (c Convs[M, B]) ToIRModel(in []*M) (*conv.Records, error) {
 	if len(in) == 0 {
 		return nil, conv.ErrEmptyArray
 	}
 	r := &conv.Records{}
 	for _, v := range in {
-		t, err := c.conv.ToEntity(v)
+		t, err := c.conv.ToIRModel(v)
 		if err != nil {
 			return nil, err
 		}

@@ -1,8 +1,8 @@
 package infconv
 
 import (
-	"github.com/yamagame/school-api-gateway/entity"
 	"github.com/yamagame/school-api-gateway/infra/model"
+	"github.com/yamagame/school-api-gateway/irmodel"
 	"github.com/yamagame/school-api-gateway/pkg/conv"
 )
 
@@ -42,8 +42,8 @@ func (LaboType) ToInfra(in *conv.Record) (*model.Labo, error) {
 	return out, nil
 }
 
-func (LaboType) ToEntity(in *model.Labo) (*conv.Record, error) {
-	out := entity.NewLabo()
+func (LaboType) ToIRModel(in *model.Labo) (*conv.Record, error) {
+	out := irmodel.NewLabo()
 	if err := out.
 		FromStruct(".ID", ".id", in).
 		FromStruct(".Name", ".name", in, conv.PtrStr).
@@ -67,7 +67,7 @@ func (LaboType) ToEntity(in *model.Labo) (*conv.Record, error) {
 			v.FromStruct(".Building.Name", ".building.name", in)
 		}).
 		IfNotNil(".Desks", in, func(v *conv.Record) {
-			if values, err := Desks.ToEntity(in.Desks); err == nil {
+			if values, err := Desks.ToIRModel(in.Desks); err == nil {
 				v.SetHasManyRecords("desk", values)
 			}
 		}).Error; err != nil {

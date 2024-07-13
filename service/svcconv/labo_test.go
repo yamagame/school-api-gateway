@@ -26,7 +26,9 @@ func TestLabo(t *testing.T) {
 			Name: "建物名",
 		},
 	}
-	e, err := infconv.Labo.ToEntity(m)
+
+	// dao -> entity -> proto 変換
+	e, err := infconv.Labo.ToIRModel(m)
 	assert.NoError(t, err)
 	s, err := Labo.ToProto(e)
 	assert.NoError(t, err)

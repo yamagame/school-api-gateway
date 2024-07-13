@@ -1,8 +1,8 @@
 package infconv
 
 import (
-	"github.com/yamagame/school-api-gateway/entity"
 	"github.com/yamagame/school-api-gateway/infra/model"
+	"github.com/yamagame/school-api-gateway/irmodel"
 	"github.com/yamagame/school-api-gateway/pkg/conv"
 )
 
@@ -24,8 +24,8 @@ func (DeskType) ToInfra(in *conv.Record) (*model.Desk, error) {
 	return out, nil
 }
 
-func (DeskType) ToEntity(in *model.Desk) (*conv.Record, error) {
-	out := entity.NewDesk()
+func (DeskType) ToIRModel(in *model.Desk) (*conv.Record, error) {
+	out := irmodel.NewDesk()
 	if err := out.
 		FromStruct(".ID", ".id", in).
 		FromStruct(".LaboID", ".labo_id", in).Error; err != nil {

@@ -71,6 +71,8 @@ func TestCreateWithMap(t *testing.T) {
 	ctx := context.Background()
 	db := infra.DB()
 	svc := NewLabo(repository.NewLabo(db))
+
+	// []map[string]stringから作成
 	id, err := svc.CreateWithMap(ctx, records)
 	assert.NoError(t, err)
 	assert.NotEqual(t, 0, id)
@@ -87,6 +89,8 @@ func TestUpdateWithMap(t *testing.T) {
 	ctx := context.Background()
 	db := infra.DB()
 	svc := NewLabo(repository.NewLabo(db))
+
+	// []map[string]stringから更新
 	id, err := svc.UpdateWithMap(ctx, records)
 	assert.NoError(t, err)
 	assert.NotEqual(t, 0, id)

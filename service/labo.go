@@ -5,10 +5,10 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/yamagame/school-api-gateway/entity"
 	"github.com/yamagame/school-api-gateway/infra/infconv"
 	"github.com/yamagame/school-api-gateway/infra/model"
 	"github.com/yamagame/school-api-gateway/infra/repository"
+	"github.com/yamagame/school-api-gateway/irmodel"
 	"github.com/yamagame/school-api-gateway/proto/school"
 	"github.com/yamagame/school-api-gateway/service/svcconv"
 )
@@ -43,7 +43,7 @@ func (s *Labo) Create(ctx context.Context) (int32, error) {
 
 func (s *Labo) CreateWithMap(ctx context.Context, in []map[string]interface{}) (int32, error) {
 	zero := int32(0)
-	entities := entity.NewLabo().NewRecords(in)
+	entities := irmodel.NewLabo().NewRecords(in)
 	records, err := infconv.Labos.ToInfra(entities)
 	if err != nil {
 		return zero, err
@@ -57,7 +57,7 @@ func (s *Labo) CreateWithMap(ctx context.Context, in []map[string]interface{}) (
 
 func (s *Labo) UpdateWithMap(ctx context.Context, in []map[string]interface{}) (int32, error) {
 	zero := int32(0)
-	entities := entity.NewLabo().NewRecords(in)
+	entities := irmodel.NewLabo().NewRecords(in)
 	records, err := infconv.Labos.ToInfra(entities, nil)
 	if err != nil {
 		return zero, err
@@ -75,7 +75,7 @@ func (s *Labo) Find(ctx context.Context, id int32) (*school.Labo, error) {
 	if results.Error != nil {
 		return zero, results.Error
 	}
-	labos, err := laboToProto(results)
+	labos, err := svcconv.Labo.InfraToProto(results)
 	if err != nil {
 		return zero, err
 	}
@@ -87,7 +87,7 @@ func (s *Labo) Find(ctx context.Context, id int32) (*school.Labo, error) {
 
 func (s *Labo) Update(ctx context.Context, in *school.Labo) (int32, error) {
 	zero := int32(0)
-	labos, err := laboToInfra([]*school.Labo{in})
+	labos, err := svcconv.Labo.ProtoToInfra([]*school.Labo{in})
 	if err != nil {
 		return zero, err
 	}
@@ -107,13 +107,13 @@ func (s *Labo) Copy(ctx context.Context, id int32) (int32, error) {
 	if results.Error != nil {
 		return zero, results.Error
 	}
-	in, err := laboToProto(results)
+	in, err := svcconv.Labo.InfraToProto(results)
 	if err != nil {
 		return zero, err
 	}
 	if len(in) > 0 {
 		in[0].Id = 0
-		labos, err := laboToInfra(in)
+		labos, err := svcconv.Labo.ProtoToInfra(in)
 		if err != nil {
 			return zero, err
 		}
@@ -130,39 +130,5 @@ func (s *Labo) List(ctx context.Context, limit, offset int32) ([]*school.Labo, e
 	if results.Error != nil {
 		return nil, results.Error
 	}
-	return laboToProto(results)
-}
-
-func laboToInfra(labos []*school.Labo) (*model.Labos, error) {
-	res := model.NewLabos()
-	for _, labo := range labos {
-		t, err := svcconv.Labo.ToEntity(labo)
-		if err != nil {
-			return nil, err
-		}
-		l, err := infconv.Labo.ToInfra(t)
-		if err != nil {
-			return nil, err
-		}
-		res.Append(l)
-	}
-	return res, nil
-}
-
-func laboToProto(labos *model.Labos) ([]*school.Labo, error) {
-	res := []*school.Labo{}
-	it := labos.NewIterator()
-	for it.HasNext() {
-		labo := it.Next()
-		t, err := infconv.Labo.ToEntity(labo)
-		if err != nil {
-			return nil, err
-		}
-		l, err := svcconv.Labo.ToProto(t)
-		if err != nil {
-			return nil, err
-		}
-		res = append(res, l)
-	}
-	return res, nil
+	return svcconv.Labo.InfraToProto(results)
 }

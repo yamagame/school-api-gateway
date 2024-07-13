@@ -31,10 +31,10 @@ func TestLaboConv(t *testing.T) {
 			{ID: 3, LaboID: 13},
 		},
 	}
-	entity, err := Labo.ToEntity(in)
+	irmodel, err := Labo.ToIRModel(in)
 	assert.NoError(t, err)
 
-	out, err := Labo.ToInfra(entity)
+	out, err := Labo.ToInfra(irmodel)
 	assert.NoError(t, err)
 
 	snapshot.Equal(t, out, "test1.json")
