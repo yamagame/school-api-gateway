@@ -17,11 +17,11 @@ type Area struct {
 // 西地区
 
 type Areas struct {
-	*conv.Variables[Area]
+	*conv.Slice[Area]
 }
 
 func NewAreas(variables ...*Area) *Areas {
 	return &Areas{
-		Variables: conv.NewVariables(variables...),
+		Slice: conv.NewSlice(variables...),
 	}
 }

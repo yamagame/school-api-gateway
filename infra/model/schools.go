@@ -17,11 +17,11 @@ type School struct {
 }
 
 type Schools struct {
-	*conv.Variables[School]
+	*conv.Slice[School]
 }
 
 func NewSchools(variables ...*School) *Schools {
 	return &Schools{
-		Variables: conv.NewVariables(variables...),
+		Slice: conv.NewSlice(variables...),
 	}
 }

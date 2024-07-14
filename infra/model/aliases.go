@@ -14,11 +14,11 @@ type Alias struct {
 }
 
 type Aliases struct {
-	*conv.Variables[Alias]
+	*conv.Slice[Alias]
 }
 
 func NewAliases(variables ...*Alias) *Aliases {
 	return &Aliases{
-		Variables: conv.NewVariables(variables...),
+		Slice: conv.NewSlice(variables...),
 	}
 }

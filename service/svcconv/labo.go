@@ -8,16 +8,10 @@ import (
 	"github.com/yamagame/school-api-gateway/proto/school"
 )
 
-type LaboType struct {
+type LaboConv struct {
 }
 
-var Labo = LaboType{}
-
-var Labos = conv.Convs[school.Labo, LaboType]{
-	Conv: Labo,
-}
-
-func (c LaboType) ToStruct(in *conv.Record) (*school.Labo, error) {
+func (c LaboConv) ToStruct(in *conv.Record) (*school.Labo, error) {
 	out := &school.Labo{}
 	in.
 		ToStruct(".id", ".Id", out).
@@ -40,7 +34,7 @@ func (c LaboType) ToStruct(in *conv.Record) (*school.Labo, error) {
 	return out, nil
 }
 
-func (c LaboType) ToIRModel(in *school.Labo) (*conv.Record, error) {
+func (c LaboConv) ToIRModel(in *school.Labo) (*conv.Record, error) {
 	out := irmodel.NewLabo().
 		FromStruct(".Id", ".id", in).
 		FromStruct(".Name", ".name", in).
@@ -59,20 +53,22 @@ func (c LaboType) ToIRModel(in *school.Labo) (*conv.Record, error) {
 	return out, nil
 }
 
-func (c LaboType) ProtoToInfra(labos []*school.Labo) (*model.Labos, error) {
-	irmodels, err := Labos.ToIRModel(labos)
-	if err != nil {
-		return nil, err
-	}
-	records, err := infconv.Labos.ToStruct(irmodels)
-	if err != nil {
-		return nil, err
-	}
-	return model.NewLabos(records...), nil
+func (LaboConv) ToArray(labos []*school.Labo) (*school.Labos, error) {
+	return &school.Labos{
+		Slice: conv.NewSlice(labos...),
+	}, nil
 }
 
-func (c LaboType) InfraToProto(labos *model.Labos) ([]*school.Labo, error) {
-	irmodels, err := infconv.Labos.ToIRModel(labos.Records)
+func (c LaboConv) ProtoToInfra(labos *school.Labos) (*model.Labos, error) {
+	irmodels, err := Labos.ToIRModel(labos.Copy())
+	if err != nil {
+		return nil, err
+	}
+	return infconv.Labos.ToStruct(irmodels)
+}
+
+func (c LaboConv) InfraToProto(labos *model.Labos) (*school.Labos, error) {
+	irmodels, err := infconv.Labos.ToIRModel(labos.Copy())
 	if err != nil {
 		return nil, err
 	}

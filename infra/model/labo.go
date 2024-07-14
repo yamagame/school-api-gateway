@@ -26,11 +26,11 @@ type Labo struct {
 }
 
 type Labos struct {
-	*conv.Variables[Labo]
+	*conv.Slice[Labo]
 }
 
 func NewLabos(variables ...*Labo) *Labos {
 	return &Labos{
-		Variables: conv.NewVariables(variables...),
+		Slice: conv.NewSlice(variables...),
 	}
 }

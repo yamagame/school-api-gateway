@@ -18,11 +18,11 @@ type Group struct {
 // Ⅲ類（理工系）
 
 type Groups struct {
-	*conv.Variables[Group]
+	*conv.Slice[Group]
 }
 
 func NewGroups(variables ...*Group) *Groups {
 	return &Groups{
-		Variables: conv.NewVariables(variables...),
+		Slice: conv.NewSlice(variables...),
 	}
 }

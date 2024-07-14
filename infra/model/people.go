@@ -20,11 +20,11 @@ type Person struct {
 }
 
 type People struct {
-	*conv.Variables[Person]
+	*conv.Slice[Person]
 }
 
 func NewPeople(variables ...*Person) *People {
 	return &People{
-		Variables: conv.NewVariables(variables...),
+		Slice: conv.NewSlice(variables...),
 	}
 }

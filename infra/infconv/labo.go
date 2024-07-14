@@ -6,15 +6,9 @@ import (
 	"github.com/yamagame/school-api-gateway/pkg/conv"
 )
 
-type LaboType struct{}
+type LaboConv struct{}
 
-var Labo = LaboType{}
-
-var Labos = conv.Convs[model.Labo, LaboType]{
-	Conv: Labo,
-}
-
-func (LaboType) ToStruct(in *conv.Record) (*model.Labo, error) {
+func (LaboConv) ToStruct(in *conv.Record) (*model.Labo, error) {
 	out := &model.Labo{}
 	if err := in.
 		ToStruct(".id", ".ID", out).
@@ -34,7 +28,7 @@ func (LaboType) ToStruct(in *conv.Record) (*model.Labo, error) {
 		}).
 		IfExist(".desk", func(v *conv.Record) {
 			if desks, err := Desks.ToStruct(v.GetHasManyRecords("desk")); err == nil {
-				out.Desks = desks
+				out.Desks = desks.Copy()
 			}
 		}).Error; err != nil {
 		return nil, err
@@ -42,7 +36,7 @@ func (LaboType) ToStruct(in *conv.Record) (*model.Labo, error) {
 	return out, nil
 }
 
-func (LaboType) ToIRModel(in *model.Labo) (*conv.Record, error) {
+func (LaboConv) ToIRModel(in *model.Labo) (*conv.Record, error) {
 	out := irmodel.NewLabo()
 	if err := out.
 		FromStruct(".ID", ".id", in).
@@ -68,4 +62,10 @@ func (LaboType) ToIRModel(in *model.Labo) (*conv.Record, error) {
 		return nil, err
 	}
 	return out, nil
+}
+
+func (LaboConv) ToArray(labos []*model.Labo) (*model.Labos, error) {
+	return &model.Labos{
+		Slice: conv.NewSlice(labos...),
+	}, nil
 }

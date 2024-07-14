@@ -25,36 +25,58 @@ func (i *Iterator[T]) Next() *T {
 	return r
 }
 
-type Variables[T any] struct {
+type Slice[T any] struct {
 	Error   error
-	Records []*T
+	records []*T
 }
 
-func NewVariables[T any](records ...*T) *Variables[T] {
-	return &Variables[T]{
-		Records: records,
+func NewSlice[T any](records ...*T) *Slice[T] {
+	return &Slice[T]{
+		records: records,
 	}
 }
 
-func (v *Variables[T]) Append(records ...*T) *Variables[T] {
+func (v *Slice[T]) Copy() []*T {
+	r := make([]*T, len(v.records))
+	for i, v := range v.records {
+		r[i] = v
+	}
+	return r
+}
+
+func (v *Slice[T]) Append(records ...*T) *Slice[T] {
 	if v.Error != nil {
 		return v
 	}
-	v.Records = append(v.Records, records...)
+	v.records = append(v.records, records...)
 	return v
 }
 
-func (v *Variables[T]) NewIterator() *Iterator[T] {
-	return NewIterator(v.Records)
+func (v *Slice[T]) IndexOf(idx int) *T {
+	if idx >= 0 && idx < v.Length() {
+		return v.records[idx]
+	}
+	return nil
 }
 
-func (v *Variables[T]) Length() int {
-	return len(v.Records)
+func (v *Slice[T]) NewIterator() *Iterator[T] {
+	return NewIterator(v.records)
 }
 
-func (v *Variables[T]) First() *T {
-	if len(v.Records) > 0 {
-		return v.Records[0]
+func (v *Slice[T]) Length() int {
+	return len(v.records)
+}
+
+func (v *Slice[T]) First() *T {
+	if len(v.records) > 0 {
+		return v.records[0]
+	}
+	return nil
+}
+
+func (v *Slice[T]) Last() *T {
+	if len(v.records) > 0 {
+		return v.records[len(v.records)-1]
 	}
 	return nil
 }

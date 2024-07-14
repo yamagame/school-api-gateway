@@ -8,11 +8,11 @@ type Desk struct {
 }
 
 type Desks struct {
-	*conv.Variables[Desk]
+	*conv.Slice[Desk]
 }
 
 func NewDesks(variables ...*Desk) *Desks {
 	return &Desks{
-		Variables: conv.NewVariables(variables...),
+		Slice: conv.NewSlice(variables...),
 	}
 }

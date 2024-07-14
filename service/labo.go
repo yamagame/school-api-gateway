@@ -9,6 +9,7 @@ import (
 	"github.com/yamagame/school-api-gateway/infra/model"
 	"github.com/yamagame/school-api-gateway/infra/repository"
 	"github.com/yamagame/school-api-gateway/irmodel"
+	"github.com/yamagame/school-api-gateway/pkg/conv"
 	"github.com/yamagame/school-api-gateway/proto/school"
 	"github.com/yamagame/school-api-gateway/service/svcconv"
 )
@@ -43,12 +44,11 @@ func (s *Labo) Create(ctx context.Context) (int32, error) {
 
 func (s *Labo) CreateWithMap(ctx context.Context, in []map[string]interface{}) (int32, error) {
 	zero := int32(0)
-	entities := irmodel.NewLabo().NewRecords(in)
-	records, err := infconv.Labos.ToStruct(entities)
+	irmodels := irmodel.NewLabo().NewRecords(in)
+	labos, err := infconv.Labos.ToStruct(irmodels)
 	if err != nil {
 		return zero, err
 	}
-	labos := model.NewLabos(records...)
 	if err := s.laborepo.Create(ctx, labos); err != nil {
 		return zero, err
 	}
@@ -57,12 +57,11 @@ func (s *Labo) CreateWithMap(ctx context.Context, in []map[string]interface{}) (
 
 func (s *Labo) UpdateWithMap(ctx context.Context, in []map[string]interface{}) (int32, error) {
 	zero := int32(0)
-	entities := irmodel.NewLabo().NewRecords(in)
-	records, err := infconv.Labos.ToStruct(entities, nil)
+	irmodels := irmodel.NewLabo().NewRecords(in)
+	labos, err := infconv.Labos.ToStruct(irmodels, nil)
 	if err != nil {
 		return zero, err
 	}
-	labos := model.NewLabos(records...)
 	if err := s.laborepo.Update(ctx, labos); err != nil {
 		return zero, err
 	}
@@ -79,19 +78,19 @@ func (s *Labo) Find(ctx context.Context, id int32) (*school.Labo, error) {
 	if err != nil {
 		return zero, err
 	}
-	if len(labos) > 0 {
-		return labos[0], nil
+	if top := labos.First(); top != nil {
+		return top, nil
 	}
 	return zero, errors.Join(ErrNotFound, fmt.Errorf("Find id: %d", id))
 }
 
 func (s *Labo) Update(ctx context.Context, in *school.Labo) (int32, error) {
 	zero := int32(0)
-	labos, err := svcconv.Labo.ProtoToInfra([]*school.Labo{in})
+	labos, err := svcconv.Labo.ProtoToInfra(&school.Labos{Slice: conv.NewSlice(in)})
 	if err != nil {
 		return zero, err
 	}
-	if len(labos.Records) > 0 {
+	if labos.Length() > 0 {
 		err = s.laborepo.Update(ctx, labos)
 		if err != nil {
 			return zero, err
@@ -111,8 +110,8 @@ func (s *Labo) Copy(ctx context.Context, id int32) (int32, error) {
 	if err != nil {
 		return zero, err
 	}
-	if len(in) > 0 {
-		in[0].Id = 0
+	if top := in.First(); top != nil {
+		top.Id = 0
 		labos, err := svcconv.Labo.ProtoToInfra(in)
 		if err != nil {
 			return zero, err
@@ -130,5 +129,9 @@ func (s *Labo) List(ctx context.Context, limit, offset int32) ([]*school.Labo, e
 	if results.Error != nil {
 		return nil, results.Error
 	}
-	return svcconv.Labo.InfraToProto(results)
+	r, err := svcconv.Labo.InfraToProto(results)
+	if err != nil {
+		return nil, err
+	}
+	return r.Copy(), nil
 }

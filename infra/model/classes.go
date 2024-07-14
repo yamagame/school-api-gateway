@@ -15,11 +15,11 @@ type Class struct {
 }
 
 type Classes struct {
-	*conv.Variables[Class]
+	*conv.Slice[Class]
 }
 
 func NewClasses(variables ...*Class) *Classes {
 	return &Classes{
-		Variables: conv.NewVariables(variables...),
+		Slice: conv.NewSlice(variables...),
 	}
 }

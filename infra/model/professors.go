@@ -18,11 +18,11 @@ type Professor struct {
 }
 
 type Professors struct {
-	*conv.Variables[Professor]
+	*conv.Slice[Professor]
 }
 
 func NewProfessors(variables ...*Professor) *Professors {
 	return &Professors{
-		Variables: conv.NewVariables(variables...),
+		Slice: conv.NewSlice(variables...),
 	}
 }

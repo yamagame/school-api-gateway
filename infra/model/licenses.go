@@ -10,11 +10,11 @@ type License struct {
 }
 
 type Licenses struct {
-	*conv.Variables[License]
+	*conv.Slice[License]
 }
 
 func NewLicenses(variables ...*License) *Licenses {
 	return &Licenses{
-		Variables: conv.NewVariables(variables...),
+		Slice: conv.NewSlice(variables...),
 	}
 }

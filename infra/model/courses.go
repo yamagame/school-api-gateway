@@ -14,11 +14,11 @@ type Course struct {
 }
 
 type Courses struct {
-	*conv.Variables[Course]
+	*conv.Slice[Course]
 }
 
 func NewCourses(variables ...*Course) *Courses {
 	return &Courses{
-		Variables: conv.NewVariables(variables...),
+		Slice: conv.NewSlice(variables...),
 	}
 }

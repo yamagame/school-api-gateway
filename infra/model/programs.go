@@ -30,11 +30,11 @@ type Program struct {
 // 15.化学生命工学プログラム
 
 type Programs struct {
-	*conv.Variables[Program]
+	*conv.Slice[Program]
 }
 
 func NewPrograms(variables ...*Program) *Programs {
 	return &Programs{
-		Variables: conv.NewVariables(variables...),
+		Slice: conv.NewSlice(variables...),
 	}
 }

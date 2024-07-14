@@ -20,11 +20,11 @@ type Employee struct {
 }
 
 type Employees struct {
-	*conv.Variables[Employee]
+	*conv.Slice[Employee]
 }
 
 func NewEmployees(variables ...*Employee) *Employees {
 	return &Employees{
-		Variables: conv.NewVariables(variables...),
+		Slice: conv.NewSlice(variables...),
 	}
 }

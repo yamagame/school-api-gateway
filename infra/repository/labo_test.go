@@ -9,7 +9,6 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/yamagame/school-api-gateway/infra"
 	"github.com/yamagame/school-api-gateway/infra/infconv"
-	"github.com/yamagame/school-api-gateway/infra/model"
 	"github.com/yamagame/school-api-gateway/irmodel"
 	"github.com/yamagame/school-api-gateway/pkg/conv"
 	"github.com/yamagame/school-api-gateway/pkg/snapshot"
@@ -45,7 +44,7 @@ func TestCreateUpdate(t *testing.T) {
 		models, err := infconv.Labos.ToStruct(labos, nil)
 		assert.NoError(t, err)
 
-		err = repo.Upsert(ctx, model.NewLabos(models...))
+		err = repo.Upsert(ctx, models)
 		assert.NoError(t, err)
 		return fmt.Errorf("restore")
 	})
@@ -59,7 +58,7 @@ func TestLabosInfraToIRModel(t *testing.T) {
 	res := repo.List(ctx, 10, 0)
 	assert.NoError(t, res.Error)
 
-	labos, err := infconv.Labos.ToIRModel(res.Records)
+	labos, err := infconv.Labos.ToIRModel(res.Copy())
 	assert.NoError(t, err)
 
 	out := labos.ValueMap()

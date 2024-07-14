@@ -18,11 +18,11 @@ type Role struct {
 // 補助
 
 type Roles struct {
-	*conv.Variables[Role]
+	*conv.Slice[Role]
 }
 
 func NewRoles(variables ...*Role) *Roles {
 	return &Roles{
-		Variables: conv.NewVariables(variables...),
+		Slice: conv.NewSlice(variables...),
 	}
 }

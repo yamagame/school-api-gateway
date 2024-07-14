@@ -18,11 +18,11 @@ type Address struct {
 }
 
 type Addresses struct {
-	*conv.Variables[Address]
+	*conv.Slice[Address]
 }
 
 func NewAddresses(variables ...*Address) *Addresses {
 	return &Addresses{
-		Variables: conv.NewVariables(variables...),
+		Slice: conv.NewSlice(variables...),
 	}
 }

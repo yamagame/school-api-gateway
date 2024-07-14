@@ -12,11 +12,11 @@ type Post struct {
 // 人事
 
 type Posts struct {
-	*conv.Variables[Post]
+	*conv.Slice[Post]
 }
 
 func NewPosts(variables ...*Post) *Posts {
 	return &Posts{
-		Variables: conv.NewVariables(variables...),
+		Slice: conv.NewSlice(variables...),
 	}
 }

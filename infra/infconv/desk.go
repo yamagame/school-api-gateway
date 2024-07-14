@@ -6,15 +6,9 @@ import (
 	"github.com/yamagame/school-api-gateway/pkg/conv"
 )
 
-type DeskType struct{}
+type DeskConv struct{}
 
-var Desk = DeskType{}
-
-var Desks = conv.Convs[model.Desk, DeskType]{
-	Conv: Desk,
-}
-
-func (DeskType) ToStruct(in *conv.Record) (*model.Desk, error) {
+func (DeskConv) ToStruct(in *conv.Record) (*model.Desk, error) {
 	out := &model.Desk{}
 	if err := in.
 		ToStruct(".id", ".ID", out).
@@ -24,7 +18,7 @@ func (DeskType) ToStruct(in *conv.Record) (*model.Desk, error) {
 	return out, nil
 }
 
-func (DeskType) ToIRModel(in *model.Desk) (*conv.Record, error) {
+func (DeskConv) ToIRModel(in *model.Desk) (*conv.Record, error) {
 	out := irmodel.NewDesk()
 	if err := out.
 		FromStruct(".ID", ".id", in).
@@ -32,4 +26,10 @@ func (DeskType) ToIRModel(in *model.Desk) (*conv.Record, error) {
 		return nil, err
 	}
 	return out, nil
+}
+
+func (DeskConv) ToArray(desks []*model.Desk) (*model.Desks, error) {
+	return &model.Desks{
+		Slice: conv.NewSlice(desks...),
+	}, nil
 }
