@@ -11,6 +11,7 @@ import (
 	"github.com/yamagame/school-api-gateway/infra"
 	"github.com/yamagame/school-api-gateway/infra/repository"
 	"github.com/yamagame/school-api-gateway/pkg/irconv"
+	"github.com/yamagame/school-api-gateway/pkg/snapshot"
 	"github.com/yamagame/school-api-gateway/proto/school"
 	"gorm.io/gorm"
 )
@@ -105,4 +106,29 @@ func TestUpdateWithMap(t *testing.T) {
 		assert.NotEqual(t, 0, id)
 		return fmt.Errorf("restore")
 	})
+}
+
+func TestList(t *testing.T) {
+	ctx := context.Background()
+	db := infra.DB()
+	svc := NewLabo(repository.NewLabo(db))
+
+	tests := []struct {
+		pageSize int
+		offset   int
+		wants    int
+	}{
+		{0, 0, 0},
+		{10, 0, 10},
+	}
+	results := []interface{}{}
+	for _, tt := range tests {
+		labos, err := svc.List(ctx, int32(tt.pageSize), int32(tt.offset))
+		assert.NoError(t, err)
+		assert.Equal(t, tt.wants, len(labos))
+		results = append(results, labos)
+	}
+
+	snapshot.Equal(t, results, "test-list.json")
+	// snapshot.Save(t, results, "test-list.json")
 }

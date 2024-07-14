@@ -36,10 +36,6 @@ func (c Convs[M, N, B]) ToStruct(in *Records) *N {
 
 func (c Convs[M, N, B]) ToIRModel(in []*M) *Records {
 	r := &Records{}
-	if len(in) == 0 {
-		r.Error = ErrEmptyArray
-		return r
-	}
 	for _, v := range in {
 		t, err := c.Conv.ToIRModel(v)
 		if err != nil {
