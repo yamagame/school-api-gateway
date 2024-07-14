@@ -12,7 +12,7 @@ type Record struct {
 	Values    map[string]*Value
 	BelongTos map[string]*Record
 	HasOnes   map[string]*Record
-	HasManys  map[string]*Many
+	HasManys  map[string]*HasMany
 }
 
 func NewRecord() *Record {
@@ -20,7 +20,7 @@ func NewRecord() *Record {
 		Values:    map[string]*Value{},
 		BelongTos: map[string]*Record{},
 		HasOnes:   map[string]*Record{},
-		HasManys:  map[string]*Many{},
+		HasManys:  map[string]*HasMany{},
 	}
 }
 
@@ -138,7 +138,7 @@ func (m *Record) SetHasOne(key string, record *Record) *Record {
 	return m
 }
 
-func (m *Record) SetHasMany(key string, many *Many) *Record {
+func (m *Record) SetHasMany(key string, many *HasMany) *Record {
 	if m.Error != nil {
 		return m
 	}
@@ -183,9 +183,9 @@ func (m *Record) GetHasOne(key string) (*Record, error) {
 	return nil, ErrNotFound
 }
 
-func (m *Record) GetHasMany(key string) (*Many, error) {
+func (m *Record) GetHasMany(key string) (*HasMany, error) {
 	if v, ok := m.HasManys[key]; ok {
-		if reflect.TypeOf(v) == reflect.TypeOf(&Many{}) {
+		if reflect.TypeOf(v) == reflect.TypeOf(&HasMany{}) {
 			return v, nil
 		}
 	}
@@ -194,9 +194,9 @@ func (m *Record) GetHasMany(key string) (*Many, error) {
 
 func (m *Record) GetHasManyRecords(key string) *Records {
 	if v, ok := m.HasManys[key]; ok {
-		if reflect.TypeOf(v) == reflect.TypeOf(&Many{}) {
+		if reflect.TypeOf(v) == reflect.TypeOf(&HasMany{}) {
 			r := NewRecords(v.Model.Copy())
-			r.Append(v.Records...)
+			r.Append(v.records...)
 			return r
 		}
 	}
@@ -227,11 +227,11 @@ func (m *Record) HasOne(jsonpath string) (*Record, error) {
 	return nil, ErrNotFound
 }
 
-func (m *Record) HasMany(jsonpath string) (*Many, error) {
+func (m *Record) HasMany(jsonpath string) (*HasMany, error) {
 	values := m.allMany()
 	if v, err := GetVal(values, jsonpath); err == nil {
-		if reflect.TypeOf(v) == reflect.TypeOf(&Many{}) {
-			field := v.(*Many)
+		if reflect.TypeOf(v) == reflect.TypeOf(&HasMany{}) {
+			field := v.(*HasMany)
 			return field, nil
 		}
 	}
@@ -279,7 +279,7 @@ func (m *Record) ValueMap() map[string]interface{} {
 	}
 	for key, v := range m.HasManys {
 		m := []map[string]interface{}{}
-		for _, t := range v.Records {
+		for _, t := range v.records {
 			m = append(m, t.ValueMap())
 		}
 		ret[key] = m
@@ -300,7 +300,7 @@ func (m *Record) allValues() map[string]interface{} {
 	}
 	for key, v := range m.HasManys {
 		m := []map[string]interface{}{}
-		for _, t := range v.Records {
+		for _, t := range v.records {
 			m = append(m, t.allValues())
 		}
 		ret[key] = m
@@ -321,7 +321,7 @@ func (m *Record) allHasOne() map[string]interface{} {
 	}
 	for key, v := range m.HasManys {
 		m := []map[string]interface{}{}
-		for _, t := range v.Records {
+		for _, t := range v.records {
 			m = append(m, t.allHasOne())
 		}
 		ret[key] = m
@@ -466,8 +466,8 @@ func (m *Record) IfExist(jpath string, cb func(v *Record)) *Record {
 			if value.IsExist() {
 				return true
 			}
-		} else if reflect.TypeOf(v) == reflect.TypeOf(&Many{}) {
-			value := v.(*Many)
+		} else if reflect.TypeOf(v) == reflect.TypeOf(&HasMany{}) {
+			value := v.(*HasMany)
 			if value.IsExist() {
 				return true
 			}
@@ -546,7 +546,7 @@ func (m *Record) UpdateHasManyes() map[string]interface{} {
 	ret := map[string]interface{}{}
 	for key, v := range m.HasManys {
 		m := []map[string]interface{}{}
-		for _, t := range v.Records {
+		for _, t := range v.records {
 			t := t.Updates()
 			if len(t) > 0 {
 				m = append(m, t)
@@ -576,7 +576,7 @@ func (m *Record) IsExist() bool {
 		}
 	}
 	for _, m := range m.HasManys {
-		for _, v := range m.Records {
+		for _, v := range m.records {
 			if v.IsExist() {
 				return true
 			}

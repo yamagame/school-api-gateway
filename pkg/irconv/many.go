@@ -1,28 +1,47 @@
 package irconv
 
-type Many struct {
+type HasMany struct {
 	Error   error
 	Model   *Record
-	Records []*Record
+	records []*Record
 }
 
-func NewMany(model *Record) *Many {
-	return &Many{
+func NewMany(model *Record) *HasMany {
+	return &HasMany{
 		Model:   model,
-		Records: []*Record{},
+		records: []*Record{},
 	}
 }
 
-func (m *Many) ValueMap() []map[string]interface{} {
+func (m *HasMany) NewIterator() *Iterator[Record] {
+	return NewIterator(m.records)
+}
+
+func (m *HasMany) Take(jsonp string, val interface{}) *Record {
+	itr := m.NewIterator()
+	for itr.HasNext() {
+		field := itr.Next()
+		if v, err := field.Get(jsonp); err == nil {
+			if v == val {
+				return field
+			}
+		}
+	}
+	r := m.Model.Copy()
+	r.Error = ErrNotFound
+	return r
+}
+
+func (m *HasMany) ValueMap() []map[string]interface{} {
 	r := []map[string]interface{}{}
-	for _, v := range m.Records {
+	for _, v := range m.records {
 		r = append(r, v.ValueMap())
 	}
 	return r
 }
 
-func (m *Many) IsExist() bool {
-	for _, v := range m.Records {
+func (m *HasMany) IsExist() bool {
+	for _, v := range m.records {
 		if v.IsExist() {
 			return true
 		}
@@ -30,44 +49,44 @@ func (m *Many) IsExist() bool {
 	return false
 }
 
-func (m *Many) Append(records ...*Record) *Many {
-	if m.Error != nil {
+func (m *HasMany) Append(records ...*Record) *HasMany {
+	if m.HasError() {
 		return m
 	}
-	m.Records = append(m.Records, records...)
+	m.records = append(m.records, records...)
 	return m
 }
 
-func (m *Many) Clear() *Many {
-	if m.Error != nil {
+func (m *HasMany) Clear() *HasMany {
+	if m.HasError() {
 		return m
 	}
-	m.Records = []*Record{}
+	m.records = []*Record{}
 	return m
 }
 
-func (m *Many) Copy() *Many {
-	r := &Many{}
+func (m *HasMany) Copy() *HasMany {
+	r := &HasMany{}
 	r.Error = m.Error
 	r.Model = m.Model.Copy()
-	r.Records = []*Record{}
-	for _, v := range m.Records {
-		r.Records = append(r.Records, v.Copy())
+	r.records = []*Record{}
+	for _, v := range m.records {
+		r.records = append(r.records, v.Copy())
 	}
 	return r
 }
 
-func (m *Many) NewOne() *Record {
+func (m *HasMany) NewOne() *Record {
 	r := m.Model.Copy()
-	m.Records = append(m.Records, r)
+	m.records = append(m.records, r)
 	return r
 }
 
-func (m *Many) SetError(err error) *Many {
+func (m *HasMany) SetError(err error) *HasMany {
 	m.Error = err
 	return m
 }
 
-func (m *Many) HasError() bool {
+func (m *HasMany) HasError() bool {
 	return m.Error != nil
 }

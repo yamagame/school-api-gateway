@@ -88,10 +88,22 @@ func (r *Labo) Find(ctx context.Context, ids []int32) *model.Labos {
 	lb := q.Labo
 	records, err := lb.WithContext(ctx).Where(lb.ID.In(ids...)).Find()
 	ret := infconv.Labo.NewSlice()
-	ret.Append(records...)
 	if err != nil {
 		ret.Error = err
 	}
+	ret.Append(records...)
+	return ret
+}
+
+func (r *Labo) FindWithName(ctx context.Context, names []string) *model.Labos {
+	q := query.Use(r.db)
+	lb := q.Labo
+	records, err := lb.WithContext(ctx).Where(lb.Name.In(names...)).Find()
+	ret := infconv.Labo.NewSlice()
+	if err != nil {
+		ret.Error = err
+	}
+	ret.Append(records...)
 	return ret
 }
 
@@ -105,9 +117,9 @@ func (r *Labo) List(ctx context.Context, limit, offset int32) *model.Labos {
 		Order(lb.ID.Asc()).
 		Find()
 	ret := infconv.Labo.NewSlice()
-	ret.Append(records...)
 	if err != nil {
 		ret.Error = err
 	}
+	ret.Append(records...)
 	return ret
 }

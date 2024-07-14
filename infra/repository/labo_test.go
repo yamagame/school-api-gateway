@@ -41,11 +41,39 @@ func TestCreateUpdate(t *testing.T) {
 		snapshot.Equal(t, out, "create-update.json")
 		// snapshot.Save(t, out, "create-update.json")
 
+		// 中間モデルからdaoに変換
 		models := infconv.Labos.ToStruct(labos)
 		assert.NoError(t, models.Error)
 
+		// Upsertする
 		err := repo.Upsert(ctx, models)
 		assert.NoError(t, err)
+
+		// Find
+		{
+			results := repo.Find(ctx, []int32{1, 2})
+			assert.NoError(t, results.Error)
+
+			res := results.ShallowCopy()
+			assert.Equal(t, 2, len(res))
+			assert.Equal(t, "サトウ1", *res[0].Name)
+			assert.Equal(t, "シミズ2", *res[1].Name)
+		}
+
+		{
+			results := repo.FindWithName(ctx, []string{"サトウ1", "シミズ2", "スズキ3"})
+			assert.NoError(t, results.Error)
+
+			res := results.ShallowCopy()
+			assert.Equal(t, 3, len(res))
+			assert.Equal(t, "サトウ1", *res[0].Name)
+			assert.Equal(t, int32(1), res[0].ID)
+			assert.Equal(t, "シミズ2", *res[1].Name)
+			assert.Equal(t, int32(2), res[1].ID)
+			assert.Equal(t, "スズキ3", *res[2].Name)
+			assert.NotEqual(t, int32(0), res[2].ID)
+		}
+
 		return fmt.Errorf("restore")
 	})
 }

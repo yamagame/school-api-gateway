@@ -3,19 +3,28 @@
     "id": 0,
     "name": ""
   },
-  "chair": [],
+  "chair": [
+    {
+      "id": 21,
+      "labo_id": 10
+    },
+    {
+      "id": 22,
+      "labo_id": 20
+    }
+  ],
   "desk": [
     {
       "id": 11,
-      "labo_id": 0
+      "labo_id": 1
     },
     {
       "id": 12,
-      "labo_id": 0
+      "labo_id": 5
     },
     {
       "id": 13,
-      "labo_id": 0
+      "labo_id": 3
     }
   ],
   "group": {
