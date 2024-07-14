@@ -80,4 +80,6 @@ ORDER BY id;
 
 SELECT LAST_INSERT_ID();
 
+SHOW variables LIKE '%char%';
+
 -- EOF
