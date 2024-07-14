@@ -1,7 +1,7 @@
 package school
 
-import "github.com/yamagame/school-api-gateway/pkg/conv"
+import "github.com/yamagame/school-api-gateway/pkg/irconv"
 
 type Labos struct {
-	*conv.Slice[Labo]
+	*irconv.Slice[Labo]
 }

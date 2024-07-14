@@ -3,12 +3,12 @@ package infconv
 import (
 	"github.com/yamagame/school-api-gateway/infra/model"
 	"github.com/yamagame/school-api-gateway/irmodel"
-	"github.com/yamagame/school-api-gateway/pkg/conv"
+	irmodel1 "github.com/yamagame/school-api-gateway/pkg/irconv"
 )
 
 type DeskConv struct{}
 
-func (DeskConv) ToStruct(in *conv.Record) (*model.Desk, error) {
+func (DeskConv) ToStruct(in *irmodel1.Record) (*model.Desk, error) {
 	out := &model.Desk{}
 	if err := in.
 		ToStruct(".id", ".ID", out).
@@ -18,7 +18,7 @@ func (DeskConv) ToStruct(in *conv.Record) (*model.Desk, error) {
 	return out, nil
 }
 
-func (DeskConv) ToIRModel(in *model.Desk) (*conv.Record, error) {
+func (DeskConv) ToIRModel(in *model.Desk) (*irmodel1.Record, error) {
 	out := irmodel.NewDesk()
 	if err := out.
 		FromStruct(".ID", ".id", in).
@@ -28,8 +28,8 @@ func (DeskConv) ToIRModel(in *model.Desk) (*conv.Record, error) {
 	return out, nil
 }
 
-func (DeskConv) ToArray(desks []*model.Desk) (*model.Desks, error) {
+func (DeskConv) NewSlice() *model.Desks {
 	return &model.Desks{
-		Slice: conv.NewSlice(desks...),
-	}, nil
+		Slice: irmodel1.NewSlice[model.Desk](),
+	}
 }

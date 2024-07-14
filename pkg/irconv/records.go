@@ -1,4 +1,4 @@
-package conv
+package irconv
 
 import (
 	"fmt"
@@ -212,4 +212,13 @@ func (f *Records) Convert(model *Record) *Records {
 
 func (f *Records) NewIterator() *Iterator[Record] {
 	return NewIterator(f.records)
+}
+
+func (f *Records) SetError(err error) *Records {
+	f.Error = err
+	return f
+}
+
+func (f *Records) HasError() bool {
+	return f.Error != nil
 }

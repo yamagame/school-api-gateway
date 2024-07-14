@@ -3,85 +3,85 @@ package irmodel
 import (
 	"time"
 
-	"github.com/yamagame/school-api-gateway/pkg/conv"
+	"github.com/yamagame/school-api-gateway/pkg/irconv"
 )
 
-var NewAddress = conv.NewRecord().
-	SetValue("id", int32(0), conv.PRIMARY).
+var NewAddress = irconv.NewRecord().
+	SetValue("id", int32(0), irconv.PRIMARY).
 	SetValue("name", "").
 	Func()
 
-var NewBuilding = conv.NewRecord().
-	SetValue("id", int32(0), conv.PRIMARY).
+var NewBuilding = irconv.NewRecord().
+	SetValue("id", int32(0), irconv.PRIMARY).
 	SetValue("name", "").
 	Func()
 
-var NewChair = conv.NewRecord().
-	SetValue("id", int32(0), conv.PRIMARY).
+var NewChair = irconv.NewRecord().
+	SetValue("id", int32(0), irconv.PRIMARY).
 	SetValue("labo_id", int32(0)).
 	Func()
 
-var NewClass = conv.NewRecord().
-	SetValue("id", int32(0), conv.PRIMARY).
+var NewClass = irconv.NewRecord().
+	SetValue("id", int32(0), irconv.PRIMARY).
 	SetValue("name", "").
 	Func()
 
-var NewDesk = conv.NewRecord().
-	SetValue("id", int32(0), conv.PRIMARY).
+var NewDesk = irconv.NewRecord().
+	SetValue("id", int32(0), irconv.PRIMARY).
 	SetValue("labo_id", int32(0)).
 	Func()
 
-var NewEmployee = conv.NewRecord().
-	SetValue("id", int32(0), conv.PRIMARY).
+var NewEmployee = irconv.NewRecord().
+	SetValue("id", int32(0), irconv.PRIMARY).
 	SetValue("name", "").
 	Func()
 
-var NewGroup = conv.NewRecord().
-	SetValue("id", int32(0), conv.PRIMARY).
+var NewGroup = irconv.NewRecord().
+	SetValue("id", int32(0), irconv.PRIMARY).
 	SetValue("name", "").
 	Func()
 
-var NewLabo = conv.NewRecord().
-	SetValue("id", int32(0), conv.PRIMARY).
+var NewLabo = irconv.NewRecord().
+	SetValue("id", int32(0), irconv.PRIMARY).
 	SetValue("name", "").
 	SetValue("url", "").
 	SetBelongTo("group", NewGroup()).
 	SetBelongTo("program", NewProgram()).
 	SetBelongTo("building", NewBuilding()).
-	SetHasMany("desk", conv.NewMany(NewDesk())).
-	SetHasMany("chair", conv.NewMany(NewChair())).
+	SetHasMany("desk", irconv.NewMany(NewDesk())).
+	SetHasMany("chair", irconv.NewMany(NewChair())).
 	Func()
 
-var NewLicnese = conv.NewRecord().
-	SetValue("id", int32(0), conv.PRIMARY).
+var NewLicnese = irconv.NewRecord().
+	SetValue("id", int32(0), irconv.PRIMARY).
 	Func()
 
-var NewPerson = conv.NewRecord().
-	SetValue("id", int32(0), conv.PRIMARY).
+var NewPerson = irconv.NewRecord().
+	SetValue("id", int32(0), irconv.PRIMARY).
 	SetValue("name", "").
 	SetValue("birthday", time.Now()).
 	SetValue("address", NewAddress()).
 	SetValue("student", NewStudent()).
 	SetValue("professor", NewProfessor()).
-	SetHasMany("licenses", conv.NewMany(NewLicnese())).
+	SetHasMany("licenses", irconv.NewMany(NewLicnese())).
 	Func()
 
-var NewProfessor = conv.NewRecord().
-	SetValue("id", int32(0), conv.PRIMARY).
+var NewProfessor = irconv.NewRecord().
+	SetValue("id", int32(0), irconv.PRIMARY).
 	Func()
 
-var NewProgram = conv.NewRecord().
-	SetValue("id", int32(0), conv.PRIMARY).
+var NewProgram = irconv.NewRecord().
+	SetValue("id", int32(0), irconv.PRIMARY).
 	SetValue("name", "").
 	Func()
 
-var NewRoom = conv.NewRecord().
-	SetValue("id", int32(0), conv.PRIMARY).
+var NewRoom = irconv.NewRecord().
+	SetValue("id", int32(0), irconv.PRIMARY).
 	SetValue("name", "").
 	SetHasOne("building", NewBuilding()).
 	SetValue("floor", 0).
 	Func()
 
-var NewStudent = conv.NewRecord().
-	SetValue("id", int32(0), conv.PRIMARY).
+var NewStudent = irconv.NewRecord().
+	SetValue("id", int32(0), irconv.PRIMARY).
 	Func()

@@ -1,4 +1,4 @@
-package conv
+package irconv
 
 import (
 	"errors"
@@ -192,15 +192,17 @@ func (m *Record) GetHasMany(key string) (*Many, error) {
 	return nil, ErrNotFound
 }
 
-func (m *Record) GetHasManyRecords(key string) (*Records, error) {
+func (m *Record) GetHasManyRecords(key string) *Records {
 	if v, ok := m.HasManys[key]; ok {
 		if reflect.TypeOf(v) == reflect.TypeOf(&Many{}) {
 			r := NewRecords(v.Model.Copy())
 			r.Append(v.Records...)
-			return r, nil
+			return r
 		}
 	}
-	return nil, ErrNotFound
+	return &Records{
+		Error: ErrNotFound,
+	}
 }
 
 func (m *Record) Value(jsonpath string) (*Value, error) {
@@ -581,4 +583,13 @@ func (m *Record) IsExist() bool {
 		}
 	}
 	return false
+}
+
+func (m *Record) SetError(err error) *Record {
+	m.Error = err
+	return m
+}
+
+func (m *Record) HasError() bool {
+	return m.Error != nil
 }

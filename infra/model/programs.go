@@ -3,7 +3,7 @@ package model
 import (
 	"time"
 
-	"github.com/yamagame/school-api-gateway/pkg/conv"
+	"github.com/yamagame/school-api-gateway/pkg/irconv"
 )
 
 type Program struct {
@@ -30,11 +30,5 @@ type Program struct {
 // 15.化学生命工学プログラム
 
 type Programs struct {
-	*conv.Slice[Program]
-}
-
-func NewPrograms(variables ...*Program) *Programs {
-	return &Programs{
-		Slice: conv.NewSlice(variables...),
-	}
+	*irconv.Slice[Program]
 }

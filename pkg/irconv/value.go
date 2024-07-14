@@ -1,4 +1,4 @@
-package conv
+package irconv
 
 import (
 	"encoding/json"

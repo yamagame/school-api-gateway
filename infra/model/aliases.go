@@ -3,7 +3,7 @@ package model
 import (
 	"time"
 
-	"github.com/yamagame/school-api-gateway/pkg/conv"
+	"github.com/yamagame/school-api-gateway/pkg/irconv"
 )
 
 type Alias struct {
@@ -14,11 +14,5 @@ type Alias struct {
 }
 
 type Aliases struct {
-	*conv.Slice[Alias]
-}
-
-func NewAliases(variables ...*Alias) *Aliases {
-	return &Aliases{
-		Slice: conv.NewSlice(variables...),
-	}
+	*irconv.Slice[Alias]
 }

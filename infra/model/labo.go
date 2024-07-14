@@ -3,7 +3,7 @@ package model
 import (
 	"time"
 
-	"github.com/yamagame/school-api-gateway/pkg/conv"
+	"github.com/yamagame/school-api-gateway/pkg/irconv"
 )
 
 type Labo struct {
@@ -26,11 +26,5 @@ type Labo struct {
 }
 
 type Labos struct {
-	*conv.Slice[Labo]
-}
-
-func NewLabos(variables ...*Labo) *Labos {
-	return &Labos{
-		Slice: conv.NewSlice(variables...),
-	}
+	*irconv.Slice[Labo]
 }

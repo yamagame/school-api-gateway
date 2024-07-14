@@ -1,4 +1,4 @@
-package conv
+package irconv
 
 import (
 	"encoding/csv"
@@ -55,8 +55,7 @@ func mergeRecords(records []map[string]interface{}) []map[string]interface{} {
 
 		for k, v := range record {
 			matches := re1.FindAllStringSubmatch(k, -1)
-			if len(matches) > 0 {
-			} else {
+			if len(matches) == 0 {
 				heads = append(heads, v.(string))
 			}
 		}

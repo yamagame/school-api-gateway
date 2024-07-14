@@ -1,6 +1,6 @@
 package model
 
-import "github.com/yamagame/school-api-gateway/pkg/conv"
+import "github.com/yamagame/school-api-gateway/pkg/irconv"
 
 type Post struct {
 	ID   int32  `gorm:"primary; comment:主キーの標準フィールド;"`
@@ -12,11 +12,5 @@ type Post struct {
 // 人事
 
 type Posts struct {
-	*conv.Slice[Post]
-}
-
-func NewPosts(variables ...*Post) *Posts {
-	return &Posts{
-		Slice: conv.NewSlice(variables...),
-	}
+	*irconv.Slice[Post]
 }

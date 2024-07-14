@@ -1,6 +1,6 @@
 package model
 
-import "github.com/yamagame/school-api-gateway/pkg/conv"
+import "github.com/yamagame/school-api-gateway/pkg/irconv"
 
 type License struct {
 	ID       int32  `gorm:"primary; comment:主キーの標準フィールド;"`
@@ -10,11 +10,5 @@ type License struct {
 }
 
 type Licenses struct {
-	*conv.Slice[License]
-}
-
-func NewLicenses(variables ...*License) *Licenses {
-	return &Licenses{
-		Slice: conv.NewSlice(variables...),
-	}
+	*irconv.Slice[License]
 }

@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/yamagame/school-api-gateway/pkg/conv"
+	"github.com/yamagame/school-api-gateway/pkg/irconv"
 	"github.com/yamagame/school-api-gateway/pkg/snapshot"
 )
 
@@ -38,7 +38,7 @@ func TestLaboCSV(t *testing.T) {
 	fp, _ := os.Open("./testdata/test-labo.csv")
 	defer fp.Close()
 
-	records, err := conv.ReadCSV(fp)
+	records, err := irconv.ReadCSV(fp)
 	assert.NoError(t, err)
 
 	labos := NewLabo().
@@ -54,7 +54,7 @@ func TestLaboHasManyCSV(t *testing.T) {
 	fp, _ := os.Open("./testdata/test-many.csv")
 	defer fp.Close()
 
-	records, err := conv.ReadCSV(fp)
+	records, err := irconv.ReadCSV(fp)
 	assert.NoError(t, err)
 
 	labos := NewLabo().
@@ -72,7 +72,7 @@ func TestLaboFillCSV(t *testing.T) {
 	fp, _ := os.Open("./testdata/test-fill.csv")
 	defer fp.Close()
 
-	records, err := conv.ReadCSV(fp)
+	records, err := irconv.ReadCSV(fp)
 	assert.NoError(t, err)
 
 	snapshot.Equal(t, records, "test-fill.json")

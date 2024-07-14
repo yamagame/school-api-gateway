@@ -10,7 +10,7 @@ import (
 	"github.com/yamagame/school-api-gateway/infra"
 	"github.com/yamagame/school-api-gateway/infra/infconv"
 	"github.com/yamagame/school-api-gateway/irmodel"
-	"github.com/yamagame/school-api-gateway/pkg/conv"
+	irmodel1 "github.com/yamagame/school-api-gateway/pkg/irconv"
 	"github.com/yamagame/school-api-gateway/pkg/snapshot"
 	"gorm.io/gorm"
 )
@@ -21,7 +21,7 @@ func TestCreateUpdate(t *testing.T) {
 	db.Transaction(func(tx *gorm.DB) error {
 		repo := NewLabo(tx)
 
-		labos := &conv.Records{}
+		labos := &irmodel1.Records{}
 		labos.Append(
 			irmodel.NewLabo().
 				Set(".id", int32(1)).
@@ -41,25 +41,24 @@ func TestCreateUpdate(t *testing.T) {
 		snapshot.Equal(t, out, "create-update.json")
 		// snapshot.Save(t, out, "create-update.json")
 
-		models, err := infconv.Labos.ToStruct(labos, nil)
-		assert.NoError(t, err)
+		models := infconv.Labos.ToStruct(labos)
+		assert.NoError(t, models.Error)
 
-		err = repo.Upsert(ctx, models)
+		err := repo.Upsert(ctx, models)
 		assert.NoError(t, err)
 		return fmt.Errorf("restore")
 	})
 }
 
 func TestLabosInfraToIRModel(t *testing.T) {
-	var err error
 	ctx := context.Background()
 	db := infra.DB()
 	repo := NewLabo(db)
 	res := repo.List(ctx, 10, 0)
 	assert.NoError(t, res.Error)
 
-	labos, err := infconv.Labos.ToIRModel(res.ShallowCopy())
-	assert.NoError(t, err)
+	labos := infconv.Labos.ToIRModel(res.ShallowCopy())
+	assert.NoError(t, labos.Error)
 
 	out := labos.ValueMap()
 
@@ -71,7 +70,7 @@ func TestLabosCSVToIRModel(t *testing.T) {
 	fp, _ := os.Open("./testdata/create-labos.csv")
 	defer fp.Close()
 
-	records, err := conv.ReadCSV(fp)
+	records, err := irmodel1.ReadCSV(fp)
 	assert.NoError(t, err)
 
 	labos := irmodel.NewLabo().

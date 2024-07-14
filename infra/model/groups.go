@@ -3,7 +3,7 @@ package model
 import (
 	"time"
 
-	"github.com/yamagame/school-api-gateway/pkg/conv"
+	"github.com/yamagame/school-api-gateway/pkg/irconv"
 )
 
 type Group struct {
@@ -18,11 +18,5 @@ type Group struct {
 // Ⅲ類（理工系）
 
 type Groups struct {
-	*conv.Slice[Group]
-}
-
-func NewGroups(variables ...*Group) *Groups {
-	return &Groups{
-		Slice: conv.NewSlice(variables...),
-	}
+	*irconv.Slice[Group]
 }

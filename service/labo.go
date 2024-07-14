@@ -9,7 +9,7 @@ import (
 	"github.com/yamagame/school-api-gateway/infra/model"
 	"github.com/yamagame/school-api-gateway/infra/repository"
 	"github.com/yamagame/school-api-gateway/irmodel"
-	"github.com/yamagame/school-api-gateway/pkg/conv"
+	irmodel1 "github.com/yamagame/school-api-gateway/pkg/irconv"
 	"github.com/yamagame/school-api-gateway/proto/school"
 	"github.com/yamagame/school-api-gateway/service/svcconv"
 )
@@ -35,7 +35,8 @@ func NewLabo(repo repository.LaboInterface) *Labo {
 }
 
 func (s *Labo) Create(ctx context.Context) (int32, error) {
-	labos := model.NewLabos(&model.Labo{})
+	labos := infconv.Labo.NewSlice()
+	labos.Append(&model.Labo{})
 	if err := s.laborepo.Create(ctx, labos); err != nil {
 		return 0, err
 	}
@@ -45,9 +46,9 @@ func (s *Labo) Create(ctx context.Context) (int32, error) {
 func (s *Labo) CreateWithMap(ctx context.Context, in []map[string]interface{}) (int32, error) {
 	zero := int32(0)
 	irmodels := irmodel.NewLabo().NewRecords(in)
-	labos, err := infconv.Labos.ToStruct(irmodels)
-	if err != nil {
-		return zero, err
+	labos := infconv.Labos.ToStruct(irmodels)
+	if labos.HasError() {
+		return zero, labos.Error
 	}
 	if err := s.laborepo.Create(ctx, labos); err != nil {
 		return zero, err
@@ -58,9 +59,9 @@ func (s *Labo) CreateWithMap(ctx context.Context, in []map[string]interface{}) (
 func (s *Labo) UpdateWithMap(ctx context.Context, in []map[string]interface{}) (int32, error) {
 	zero := int32(0)
 	irmodels := irmodel.NewLabo().NewRecords(in)
-	labos, err := infconv.Labos.ToStruct(irmodels, nil)
-	if err != nil {
-		return zero, err
+	labos := infconv.Labos.ToStruct(irmodels)
+	if labos.HasError() {
+		return zero, labos.Error
 	}
 	if err := s.laborepo.Update(ctx, labos); err != nil {
 		return zero, err
@@ -71,12 +72,12 @@ func (s *Labo) UpdateWithMap(ctx context.Context, in []map[string]interface{}) (
 func (s *Labo) Find(ctx context.Context, id int32) (*school.Labo, error) {
 	var zero *school.Labo
 	results := s.laborepo.Find(ctx, []int32{id})
-	if results.Error != nil {
+	if results.HasError() {
 		return zero, results.Error
 	}
-	labos, err := svcconv.Labo.InfraToProto(results)
-	if err != nil {
-		return zero, err
+	labos := svcconv.Labo.InfraToProto(results)
+	if labos.HasError() {
+		return zero, labos.Error
 	}
 	if top := labos.First(); top != nil {
 		return top, nil
@@ -86,12 +87,12 @@ func (s *Labo) Find(ctx context.Context, id int32) (*school.Labo, error) {
 
 func (s *Labo) Update(ctx context.Context, in *school.Labo) (int32, error) {
 	zero := int32(0)
-	labos, err := svcconv.Labo.ProtoToInfra(&school.Labos{Slice: conv.NewSlice(in)})
-	if err != nil {
-		return zero, err
+	labos := svcconv.Labo.ProtoToInfra(&school.Labos{Slice: irmodel1.NewSlice(in)})
+	if labos.HasError() {
+		return zero, labos.Error
 	}
 	if labos.Length() > 0 {
-		err = s.laborepo.Update(ctx, labos)
+		err := s.laborepo.Update(ctx, labos)
 		if err != nil {
 			return zero, err
 		}
@@ -103,18 +104,18 @@ func (s *Labo) Update(ctx context.Context, in *school.Labo) (int32, error) {
 func (s *Labo) Copy(ctx context.Context, id int32) (int32, error) {
 	zero := int32(0)
 	results := s.laborepo.Find(ctx, []int32{id})
-	if results.Error != nil {
+	if results.HasError() {
 		return zero, results.Error
 	}
-	in, err := svcconv.Labo.InfraToProto(results)
-	if err != nil {
-		return zero, err
+	in := svcconv.Labo.InfraToProto(results)
+	if in.HasError() {
+		return zero, in.Error
 	}
 	if top := in.First(); top != nil {
 		top.Id = 0
-		labos, err := svcconv.Labo.ProtoToInfra(in)
-		if err != nil {
-			return zero, err
+		labos := svcconv.Labo.ProtoToInfra(in)
+		if labos.HasError() {
+			return zero, labos.Error
 		}
 		if err := s.laborepo.Create(ctx, labos); err != nil {
 			return 0, err
@@ -126,12 +127,12 @@ func (s *Labo) Copy(ctx context.Context, id int32) (int32, error) {
 
 func (s *Labo) List(ctx context.Context, limit, offset int32) ([]*school.Labo, error) {
 	results := s.laborepo.List(ctx, limit, offset)
-	if results.Error != nil {
+	if results.HasError() {
 		return nil, results.Error
 	}
-	r, err := svcconv.Labo.InfraToProto(results)
-	if err != nil {
-		return nil, err
+	r := svcconv.Labo.InfraToProto(results)
+	if r.HasError() {
+		return nil, r.Error
 	}
 	return r.ShallowCopy(), nil
 }

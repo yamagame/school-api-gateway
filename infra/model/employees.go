@@ -3,7 +3,7 @@ package model
 import (
 	"time"
 
-	"github.com/yamagame/school-api-gateway/pkg/conv"
+	"github.com/yamagame/school-api-gateway/pkg/irconv"
 )
 
 type Employee struct {
@@ -20,11 +20,5 @@ type Employee struct {
 }
 
 type Employees struct {
-	*conv.Slice[Employee]
-}
-
-func NewEmployees(variables ...*Employee) *Employees {
-	return &Employees{
-		Slice: conv.NewSlice(variables...),
-	}
+	*irconv.Slice[Employee]
 }

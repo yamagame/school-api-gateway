@@ -1,4 +1,4 @@
-package conv
+package irconv
 
 type Many struct {
 	Error   error
@@ -61,4 +61,13 @@ func (m *Many) NewOne() *Record {
 	r := m.Model.Copy()
 	m.Records = append(m.Records, r)
 	return r
+}
+
+func (m *Many) SetError(err error) *Many {
+	m.Error = err
+	return m
+}
+
+func (m *Many) HasError() bool {
+	return m.Error != nil
 }

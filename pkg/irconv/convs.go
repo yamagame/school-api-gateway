@@ -1,45 +1,54 @@
-package conv
+package irconv
+
+type ConvsInterface[M any] interface {
+	Append(...*M) *Slice[M]
+	SetError(err error) *Slice[M]
+}
 
 type ConvInterface[M any, N any] interface {
 	ToStruct(*Record) (*M, error)
 	ToIRModel(*M) (*Record, error)
-	ToArray([]*M) (*N, error)
+	NewSlice() *N
 }
 
-type Convs[M any, N any, B ConvInterface[M, N]] struct {
+type Convs[M any, N ConvsInterface[M], B ConvInterface[M, N]] struct {
 	Conv B
 }
 
-func (c Convs[M, N, B]) ToStruct(in *Records, errs ...error) (*N, error) {
-	if len(errs) > 0 && errs[0] != nil {
-		return nil, errs[0]
+func (c Convs[M, N, B]) ToStruct(in *Records) *N {
+	r := c.Conv.NewSlice()
+	if in.Error != nil {
+		(*r).SetError(in.Error)
+		return r
 	}
-	r := []*M{}
 	it := in.NewIterator()
 	for it.HasNext() {
 		v := it.Next()
 		t, err := c.Conv.ToStruct(v)
 		if err != nil {
-			return nil, err
+			(*r).SetError(err)
+			return r
 		}
-		r = append(r, t)
+		(*r).Append(t)
 	}
-	return c.Conv.ToArray(r)
+	return r
 }
 
-func (c Convs[M, N, B]) ToIRModel(in []*M) (*Records, error) {
-	if len(in) == 0 {
-		return nil, ErrEmptyArray
-	}
+func (c Convs[M, N, B]) ToIRModel(in []*M) *Records {
 	r := &Records{}
+	if len(in) == 0 {
+		r.Error = ErrEmptyArray
+		return r
+	}
 	for _, v := range in {
 		t, err := c.Conv.ToIRModel(v)
 		if err != nil {
-			return nil, err
+			r.Error = err
+			return r
 		}
 		r.Append(t)
 	}
-	return r, nil
+	return r
 }
 
 type valiables[T any] interface {

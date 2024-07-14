@@ -1,6 +1,6 @@
 package model
 
-import "github.com/yamagame/school-api-gateway/pkg/conv"
+import "github.com/yamagame/school-api-gateway/pkg/irconv"
 
 type Chair struct {
 	ID     int32 `gorm:"primary; comment:主キーの標準フィールド;"`
@@ -8,11 +8,5 @@ type Chair struct {
 }
 
 type Chairs struct {
-	*conv.Slice[Chair]
-}
-
-func NewChairs(variables ...*Chair) *Chairs {
-	return &Chairs{
-		Slice: conv.NewSlice(variables...),
-	}
+	*irconv.Slice[Chair]
 }

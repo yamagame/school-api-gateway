@@ -3,7 +3,7 @@ package model
 import (
 	"time"
 
-	"github.com/yamagame/school-api-gateway/pkg/conv"
+	"github.com/yamagame/school-api-gateway/pkg/irconv"
 )
 
 type Area struct {
@@ -17,11 +17,5 @@ type Area struct {
 // 西地区
 
 type Areas struct {
-	*conv.Slice[Area]
-}
-
-func NewAreas(variables ...*Area) *Areas {
-	return &Areas{
-		Slice: conv.NewSlice(variables...),
-	}
+	*irconv.Slice[Area]
 }

@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/yamagame/school-api-gateway/infra/dao/query"
+	"github.com/yamagame/school-api-gateway/infra/infconv"
 	"github.com/yamagame/school-api-gateway/infra/model"
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
@@ -42,8 +43,8 @@ func (r *Labo) UpsertInBatches(ctx context.Context, labos *model.Labos, columns 
 
 func (r *Labo) Upsert(ctx context.Context, labos *model.Labos) error {
 	var err error
-	creates := model.NewLabos()
-	updates := model.NewLabos()
+	creates := infconv.Labo.NewSlice()
+	updates := infconv.Labo.NewSlice()
 	it := labos.NewIterator()
 	for it.HasNext() {
 		labo := it.Next()
@@ -86,7 +87,8 @@ func (r *Labo) Find(ctx context.Context, ids []int32) *model.Labos {
 	q := query.Use(r.db)
 	lb := q.Labo
 	records, err := lb.WithContext(ctx).Where(lb.ID.In(ids...)).Find()
-	ret := model.NewLabos(records...)
+	ret := infconv.Labo.NewSlice()
+	ret.Append(records...)
 	if err != nil {
 		ret.Error = err
 	}
@@ -102,7 +104,8 @@ func (r *Labo) List(ctx context.Context, limit, offset int32) *model.Labos {
 		Offset(int(offset)).
 		Order(lb.ID.Asc()).
 		Find()
-	ret := model.NewLabos(records...)
+	ret := infconv.Labo.NewSlice()
+	ret.Append(records...)
 	if err != nil {
 		ret.Error = err
 	}
