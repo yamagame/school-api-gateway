@@ -28,7 +28,7 @@ func (LaboConv) ToStruct(in *conv.Record) (*model.Labo, error) {
 		}).
 		IfExist(".desk", func(v *conv.Record) {
 			if desks, err := Desks.ToStruct(v.GetHasManyRecords("desk")); err == nil {
-				out.Desks = desks.Copy()
+				out.Desks = desks.ShallowCopy()
 			}
 		}).Error; err != nil {
 		return nil, err

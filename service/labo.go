@@ -133,5 +133,5 @@ func (s *Labo) List(ctx context.Context, limit, offset int32) ([]*school.Labo, e
 	if err != nil {
 		return nil, err
 	}
-	return r.Copy(), nil
+	return r.ShallowCopy(), nil
 }

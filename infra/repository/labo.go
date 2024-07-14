@@ -37,7 +37,7 @@ func (r *Labo) UpsertInBatches(ctx context.Context, labos *model.Labos, columns 
 		Clauses(clause.OnConflict{
 			DoUpdates: clause.AssignmentColumns(columns),
 		}).
-		CreateInBatches(labos.Copy(), r.batchSize)
+		CreateInBatches(labos.ShallowCopy(), r.batchSize)
 }
 
 func (r *Labo) Upsert(ctx context.Context, labos *model.Labos) error {
@@ -65,7 +65,7 @@ func (r *Labo) Upsert(ctx context.Context, labos *model.Labos) error {
 func (r *Labo) Create(ctx context.Context, labos *model.Labos) error {
 	q := query.Use(r.db)
 	lb := q.Labo
-	return lb.WithContext(ctx).CreateInBatches(labos.Copy(), r.batchSize)
+	return lb.WithContext(ctx).CreateInBatches(labos.ShallowCopy(), r.batchSize)
 }
 
 func (r *Labo) Update(ctx context.Context, labos *model.Labos) error {

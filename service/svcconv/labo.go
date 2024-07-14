@@ -60,7 +60,7 @@ func (LaboConv) ToArray(labos []*school.Labo) (*school.Labos, error) {
 }
 
 func (c LaboConv) ProtoToInfra(labos *school.Labos) (*model.Labos, error) {
-	irmodels, err := Labos.ToIRModel(labos.Copy())
+	irmodels, err := Labos.ToIRModel(labos.ShallowCopy())
 	if err != nil {
 		return nil, err
 	}
@@ -68,7 +68,7 @@ func (c LaboConv) ProtoToInfra(labos *school.Labos) (*model.Labos, error) {
 }
 
 func (c LaboConv) InfraToProto(labos *model.Labos) (*school.Labos, error) {
-	irmodels, err := infconv.Labos.ToIRModel(labos.Copy())
+	irmodels, err := infconv.Labos.ToIRModel(labos.ShallowCopy())
 	if err != nil {
 		return nil, err
 	}

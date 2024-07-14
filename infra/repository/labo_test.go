@@ -58,7 +58,7 @@ func TestLabosInfraToIRModel(t *testing.T) {
 	res := repo.List(ctx, 10, 0)
 	assert.NoError(t, res.Error)
 
-	labos, err := infconv.Labos.ToIRModel(res.Copy())
+	labos, err := infconv.Labos.ToIRModel(res.ShallowCopy())
 	assert.NoError(t, err)
 
 	out := labos.ValueMap()
