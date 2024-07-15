@@ -1,0 +1,76 @@
+[
+  {
+    "building": {
+      "id": 1,
+      "name": "A棟"
+    },
+    "chair": [],
+    "desk": [
+      {
+        "id": 1,
+        "labo_id": 1,
+        "name": "机1"
+      }
+    ],
+    "group": {
+      "id": 1,
+      "name": "Ⅰ類（情報系）"
+    },
+    "id": 1,
+    "name": "佐藤",
+    "program": {
+      "id": 1,
+      "name": "01.メディア情報学プログラム"
+    },
+    "url": ""
+  },
+  {
+    "building": {
+      "id": 2,
+      "name": "B棟"
+    },
+    "chair": [],
+    "desk": [
+      {
+        "id": 2,
+        "labo_id": 2,
+        "name": ""
+      },
+      {
+        "id": 3,
+        "labo_id": 2,
+        "name": ""
+      }
+    ],
+    "group": {
+      "id": 2,
+      "name": "Ⅱ類（融合系）"
+    },
+    "id": 2,
+    "name": "清水",
+    "program": {
+      "id": 2,
+      "name": "02.経営・社会情報学プログラム"
+    },
+    "url": ""
+  },
+  {
+    "building": {
+      "id": 3,
+      "name": "C棟"
+    },
+    "chair": [],
+    "desk": [],
+    "group": {
+      "id": 3,
+      "name": "Ⅲ類（理工系）"
+    },
+    "id": 3,
+    "name": "鈴木",
+    "program": {
+      "id": 3,
+      "name": "03.情報数理工学プログラム"
+    },
+    "url": ""
+  }
+]

@@ -134,7 +134,15 @@ func TestFind(t *testing.T) {
 				&model.Desk{
 					LaboID: values[1].ID,
 				})
-			repo.Update(ctx, labos)
+			err := repo.Update(ctx, labos)
+			require.NoError(t, err)
+		}
+
+		{
+			records := repo.Find(ctx, []int32{1, 2, 3})
+			labos := infconv.Labos.ToIRModel(records.MustShallowCopy())
+			out := labos.ValueMap()
+			snapshot.Match(t, out, "find-irmodels-1.json")
 		}
 
 		{
@@ -143,7 +151,15 @@ func TestFind(t *testing.T) {
 			values[0].Desks[0].Name = "机1-A"
 			values[1].Desks[0].Name = "机2"
 			values[1].Desks[1].Name = "机3"
-			repo.Update(ctx, labos)
+			err := repo.Update(ctx, labos)
+			require.NoError(t, err)
+		}
+
+		{
+			records := repo.Find(ctx, []int32{1, 2, 3})
+			labos := infconv.Labos.ToIRModel(records.MustShallowCopy())
+			out := labos.ValueMap()
+			snapshot.Match(t, out, "find-irmodels-2.json")
 		}
 
 		labos := repo.Find(ctx, []int32{1, 2, 3}).MustShallowCopy()
