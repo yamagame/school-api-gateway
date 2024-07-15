@@ -13,8 +13,13 @@ type Building struct {
 	Aliases   []Alias    `gorm:"many2many:building_aliases; comment:別名;"`
 	CreatedAt *time.Time `gorm:"comment:GORMによって自動的に管理される作成時間;"`
 	UpdatedAt *time.Time `gorm:"comment:GORMによって自動的に管理される更新時間;"`
+	Error     error      `gorm:"-"`
 }
 
 type Buildings struct {
 	*irconv.Slice[Building]
+}
+
+func (m *Building) HasError() bool {
+	return m.Error != nil
 }

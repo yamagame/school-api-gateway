@@ -11,6 +11,7 @@ type Group struct {
 	Name      string     `gorm:"type:varchar(255); comment:専門領域名;"`
 	CreatedAt *time.Time `gorm:"comment:GORMによって自動的に管理される作成時間;"`
 	UpdatedAt *time.Time `gorm:"comment:GORMによって自動的に管理される更新時間;"`
+	Error     error      `gorm:"-"`
 }
 
 // Ⅰ類（情報系）
@@ -19,4 +20,8 @@ type Group struct {
 
 type Groups struct {
 	*irconv.Slice[Group]
+}
+
+func (m *Group) HasError() bool {
+	return m.Error != nil
 }

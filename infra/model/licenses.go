@@ -7,8 +7,13 @@ type License struct {
 	Name     string `gorm:"type:varchar(255); comment:ライセンス名;"`
 	PersonID int32  `gorm:"資格所有者の人物ID"`
 	Person   Person `gorm:"資格所有者"`
+	Error    error  `gorm:"-"`
 }
 
 type Licenses struct {
 	*irconv.Slice[License]
+}
+
+func (m *License) HasError() bool {
+	return m.Error != nil
 }

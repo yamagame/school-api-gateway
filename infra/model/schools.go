@@ -14,8 +14,13 @@ type School struct {
 	Classes   []Class    `gorm:"many2many:school_classes;"`
 	CreatedAt *time.Time `gorm:"comment:GORMによって自動的に管理される作成時間;"`
 	UpdatedAt *time.Time `gorm:"comment:GORMによって自動的に管理される更新時間;"`
+	Error     error      `gorm:"-"`
 }
 
 type Schools struct {
 	*irconv.Slice[School]
+}
+
+func (m *School) HasError() bool {
+	return m.Error != nil
 }

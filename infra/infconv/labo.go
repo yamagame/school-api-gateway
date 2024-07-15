@@ -10,7 +10,7 @@ type LaboConv struct{}
 
 func (LaboConv) ToStruct(in *irmodel1.Record) (*model.Labo, error) {
 	out := &model.Labo{}
-	if err := in.
+	out.Error = in.
 		ToStruct(".id", ".ID", out).
 		ToStruct(".name", ".Name", out, irmodel1.StrPtr).
 		ToStruct(".url", ".URL", out, irmodel1.StrPtr).
@@ -30,14 +30,16 @@ func (LaboConv) ToStruct(in *irmodel1.Record) (*model.Labo, error) {
 			if desks, err := Desks.ToStruct(v.GetHasManyRecords("desk")).ShallowCopy(); err == nil {
 				out.Desks = desks
 			}
-		}).Error; err != nil {
-		return nil, err
-	}
-	return out, nil
+		}).Error
+	return out, out.Error
 }
 
 func (LaboConv) ToIRModel(in *model.Labo) *irmodel1.Record {
 	out := irmodel.NewLabo()
+	if in.HasError() {
+		out.Error = in.Error
+		return out
+	}
 	return out.
 		FromStruct(".ID", ".id", in).
 		FromStruct(".Name", ".name", in, irmodel1.PtrStr).

@@ -6,8 +6,13 @@ type Desk struct {
 	ID     int32 `gorm:"primary; comment:主キーの標準フィールド;"`
 	LaboID int32
 	Name   string
+	Error  error `gorm:"-"`
 }
 
 type Desks struct {
 	*irconv.Slice[Desk]
+}
+
+func (m *Desk) HasError() bool {
+	return m.Error != nil
 }

@@ -11,6 +11,7 @@ type Program struct {
 	Name      string     `gorm:"type:varchar(255); comment:プログラム名;"`
 	CreatedAt *time.Time `gorm:"comment:GORMによって自動的に管理される作成時間;"`
 	UpdatedAt *time.Time `gorm:"comment:GORMによって自動的に管理される更新時間;"`
+	Error     error      `gorm:"-"`
 }
 
 // 01.メディア情報学プログラム
@@ -31,4 +32,8 @@ type Program struct {
 
 type Programs struct {
 	*irconv.Slice[Program]
+}
+
+func (m *Program) HasError() bool {
+	return m.Error != nil
 }

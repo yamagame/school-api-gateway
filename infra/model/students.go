@@ -18,8 +18,13 @@ type Student struct {
 	Grade     int32      `gorm:"comment:学年;"`
 	CreatedAt *time.Time `gorm:"comment:GORMによって自動的に管理される作成時間;"`
 	UpdatedAt *time.Time `gorm:"comment:GORMによって自動的に管理される更新時間;"`
+	Error     error      `gorm:"-"`
 }
 
 type Students struct {
 	*irconv.Slice[Student]
+}
+
+func (m *Student) HasError() bool {
+	return m.Error != nil
 }

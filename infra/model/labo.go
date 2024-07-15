@@ -23,8 +23,13 @@ type Labo struct {
 	Chairs     []*Chair     `gorm:"comment:研究室の椅子;"`
 	CreatedAt  *time.Time   `gorm:"comment:GORMによって自動的に管理される作成時間;"`
 	UpdatedAt  *time.Time   `gorm:"comment:GORMによって自動的に管理される更新時間;"`
+	Error      error        `gorm:"-"`
 }
 
 type Labos struct {
 	*irconv.Slice[Labo]
+}
+
+func (m *Labo) HasError() bool {
+	return m.Error != nil
 }

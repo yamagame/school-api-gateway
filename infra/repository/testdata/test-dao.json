@@ -2,6 +2,7 @@
   {
     "Building": {
       "Aliases": null,
+      "Error": null,
       "Floors": 0,
       "ID": 1,
       "Name": "A棟"
@@ -9,7 +10,9 @@
     "BuildingID": 1,
     "Chairs": [],
     "Desks": [],
+    "Error": null,
     "Group": {
+      "Error": null,
       "ID": 1,
       "Name": "Ⅰ類（情報系）"
     },
@@ -18,6 +21,7 @@
     "Name": "佐藤",
     "Professors": null,
     "Program": {
+      "Error": null,
       "ID": 1,
       "Name": "01.メディア情報学プログラム"
     },
@@ -29,6 +33,7 @@
   {
     "Building": {
       "Aliases": null,
+      "Error": null,
       "Floors": 0,
       "ID": 2,
       "Name": "B棟"
@@ -36,7 +41,9 @@
     "BuildingID": 2,
     "Chairs": [],
     "Desks": [],
+    "Error": null,
     "Group": {
+      "Error": null,
       "ID": 2,
       "Name": "Ⅱ類（融合系）"
     },
@@ -45,6 +52,7 @@
     "Name": "清水",
     "Professors": null,
     "Program": {
+      "Error": null,
       "ID": 2,
       "Name": "02.経営・社会情報学プログラム"
     },
@@ -56,6 +64,7 @@
   {
     "Building": {
       "Aliases": null,
+      "Error": null,
       "Floors": 0,
       "ID": 3,
       "Name": "C棟"
@@ -63,7 +72,9 @@
     "BuildingID": 3,
     "Chairs": [],
     "Desks": [],
+    "Error": null,
     "Group": {
+      "Error": null,
       "ID": 3,
       "Name": "Ⅲ類（理工系）"
     },
@@ -72,6 +83,7 @@
     "Name": "鈴木",
     "Professors": null,
     "Program": {
+      "Error": null,
       "ID": 3,
       "Name": "03.情報数理工学プログラム"
     },
@@ -83,6 +95,7 @@
   {
     "Building": {
       "Aliases": null,
+      "Error": null,
       "Floors": 0,
       "ID": 4,
       "Name": "D棟"
@@ -90,7 +103,9 @@
     "BuildingID": 4,
     "Chairs": [],
     "Desks": [],
+    "Error": null,
     "Group": {
+      "Error": null,
       "ID": 1,
       "Name": "Ⅰ類（情報系）"
     },
@@ -99,6 +114,7 @@
     "Name": "高橋",
     "Professors": null,
     "Program": {
+      "Error": null,
       "ID": 4,
       "Name": "04.コンピュータサイエンスプログラム"
     },
@@ -110,6 +126,7 @@
   {
     "Building": {
       "Aliases": null,
+      "Error": null,
       "Floors": 0,
       "ID": 5,
       "Name": "E棟"
@@ -117,7 +134,9 @@
     "BuildingID": 5,
     "Chairs": [],
     "Desks": [],
+    "Error": null,
     "Group": {
+      "Error": null,
       "ID": 2,
       "Name": "Ⅱ類（融合系）"
     },
@@ -126,6 +145,7 @@
     "Name": "田中",
     "Professors": null,
     "Program": {
+      "Error": null,
       "ID": 5,
       "Name": "05.デザイン思考・データサイエンスプログラム"
     },
@@ -137,6 +157,7 @@
   {
     "Building": {
       "Aliases": null,
+      "Error": null,
       "Floors": 0,
       "ID": 6,
       "Name": "F棟"
@@ -144,7 +165,9 @@
     "BuildingID": 6,
     "Chairs": [],
     "Desks": [],
+    "Error": null,
     "Group": {
+      "Error": null,
       "ID": 3,
       "Name": "Ⅲ類（理工系）"
     },
@@ -153,6 +176,7 @@
     "Name": "渡辺",
     "Professors": null,
     "Program": {
+      "Error": null,
       "ID": 6,
       "Name": "06.セキュリティ情報学プログラム"
     },
@@ -164,6 +188,7 @@
   {
     "Building": {
       "Aliases": null,
+      "Error": null,
       "Floors": 0,
       "ID": 7,
       "Name": "G棟"
@@ -171,7 +196,9 @@
     "BuildingID": 7,
     "Chairs": [],
     "Desks": [],
+    "Error": null,
     "Group": {
+      "Error": null,
       "ID": 1,
       "Name": "Ⅰ類（情報系）"
     },
@@ -180,6 +207,7 @@
     "Name": "伊藤",
     "Professors": null,
     "Program": {
+      "Error": null,
       "ID": 7,
       "Name": "07.情報通信工学プログラム"
     },
@@ -191,6 +219,7 @@
   {
     "Building": {
       "Aliases": null,
+      "Error": null,
       "Floors": 0,
       "ID": 8,
       "Name": "H棟"
@@ -198,7 +227,9 @@
     "BuildingID": 8,
     "Chairs": [],
     "Desks": [],
+    "Error": null,
     "Group": {
+      "Error": null,
       "ID": 2,
       "Name": "Ⅱ類（融合系）"
     },
@@ -207,6 +238,7 @@
     "Name": "山本",
     "Professors": null,
     "Program": {
+      "Error": null,
       "ID": 8,
       "Name": "08.電子情報学プログラム"
     },
@@ -218,6 +250,7 @@
   {
     "Building": {
       "Aliases": null,
+      "Error": null,
       "Floors": 0,
       "ID": 9,
       "Name": "I棟"
@@ -225,7 +258,9 @@
     "BuildingID": 9,
     "Chairs": [],
     "Desks": [],
+    "Error": null,
     "Group": {
+      "Error": null,
       "ID": 3,
       "Name": "Ⅲ類（理工系）"
     },
@@ -234,6 +269,7 @@
     "Name": "中村",
     "Professors": null,
     "Program": {
+      "Error": null,
       "ID": 9,
       "Name": "09.計測・制御システムプログラム"
     },
@@ -245,6 +281,7 @@
   {
     "Building": {
       "Aliases": null,
+      "Error": null,
       "Floors": 0,
       "ID": 10,
       "Name": "J棟"
@@ -252,7 +289,9 @@
     "BuildingID": 10,
     "Chairs": [],
     "Desks": [],
+    "Error": null,
     "Group": {
+      "Error": null,
       "ID": 1,
       "Name": "Ⅰ類（情報系）"
     },
@@ -261,6 +300,7 @@
     "Name": "小林",
     "Professors": null,
     "Program": {
+      "Error": null,
       "ID": 10,
       "Name": "10.先端ロボティクスプログラム"
     },
@@ -272,6 +312,7 @@
   {
     "Building": {
       "Aliases": null,
+      "Error": null,
       "Floors": 0,
       "ID": 11,
       "Name": "K棟"
@@ -279,7 +320,9 @@
     "BuildingID": 11,
     "Chairs": [],
     "Desks": [],
+    "Error": null,
     "Group": {
+      "Error": null,
       "ID": 2,
       "Name": "Ⅱ類（融合系）"
     },
@@ -288,6 +331,7 @@
     "Name": "斎藤",
     "Professors": null,
     "Program": {
+      "Error": null,
       "ID": 11,
       "Name": "11.機械システムプログラム"
     },
@@ -299,6 +343,7 @@
   {
     "Building": {
       "Aliases": null,
+      "Error": null,
       "Floors": 0,
       "ID": 12,
       "Name": "L棟"
@@ -306,7 +351,9 @@
     "BuildingID": 12,
     "Chairs": [],
     "Desks": [],
+    "Error": null,
     "Group": {
+      "Error": null,
       "ID": 3,
       "Name": "Ⅲ類（理工系）"
     },
@@ -315,6 +362,7 @@
     "Name": "加藤",
     "Professors": null,
     "Program": {
+      "Error": null,
       "ID": 12,
       "Name": "12.電子工学プログラム"
     },
@@ -326,6 +374,7 @@
   {
     "Building": {
       "Aliases": null,
+      "Error": null,
       "Floors": 0,
       "ID": 13,
       "Name": "M棟"
@@ -333,7 +382,9 @@
     "BuildingID": 13,
     "Chairs": [],
     "Desks": [],
+    "Error": null,
     "Group": {
+      "Error": null,
       "ID": 1,
       "Name": "Ⅰ類（情報系）"
     },
@@ -342,6 +393,7 @@
     "Name": "吉田",
     "Professors": null,
     "Program": {
+      "Error": null,
       "ID": 13,
       "Name": "13.光工学プログラム"
     },
@@ -353,6 +405,7 @@
   {
     "Building": {
       "Aliases": null,
+      "Error": null,
       "Floors": 0,
       "ID": 1,
       "Name": "A棟"
@@ -360,7 +413,9 @@
     "BuildingID": 1,
     "Chairs": [],
     "Desks": [],
+    "Error": null,
     "Group": {
+      "Error": null,
       "ID": 2,
       "Name": "Ⅱ類（融合系）"
     },
@@ -369,6 +424,7 @@
     "Name": "山田",
     "Professors": null,
     "Program": {
+      "Error": null,
       "ID": 14,
       "Name": "14.物理工学プログラム"
     },
@@ -380,6 +436,7 @@
   {
     "Building": {
       "Aliases": null,
+      "Error": null,
       "Floors": 0,
       "ID": 2,
       "Name": "B棟"
@@ -387,7 +444,9 @@
     "BuildingID": 2,
     "Chairs": [],
     "Desks": [],
+    "Error": null,
     "Group": {
+      "Error": null,
       "ID": 3,
       "Name": "Ⅲ類（理工系）"
     },
@@ -396,6 +455,7 @@
     "Name": "佐々木",
     "Professors": null,
     "Program": {
+      "Error": null,
       "ID": 15,
       "Name": "15.化学生命工学プログラム"
     },
@@ -407,6 +467,7 @@
   {
     "Building": {
       "Aliases": null,
+      "Error": null,
       "Floors": 0,
       "ID": 3,
       "Name": "C棟"
@@ -414,7 +475,9 @@
     "BuildingID": 3,
     "Chairs": [],
     "Desks": [],
+    "Error": null,
     "Group": {
+      "Error": null,
       "ID": 1,
       "Name": "Ⅰ類（情報系）"
     },
@@ -423,6 +486,7 @@
     "Name": "山口",
     "Professors": null,
     "Program": {
+      "Error": null,
       "ID": 1,
       "Name": "01.メディア情報学プログラム"
     },
@@ -434,6 +498,7 @@
   {
     "Building": {
       "Aliases": null,
+      "Error": null,
       "Floors": 0,
       "ID": 4,
       "Name": "D棟"
@@ -441,7 +506,9 @@
     "BuildingID": 4,
     "Chairs": [],
     "Desks": [],
+    "Error": null,
     "Group": {
+      "Error": null,
       "ID": 2,
       "Name": "Ⅱ類（融合系）"
     },
@@ -450,6 +517,7 @@
     "Name": "松本",
     "Professors": null,
     "Program": {
+      "Error": null,
       "ID": 2,
       "Name": "02.経営・社会情報学プログラム"
     },
@@ -461,6 +529,7 @@
   {
     "Building": {
       "Aliases": null,
+      "Error": null,
       "Floors": 0,
       "ID": 5,
       "Name": "E棟"
@@ -468,7 +537,9 @@
     "BuildingID": 5,
     "Chairs": [],
     "Desks": [],
+    "Error": null,
     "Group": {
+      "Error": null,
       "ID": 3,
       "Name": "Ⅲ類（理工系）"
     },
@@ -477,6 +548,7 @@
     "Name": "井上",
     "Professors": null,
     "Program": {
+      "Error": null,
       "ID": 3,
       "Name": "03.情報数理工学プログラム"
     },
@@ -488,6 +560,7 @@
   {
     "Building": {
       "Aliases": null,
+      "Error": null,
       "Floors": 0,
       "ID": 6,
       "Name": "F棟"
@@ -495,7 +568,9 @@
     "BuildingID": 6,
     "Chairs": [],
     "Desks": [],
+    "Error": null,
     "Group": {
+      "Error": null,
       "ID": 1,
       "Name": "Ⅰ類（情報系）"
     },
@@ -504,6 +579,7 @@
     "Name": "木村",
     "Professors": null,
     "Program": {
+      "Error": null,
       "ID": 4,
       "Name": "04.コンピュータサイエンスプログラム"
     },
@@ -515,6 +591,7 @@
   {
     "Building": {
       "Aliases": null,
+      "Error": null,
       "Floors": 0,
       "ID": 7,
       "Name": "G棟"
@@ -522,7 +599,9 @@
     "BuildingID": 7,
     "Chairs": [],
     "Desks": [],
+    "Error": null,
     "Group": {
+      "Error": null,
       "ID": 2,
       "Name": "Ⅱ類（融合系）"
     },
@@ -531,6 +610,7 @@
     "Name": "清水",
     "Professors": null,
     "Program": {
+      "Error": null,
       "ID": 5,
       "Name": "05.デザイン思考・データサイエンスプログラム"
     },
@@ -542,6 +622,7 @@
   {
     "Building": {
       "Aliases": null,
+      "Error": null,
       "Floors": 0,
       "ID": 8,
       "Name": "H棟"
@@ -549,7 +630,9 @@
     "BuildingID": 8,
     "Chairs": [],
     "Desks": [],
+    "Error": null,
     "Group": {
+      "Error": null,
       "ID": 3,
       "Name": "Ⅲ類（理工系）"
     },
@@ -558,6 +641,7 @@
     "Name": "山崎",
     "Professors": null,
     "Program": {
+      "Error": null,
       "ID": 6,
       "Name": "06.セキュリティ情報学プログラム"
     },
@@ -569,6 +653,7 @@
   {
     "Building": {
       "Aliases": null,
+      "Error": null,
       "Floors": 0,
       "ID": 9,
       "Name": "I棟"
@@ -576,7 +661,9 @@
     "BuildingID": 9,
     "Chairs": [],
     "Desks": [],
+    "Error": null,
     "Group": {
+      "Error": null,
       "ID": 1,
       "Name": "Ⅰ類（情報系）"
     },
@@ -585,6 +672,7 @@
     "Name": "中島",
     "Professors": null,
     "Program": {
+      "Error": null,
       "ID": 7,
       "Name": "07.情報通信工学プログラム"
     },
@@ -596,6 +684,7 @@
   {
     "Building": {
       "Aliases": null,
+      "Error": null,
       "Floors": 0,
       "ID": 10,
       "Name": "J棟"
@@ -603,7 +692,9 @@
     "BuildingID": 10,
     "Chairs": [],
     "Desks": [],
+    "Error": null,
     "Group": {
+      "Error": null,
       "ID": 2,
       "Name": "Ⅱ類（融合系）"
     },
@@ -612,6 +703,7 @@
     "Name": "池田",
     "Professors": null,
     "Program": {
+      "Error": null,
       "ID": 8,
       "Name": "08.電子情報学プログラム"
     },
@@ -623,6 +715,7 @@
   {
     "Building": {
       "Aliases": null,
+      "Error": null,
       "Floors": 0,
       "ID": 11,
       "Name": "K棟"
@@ -630,7 +723,9 @@
     "BuildingID": 11,
     "Chairs": [],
     "Desks": [],
+    "Error": null,
     "Group": {
+      "Error": null,
       "ID": 3,
       "Name": "Ⅲ類（理工系）"
     },
@@ -639,6 +734,7 @@
     "Name": "阿部",
     "Professors": null,
     "Program": {
+      "Error": null,
       "ID": 9,
       "Name": "09.計測・制御システムプログラム"
     },
@@ -650,6 +746,7 @@
   {
     "Building": {
       "Aliases": null,
+      "Error": null,
       "Floors": 0,
       "ID": 12,
       "Name": "L棟"
@@ -657,7 +754,9 @@
     "BuildingID": 12,
     "Chairs": [],
     "Desks": [],
+    "Error": null,
     "Group": {
+      "Error": null,
       "ID": 1,
       "Name": "Ⅰ類（情報系）"
     },
@@ -666,6 +765,7 @@
     "Name": "橋本",
     "Professors": null,
     "Program": {
+      "Error": null,
       "ID": 10,
       "Name": "10.先端ロボティクスプログラム"
     },
@@ -677,6 +777,7 @@
   {
     "Building": {
       "Aliases": null,
+      "Error": null,
       "Floors": 0,
       "ID": 13,
       "Name": "M棟"
@@ -684,7 +785,9 @@
     "BuildingID": 13,
     "Chairs": [],
     "Desks": [],
+    "Error": null,
     "Group": {
+      "Error": null,
       "ID": 2,
       "Name": "Ⅱ類（融合系）"
     },
@@ -693,6 +796,7 @@
     "Name": "山下",
     "Professors": null,
     "Program": {
+      "Error": null,
       "ID": 11,
       "Name": "11.機械システムプログラム"
     },
@@ -704,6 +808,7 @@
   {
     "Building": {
       "Aliases": null,
+      "Error": null,
       "Floors": 0,
       "ID": 1,
       "Name": "A棟"
@@ -711,7 +816,9 @@
     "BuildingID": 1,
     "Chairs": [],
     "Desks": [],
+    "Error": null,
     "Group": {
+      "Error": null,
       "ID": 3,
       "Name": "Ⅲ類（理工系）"
     },
@@ -720,6 +827,7 @@
     "Name": "石川",
     "Professors": null,
     "Program": {
+      "Error": null,
       "ID": 12,
       "Name": "12.電子工学プログラム"
     },
@@ -731,6 +839,7 @@
   {
     "Building": {
       "Aliases": null,
+      "Error": null,
       "Floors": 0,
       "ID": 2,
       "Name": "B棟"
@@ -738,7 +847,9 @@
     "BuildingID": 2,
     "Chairs": [],
     "Desks": [],
+    "Error": null,
     "Group": {
+      "Error": null,
       "ID": 1,
       "Name": "Ⅰ類（情報系）"
     },
@@ -747,6 +858,7 @@
     "Name": "前田",
     "Professors": null,
     "Program": {
+      "Error": null,
       "ID": 13,
       "Name": "13.光工学プログラム"
     },
@@ -758,6 +870,7 @@
   {
     "Building": {
       "Aliases": null,
+      "Error": null,
       "Floors": 0,
       "ID": 3,
       "Name": "C棟"
@@ -765,7 +878,9 @@
     "BuildingID": 3,
     "Chairs": [],
     "Desks": [],
+    "Error": null,
     "Group": {
+      "Error": null,
       "ID": 2,
       "Name": "Ⅱ類（融合系）"
     },
@@ -774,6 +889,7 @@
     "Name": "小川",
     "Professors": null,
     "Program": {
+      "Error": null,
       "ID": 14,
       "Name": "14.物理工学プログラム"
     },
@@ -785,6 +901,7 @@
   {
     "Building": {
       "Aliases": null,
+      "Error": null,
       "Floors": 0,
       "ID": 5,
       "Name": "E棟"
@@ -793,17 +910,21 @@
     "Chairs": [],
     "Desks": [
       {
+        "Error": null,
         "ID": 1,
         "LaboID": 30,
         "Name": "テーブルA"
       },
       {
+        "Error": null,
         "ID": 2,
         "LaboID": 30,
         "Name": "テーブルB"
       }
     ],
+    "Error": null,
     "Group": {
+      "Error": null,
       "ID": 3,
       "Name": "Ⅲ類（理工系）"
     },
@@ -812,6 +933,7 @@
     "Name": "藤田テスト",
     "Professors": null,
     "Program": {
+      "Error": null,
       "ID": 15,
       "Name": "15.化学生命工学プログラム"
     },

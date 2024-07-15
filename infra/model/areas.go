@@ -11,6 +11,7 @@ type Area struct {
 	Name      string     `gorm:"comment:地区名;"`
 	CreatedAt *time.Time `gorm:"comment:GORMによって自動的に管理される作成時間;"`
 	UpdatedAt *time.Time `gorm:"comment:GORMによって自動的に管理される更新時間;"`
+	Error     error      `gorm:"-"`
 }
 
 // 東地区
@@ -18,4 +19,8 @@ type Area struct {
 
 type Areas struct {
 	*irconv.Slice[Area]
+}
+
+func (m *Area) HasError() bool {
+	return m.Error != nil
 }

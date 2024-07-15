@@ -7,14 +7,16 @@
     "ID": 0,
     "Name": "グループ名",
     "CreatedAt": null,
-    "UpdatedAt": null
+    "UpdatedAt": null,
+    "Error": null
   },
   "ProgramID": 12,
   "Program": {
     "ID": 0,
     "Name": "プログラム名",
     "CreatedAt": null,
-    "UpdatedAt": null
+    "UpdatedAt": null,
+    "Error": null
   },
   "BuildingID": 12,
   "Building": {
@@ -23,7 +25,8 @@
     "Floors": 0,
     "Aliases": null,
     "CreatedAt": null,
-    "UpdatedAt": null
+    "UpdatedAt": null,
+    "Error": null
   },
   "Professors": null,
   "Students": null,
@@ -32,20 +35,24 @@
     {
       "ID": 1,
       "LaboID": 10,
-      "Name": ""
+      "Name": "",
+      "Error": null
     },
     {
       "ID": 2,
       "LaboID": 11,
-      "Name": ""
+      "Name": "",
+      "Error": null
     },
     {
       "ID": 3,
       "LaboID": 13,
-      "Name": ""
+      "Name": "",
+      "Error": null
     }
   ],
   "Chairs": null,
   "CreatedAt": null,
-  "UpdatedAt": null
+  "UpdatedAt": null,
+  "Error": null
 }

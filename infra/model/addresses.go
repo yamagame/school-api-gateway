@@ -15,8 +15,13 @@ type Address struct {
 	Building   string     `gorm:"comment:建物名;"`
 	CreatedAt  *time.Time `gorm:"comment:GORMによって自動的に管理される作成時間;"`
 	UpdatedAt  *time.Time `gorm:"comment:GORMによって自動的に管理される更新時間;"`
+	Error      error      `gorm:"-"`
 }
 
 type Addresses struct {
 	*irconv.Slice[Address]
+}
+
+func (m *Address) HasError() bool {
+	return m.Error != nil
 }

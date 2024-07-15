@@ -10,18 +10,20 @@ type DeskConv struct{}
 
 func (DeskConv) ToStruct(in *irmodel1.Record) (*model.Desk, error) {
 	out := &model.Desk{}
-	if err := in.
+	out.Error = in.
 		ToStruct(".id", ".ID", out).
 		ToStruct(".labo_id", ".LaboID", out).
 		ToStruct(".name", ".Name", out).
-		Error; err != nil {
-		return nil, err
-	}
-	return out, nil
+		Error
+	return out, out.Error
 }
 
 func (DeskConv) ToIRModel(in *model.Desk) *irmodel1.Record {
 	out := irmodel.NewDesk()
+	if in.HasError() {
+		out.Error = in.Error
+		return out
+	}
 	return out.
 		FromStruct(".ID", ".id", in).
 		FromStruct(".LaboID", ".labo_id", in).
