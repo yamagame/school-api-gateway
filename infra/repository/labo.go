@@ -38,7 +38,7 @@ func (r *Labo) UpsertInBatches(ctx context.Context, labos *model.Labos, columns 
 		Clauses(clause.OnConflict{
 			DoUpdates: clause.AssignmentColumns(columns),
 		}).
-		CreateInBatches(labos.ShallowCopy(), r.batchSize)
+		CreateInBatches(labos.MustShallowCopy(), r.batchSize)
 }
 
 func (r *Labo) Upsert(ctx context.Context, labos *model.Labos) error {
@@ -66,7 +66,7 @@ func (r *Labo) Upsert(ctx context.Context, labos *model.Labos) error {
 func (r *Labo) Create(ctx context.Context, labos *model.Labos) error {
 	q := query.Use(r.db)
 	lb := q.Labo
-	return lb.WithContext(ctx).CreateInBatches(labos.ShallowCopy(), r.batchSize)
+	return lb.WithContext(ctx).CreateInBatches(labos.MustShallowCopy(), r.batchSize)
 }
 
 func (r *Labo) Update(ctx context.Context, labos *model.Labos) error {
@@ -75,7 +75,9 @@ func (r *Labo) Update(ctx context.Context, labos *model.Labos) error {
 	it := labos.NewIterator()
 	for it.HasNext() {
 		labo := it.Next()
-		_, err := lb.WithContext(ctx).Where(lb.ID.Eq(labo.ID)).Updates(labo)
+		_, err := lb.WithContext(ctx).
+			Session(&gorm.Session{FullSaveAssociations: true}).
+			Where(lb.ID.Eq(labo.ID)).Updates(labo)
 		if err != nil {
 			return err
 		}
@@ -87,6 +89,7 @@ func (r *Labo) Find(ctx context.Context, ids []int32) *model.Labos {
 	q := query.Use(r.db)
 	lb := q.Labo
 	records, err := lb.WithContext(ctx).
+		Preload(lb.Desks, lb.Chairs).
 		Joins(lb.Building, lb.Group, lb.Program).
 		Where(lb.ID.In(ids...)).Find()
 	ret := infconv.Labo.NewSlice()

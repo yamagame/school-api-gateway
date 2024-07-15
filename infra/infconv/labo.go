@@ -27,9 +27,8 @@ func (LaboConv) ToStruct(in *irmodel1.Record) (*model.Labo, error) {
 				ToStruct(".building.name", ".Building.Name", out)
 		}).
 		IfExist(".desk", func(v *irmodel1.Record) {
-			desks := Desks.ToStruct(v.GetHasManyRecords("desk"))
-			if !desks.HasError() {
-				out.Desks = desks.ShallowCopy()
+			if desks, err := Desks.ToStruct(v.GetHasManyRecords("desk")).ShallowCopy(); err == nil {
+				out.Desks = desks
 			}
 		}).Error; err != nil {
 		return nil, err

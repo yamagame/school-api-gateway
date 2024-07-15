@@ -43,3 +43,11 @@ func DB() *gorm.DB {
 	}
 	return db
 }
+
+func ResetAutoIncrementForTest(db *gorm.DB) {
+	if os.Getenv("ENV") != "test" {
+		return
+	}
+	db.Exec("ALTER TABLE `desks` auto_increment = 1;")
+	db.Exec("ALTER TABLE `chairs` auto_increment = 1;")
+}

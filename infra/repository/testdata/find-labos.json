@@ -7,8 +7,14 @@
       "Name": "A棟"
     },
     "BuildingID": 1,
-    "Chairs": null,
-    "Desks": null,
+    "Chairs": [],
+    "Desks": [
+      {
+        "ID": 1,
+        "LaboID": 1,
+        "Name": "机1-A"
+      }
+    ],
     "Group": {
       "ID": 1,
       "Name": "Ⅰ類（情報系）"
@@ -34,8 +40,19 @@
       "Name": "B棟"
     },
     "BuildingID": 2,
-    "Chairs": null,
-    "Desks": null,
+    "Chairs": [],
+    "Desks": [
+      {
+        "ID": 2,
+        "LaboID": 2,
+        "Name": "机2"
+      },
+      {
+        "ID": 3,
+        "LaboID": 2,
+        "Name": "机3"
+      }
+    ],
     "Group": {
       "ID": 2,
       "Name": "Ⅱ類（融合系）"
@@ -61,8 +78,8 @@
       "Name": "C棟"
     },
     "BuildingID": 3,
-    "Chairs": null,
-    "Desks": null,
+    "Chairs": [],
+    "Desks": [],
     "Group": {
       "ID": 3,
       "Name": "Ⅲ類（理工系）"

@@ -17,23 +17,29 @@ import (
 
 func Use(db *gorm.DB, opts ...gen.DOOption) *Query {
 	return &Query{
-		db:   db,
-		Labo: newLabo(db, opts...),
+		db:    db,
+		Chair: newChair(db, opts...),
+		Desk:  newDesk(db, opts...),
+		Labo:  newLabo(db, opts...),
 	}
 }
 
 type Query struct {
 	db *gorm.DB
 
-	Labo labo
+	Chair chair
+	Desk  desk
+	Labo  labo
 }
 
 func (q *Query) Available() bool { return q.db != nil }
 
 func (q *Query) clone(db *gorm.DB) *Query {
 	return &Query{
-		db:   db,
-		Labo: q.Labo.clone(db),
+		db:    db,
+		Chair: q.Chair.clone(db),
+		Desk:  q.Desk.clone(db),
+		Labo:  q.Labo.clone(db),
 	}
 }
 
@@ -47,18 +53,24 @@ func (q *Query) WriteDB() *Query {
 
 func (q *Query) ReplaceDB(db *gorm.DB) *Query {
 	return &Query{
-		db:   db,
-		Labo: q.Labo.replaceDB(db),
+		db:    db,
+		Chair: q.Chair.replaceDB(db),
+		Desk:  q.Desk.replaceDB(db),
+		Labo:  q.Labo.replaceDB(db),
 	}
 }
 
 type queryCtx struct {
-	Labo ILaboDo
+	Chair IChairDo
+	Desk  IDeskDo
+	Labo  ILaboDo
 }
 
 func (q *Query) WithContext(ctx context.Context) *queryCtx {
 	return &queryCtx{
-		Labo: q.Labo.WithContext(ctx),
+		Chair: q.Chair.WithContext(ctx),
+		Desk:  q.Desk.WithContext(ctx),
+		Labo:  q.Labo.WithContext(ctx),
 	}
 }
 

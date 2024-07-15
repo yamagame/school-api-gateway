@@ -7,8 +7,10 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"github.com/yamagame/school-api-gateway/infra"
 	"github.com/yamagame/school-api-gateway/infra/infconv"
+	"github.com/yamagame/school-api-gateway/infra/model"
 	"github.com/yamagame/school-api-gateway/irmodel"
 	irmodel1 "github.com/yamagame/school-api-gateway/pkg/irconv"
 	"github.com/yamagame/school-api-gateway/pkg/snapshot"
@@ -53,7 +55,8 @@ func TestCreateUpdate(t *testing.T) {
 			results := repo.Find(ctx, []int32{1, 2})
 			assert.NoError(t, results.Error)
 
-			res := results.ShallowCopy()
+			res, err := results.ShallowCopy()
+			require.NoError(t, err)
 			assert.Equal(t, 2, len(res))
 			assert.Equal(t, "サトウ1", *res[0].Name)
 			assert.Equal(t, "シミズ2", *res[1].Name)
@@ -63,7 +66,8 @@ func TestCreateUpdate(t *testing.T) {
 			results := repo.FindWithName(ctx, []string{"サトウ1", "シミズ2", "スズキ3"})
 			assert.NoError(t, results.Error)
 
-			res := results.ShallowCopy()
+			res, err := results.ShallowCopy()
+			require.NoError(t, err)
 			assert.Equal(t, 3, len(res))
 			assert.Equal(t, "サトウ1", *res[0].Name)
 			assert.Equal(t, int32(1), res[0].ID)
@@ -84,7 +88,7 @@ func TestLabosInfraToIRModel(t *testing.T) {
 	res := repo.List(ctx, 10, 0)
 	assert.NoError(t, res.Error)
 
-	labos := infconv.Labos.ToIRModel(res.ShallowCopy())
+	labos := infconv.Labos.ToIRModel(res.MustShallowCopy())
 	assert.NoError(t, labos.Error)
 
 	out := labos.ValueMap()
@@ -110,12 +114,41 @@ func TestLabosCSVToIRModel(t *testing.T) {
 func TestFind(t *testing.T) {
 	ctx := context.Background()
 	db := infra.DB()
+	infra.ResetAutoIncrementForTest(db)
+	db.Transaction(func(tx *gorm.DB) error {
+		repo := NewLabo(tx)
 
-	repo := NewLabo(db)
+		{
+			labos := repo.Find(ctx, []int32{1, 2, 3})
+			values := labos.MustShallowCopy()
+			values[0].Desks = append(values[0].Desks,
+				&model.Desk{
+					LaboID: values[0].ID,
+					Name:   "机1",
+				},
+			)
+			values[1].Desks = append(values[1].Desks,
+				&model.Desk{
+					LaboID: values[1].ID,
+				},
+				&model.Desk{
+					LaboID: values[1].ID,
+				})
+			repo.Update(ctx, labos)
+		}
 
-	labos := repo.Find(ctx, []int32{1, 2, 3}).ShallowCopy()
+		{
+			labos := repo.Find(ctx, []int32{1, 2, 3})
+			values := labos.MustShallowCopy()
+			values[0].Desks[0].Name = "机1-A"
+			values[1].Desks[0].Name = "机2"
+			values[1].Desks[1].Name = "机3"
+			repo.Update(ctx, labos)
+		}
 
-	out := snapshot.Delete(t, labos, "CreatedAt", "UpdatedAt")
-
-	snapshot.Match(t, out, "find-labos.json")
+		labos := repo.Find(ctx, []int32{1, 2, 3}).MustShallowCopy()
+		out := snapshot.Delete(t, labos, "CreatedAt", "UpdatedAt")
+		snapshot.Match(t, out, "find-labos.json")
+		return fmt.Errorf("restore")
+	})
 }

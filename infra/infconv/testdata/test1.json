@@ -31,15 +31,18 @@
   "Desks": [
     {
       "ID": 1,
-      "LaboID": 10
+      "LaboID": 10,
+      "Name": ""
     },
     {
       "ID": 2,
-      "LaboID": 11
+      "LaboID": 11,
+      "Name": ""
     },
     {
       "ID": 3,
-      "LaboID": 13
+      "LaboID": 13,
+      "Name": ""
     }
   ],
   "Chairs": null,

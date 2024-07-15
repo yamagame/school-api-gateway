@@ -14,21 +14,21 @@ import (
 // Equal スナップショットと一致比較
 func Equal(t *testing.T, v interface{}, fname string) {
 	b, err := json.MarshalIndent(v, "", "  ")
-	require.NoError(t, err)
+	assert.NoError(t, err)
 	fpath := filepath.Join("./testdata/", fname)
 	rp, err := os.Open(fpath)
-	require.NoError(t, err)
+	assert.NoError(t, err)
 	data, err := io.ReadAll(rp)
-	require.NoError(t, err)
+	assert.NoError(t, err)
 	assert.Equal(t, data, b)
 }
 
 // Equal スナップショットを保存
 func Save(t *testing.T, v interface{}, fname string) {
 	b, err := json.MarshalIndent(v, "", "  ")
-	require.NoError(t, err)
+	assert.NoError(t, err)
 	err = os.MkdirAll("./testdata/", 0777)
-	require.NoError(t, err)
+	assert.NoError(t, err)
 	fpath := filepath.Join("./testdata/", fname)
 	os.WriteFile(fpath, b, 0666)
 }

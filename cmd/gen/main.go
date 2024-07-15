@@ -23,6 +23,8 @@ func main() {
 	g.UseDB(db)
 
 	g.ApplyBasic(model.Labo{})
+	g.ApplyBasic(model.Desk{})
+	g.ApplyBasic(model.Chair{})
 
 	// // 全てのテーブルを取得
 	// tableList, err := db.Migrator().GetTables()

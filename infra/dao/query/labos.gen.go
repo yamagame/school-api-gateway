@@ -29,11 +29,24 @@ func newLabo(db *gorm.DB, opts ...gen.DOOption) labo {
 	_labo.ALL = field.NewAsterisk(tableName)
 	_labo.ID = field.NewInt32(tableName, "id")
 	_labo.Name = field.NewString(tableName, "name")
+	_labo.URL = field.NewString(tableName, "url")
 	_labo.GroupID = field.NewInt32(tableName, "group_id")
 	_labo.ProgramID = field.NewInt32(tableName, "program_id")
 	_labo.BuildingID = field.NewInt32(tableName, "building_id")
 	_labo.CreatedAt = field.NewTime(tableName, "created_at")
 	_labo.UpdatedAt = field.NewTime(tableName, "updated_at")
+	_labo.Desks = laboHasManyDesks{
+		db: db.Session(&gorm.Session{}),
+
+		RelationField: field.NewRelation("Desks", "model.Desk"),
+	}
+
+	_labo.Chairs = laboHasManyChairs{
+		db: db.Session(&gorm.Session{}),
+
+		RelationField: field.NewRelation("Chairs", "model.Chair"),
+	}
+
 	_labo.Group = laboBelongsToGroup{
 		db: db.Session(&gorm.Session{}),
 
@@ -69,7 +82,7 @@ func newLabo(db *gorm.DB, opts ...gen.DOOption) labo {
 			Address struct {
 				field.RelationField
 			}
-			Licenses struct {
+			People struct {
 				field.RelationField
 				Person struct {
 					field.RelationField
@@ -87,17 +100,17 @@ func newLabo(db *gorm.DB, opts ...gen.DOOption) labo {
 			}{
 				RelationField: field.NewRelation("Professors.Person.Address", "model.Address"),
 			},
-			Licenses: struct {
+			People: struct {
 				field.RelationField
 				Person struct {
 					field.RelationField
 				}
 			}{
-				RelationField: field.NewRelation("Professors.Person.Licenses", "model.License"),
+				RelationField: field.NewRelation("Professors.Person.People", "model.License"),
 				Person: struct {
 					field.RelationField
 				}{
-					RelationField: field.NewRelation("Professors.Person.Licenses.Person", "model.Person"),
+					RelationField: field.NewRelation("Professors.Person.People.Person", "model.Person"),
 				},
 			},
 		},
@@ -154,12 +167,17 @@ type labo struct {
 	ALL        field.Asterisk
 	ID         field.Int32
 	Name       field.String
+	URL        field.String
 	GroupID    field.Int32
 	ProgramID  field.Int32
 	BuildingID field.Int32
 	CreatedAt  field.Time
 	UpdatedAt  field.Time
-	Group      laboBelongsToGroup
+	Desks      laboHasManyDesks
+
+	Chairs laboHasManyChairs
+
+	Group laboBelongsToGroup
 
 	Program laboBelongsToProgram
 
@@ -188,6 +206,7 @@ func (l *labo) updateTableName(table string) *labo {
 	l.ALL = field.NewAsterisk(table)
 	l.ID = field.NewInt32(table, "id")
 	l.Name = field.NewString(table, "name")
+	l.URL = field.NewString(table, "url")
 	l.GroupID = field.NewInt32(table, "group_id")
 	l.ProgramID = field.NewInt32(table, "program_id")
 	l.BuildingID = field.NewInt32(table, "building_id")
@@ -209,9 +228,10 @@ func (l *labo) GetFieldByName(fieldName string) (field.OrderExpr, bool) {
 }
 
 func (l *labo) fillFieldMap() {
-	l.fieldMap = make(map[string]field.Expr, 13)
+	l.fieldMap = make(map[string]field.Expr, 16)
 	l.fieldMap["id"] = l.ID
 	l.fieldMap["name"] = l.Name
+	l.fieldMap["url"] = l.URL
 	l.fieldMap["group_id"] = l.GroupID
 	l.fieldMap["program_id"] = l.ProgramID
 	l.fieldMap["building_id"] = l.BuildingID
@@ -228,6 +248,148 @@ func (l labo) clone(db *gorm.DB) labo {
 func (l labo) replaceDB(db *gorm.DB) labo {
 	l.laboDo.ReplaceDB(db)
 	return l
+}
+
+type laboHasManyDesks struct {
+	db *gorm.DB
+
+	field.RelationField
+}
+
+func (a laboHasManyDesks) Where(conds ...field.Expr) *laboHasManyDesks {
+	if len(conds) == 0 {
+		return &a
+	}
+
+	exprs := make([]clause.Expression, 0, len(conds))
+	for _, cond := range conds {
+		exprs = append(exprs, cond.BeCond().(clause.Expression))
+	}
+	a.db = a.db.Clauses(clause.Where{Exprs: exprs})
+	return &a
+}
+
+func (a laboHasManyDesks) WithContext(ctx context.Context) *laboHasManyDesks {
+	a.db = a.db.WithContext(ctx)
+	return &a
+}
+
+func (a laboHasManyDesks) Session(session *gorm.Session) *laboHasManyDesks {
+	a.db = a.db.Session(session)
+	return &a
+}
+
+func (a laboHasManyDesks) Model(m *model.Labo) *laboHasManyDesksTx {
+	return &laboHasManyDesksTx{a.db.Model(m).Association(a.Name())}
+}
+
+type laboHasManyDesksTx struct{ tx *gorm.Association }
+
+func (a laboHasManyDesksTx) Find() (result []*model.Desk, err error) {
+	return result, a.tx.Find(&result)
+}
+
+func (a laboHasManyDesksTx) Append(values ...*model.Desk) (err error) {
+	targetValues := make([]interface{}, len(values))
+	for i, v := range values {
+		targetValues[i] = v
+	}
+	return a.tx.Append(targetValues...)
+}
+
+func (a laboHasManyDesksTx) Replace(values ...*model.Desk) (err error) {
+	targetValues := make([]interface{}, len(values))
+	for i, v := range values {
+		targetValues[i] = v
+	}
+	return a.tx.Replace(targetValues...)
+}
+
+func (a laboHasManyDesksTx) Delete(values ...*model.Desk) (err error) {
+	targetValues := make([]interface{}, len(values))
+	for i, v := range values {
+		targetValues[i] = v
+	}
+	return a.tx.Delete(targetValues...)
+}
+
+func (a laboHasManyDesksTx) Clear() error {
+	return a.tx.Clear()
+}
+
+func (a laboHasManyDesksTx) Count() int64 {
+	return a.tx.Count()
+}
+
+type laboHasManyChairs struct {
+	db *gorm.DB
+
+	field.RelationField
+}
+
+func (a laboHasManyChairs) Where(conds ...field.Expr) *laboHasManyChairs {
+	if len(conds) == 0 {
+		return &a
+	}
+
+	exprs := make([]clause.Expression, 0, len(conds))
+	for _, cond := range conds {
+		exprs = append(exprs, cond.BeCond().(clause.Expression))
+	}
+	a.db = a.db.Clauses(clause.Where{Exprs: exprs})
+	return &a
+}
+
+func (a laboHasManyChairs) WithContext(ctx context.Context) *laboHasManyChairs {
+	a.db = a.db.WithContext(ctx)
+	return &a
+}
+
+func (a laboHasManyChairs) Session(session *gorm.Session) *laboHasManyChairs {
+	a.db = a.db.Session(session)
+	return &a
+}
+
+func (a laboHasManyChairs) Model(m *model.Labo) *laboHasManyChairsTx {
+	return &laboHasManyChairsTx{a.db.Model(m).Association(a.Name())}
+}
+
+type laboHasManyChairsTx struct{ tx *gorm.Association }
+
+func (a laboHasManyChairsTx) Find() (result []*model.Chair, err error) {
+	return result, a.tx.Find(&result)
+}
+
+func (a laboHasManyChairsTx) Append(values ...*model.Chair) (err error) {
+	targetValues := make([]interface{}, len(values))
+	for i, v := range values {
+		targetValues[i] = v
+	}
+	return a.tx.Append(targetValues...)
+}
+
+func (a laboHasManyChairsTx) Replace(values ...*model.Chair) (err error) {
+	targetValues := make([]interface{}, len(values))
+	for i, v := range values {
+		targetValues[i] = v
+	}
+	return a.tx.Replace(targetValues...)
+}
+
+func (a laboHasManyChairsTx) Delete(values ...*model.Chair) (err error) {
+	targetValues := make([]interface{}, len(values))
+	for i, v := range values {
+		targetValues[i] = v
+	}
+	return a.tx.Delete(targetValues...)
+}
+
+func (a laboHasManyChairsTx) Clear() error {
+	return a.tx.Clear()
+}
+
+func (a laboHasManyChairsTx) Count() int64 {
+	return a.tx.Count()
 }
 
 type laboBelongsToGroup struct {
@@ -460,7 +622,7 @@ type laboManyToManyProfessors struct {
 		Address struct {
 			field.RelationField
 		}
-		Licenses struct {
+		People struct {
 			field.RelationField
 			Person struct {
 				field.RelationField

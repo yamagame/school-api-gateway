@@ -20,16 +20,27 @@ func (v *Slice[T]) HasError() bool {
 	return v.Error != nil
 }
 
-func (v *Slice[T]) ShallowCopy() []*T {
+func (v *Slice[T]) ShallowCopy() ([]*T, error) {
+	if v.HasError() {
+		return []*T{}, v.Error
+	}
 	r := make([]*T, len(v.records))
 	for i, v := range v.records {
 		r[i] = v
+	}
+	return r, nil
+}
+
+func (v *Slice[T]) MustShallowCopy() []*T {
+	r, err := v.ShallowCopy()
+	if err != nil {
+		panic(err)
 	}
 	return r
 }
 
 func (v *Slice[T]) Append(records ...*T) *Slice[T] {
-	if v.Error != nil {
+	if v.HasError() {
 		return v
 	}
 	v.records = append(v.records, records...)
