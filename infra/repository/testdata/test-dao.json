@@ -1,0 +1,823 @@
+[
+  {
+    "Building": {
+      "Aliases": null,
+      "Floors": 0,
+      "ID": 1,
+      "Name": "A棟"
+    },
+    "BuildingID": 1,
+    "Chairs": [],
+    "Desks": [],
+    "Group": {
+      "ID": 1,
+      "Name": "Ⅰ類（情報系）"
+    },
+    "GroupID": 1,
+    "ID": 1,
+    "Name": "佐藤",
+    "Professors": null,
+    "Program": {
+      "ID": 1,
+      "Name": "01.メディア情報学プログラム"
+    },
+    "ProgramID": 1,
+    "Rooms": null,
+    "Students": null,
+    "URL": null
+  },
+  {
+    "Building": {
+      "Aliases": null,
+      "Floors": 0,
+      "ID": 2,
+      "Name": "B棟"
+    },
+    "BuildingID": 2,
+    "Chairs": [],
+    "Desks": [],
+    "Group": {
+      "ID": 2,
+      "Name": "Ⅱ類（融合系）"
+    },
+    "GroupID": 2,
+    "ID": 2,
+    "Name": "清水",
+    "Professors": null,
+    "Program": {
+      "ID": 2,
+      "Name": "02.経営・社会情報学プログラム"
+    },
+    "ProgramID": 2,
+    "Rooms": null,
+    "Students": null,
+    "URL": null
+  },
+  {
+    "Building": {
+      "Aliases": null,
+      "Floors": 0,
+      "ID": 3,
+      "Name": "C棟"
+    },
+    "BuildingID": 3,
+    "Chairs": [],
+    "Desks": [],
+    "Group": {
+      "ID": 3,
+      "Name": "Ⅲ類（理工系）"
+    },
+    "GroupID": 3,
+    "ID": 3,
+    "Name": "鈴木",
+    "Professors": null,
+    "Program": {
+      "ID": 3,
+      "Name": "03.情報数理工学プログラム"
+    },
+    "ProgramID": 3,
+    "Rooms": null,
+    "Students": null,
+    "URL": null
+  },
+  {
+    "Building": {
+      "Aliases": null,
+      "Floors": 0,
+      "ID": 4,
+      "Name": "D棟"
+    },
+    "BuildingID": 4,
+    "Chairs": [],
+    "Desks": [],
+    "Group": {
+      "ID": 1,
+      "Name": "Ⅰ類（情報系）"
+    },
+    "GroupID": 1,
+    "ID": 4,
+    "Name": "高橋",
+    "Professors": null,
+    "Program": {
+      "ID": 4,
+      "Name": "04.コンピュータサイエンスプログラム"
+    },
+    "ProgramID": 4,
+    "Rooms": null,
+    "Students": null,
+    "URL": null
+  },
+  {
+    "Building": {
+      "Aliases": null,
+      "Floors": 0,
+      "ID": 5,
+      "Name": "E棟"
+    },
+    "BuildingID": 5,
+    "Chairs": [],
+    "Desks": [],
+    "Group": {
+      "ID": 2,
+      "Name": "Ⅱ類（融合系）"
+    },
+    "GroupID": 2,
+    "ID": 5,
+    "Name": "田中",
+    "Professors": null,
+    "Program": {
+      "ID": 5,
+      "Name": "05.デザイン思考・データサイエンスプログラム"
+    },
+    "ProgramID": 5,
+    "Rooms": null,
+    "Students": null,
+    "URL": null
+  },
+  {
+    "Building": {
+      "Aliases": null,
+      "Floors": 0,
+      "ID": 6,
+      "Name": "F棟"
+    },
+    "BuildingID": 6,
+    "Chairs": [],
+    "Desks": [],
+    "Group": {
+      "ID": 3,
+      "Name": "Ⅲ類（理工系）"
+    },
+    "GroupID": 3,
+    "ID": 6,
+    "Name": "渡辺",
+    "Professors": null,
+    "Program": {
+      "ID": 6,
+      "Name": "06.セキュリティ情報学プログラム"
+    },
+    "ProgramID": 6,
+    "Rooms": null,
+    "Students": null,
+    "URL": null
+  },
+  {
+    "Building": {
+      "Aliases": null,
+      "Floors": 0,
+      "ID": 7,
+      "Name": "G棟"
+    },
+    "BuildingID": 7,
+    "Chairs": [],
+    "Desks": [],
+    "Group": {
+      "ID": 1,
+      "Name": "Ⅰ類（情報系）"
+    },
+    "GroupID": 1,
+    "ID": 7,
+    "Name": "伊藤",
+    "Professors": null,
+    "Program": {
+      "ID": 7,
+      "Name": "07.情報通信工学プログラム"
+    },
+    "ProgramID": 7,
+    "Rooms": null,
+    "Students": null,
+    "URL": null
+  },
+  {
+    "Building": {
+      "Aliases": null,
+      "Floors": 0,
+      "ID": 8,
+      "Name": "H棟"
+    },
+    "BuildingID": 8,
+    "Chairs": [],
+    "Desks": [],
+    "Group": {
+      "ID": 2,
+      "Name": "Ⅱ類（融合系）"
+    },
+    "GroupID": 2,
+    "ID": 8,
+    "Name": "山本",
+    "Professors": null,
+    "Program": {
+      "ID": 8,
+      "Name": "08.電子情報学プログラム"
+    },
+    "ProgramID": 8,
+    "Rooms": null,
+    "Students": null,
+    "URL": null
+  },
+  {
+    "Building": {
+      "Aliases": null,
+      "Floors": 0,
+      "ID": 9,
+      "Name": "I棟"
+    },
+    "BuildingID": 9,
+    "Chairs": [],
+    "Desks": [],
+    "Group": {
+      "ID": 3,
+      "Name": "Ⅲ類（理工系）"
+    },
+    "GroupID": 3,
+    "ID": 9,
+    "Name": "中村",
+    "Professors": null,
+    "Program": {
+      "ID": 9,
+      "Name": "09.計測・制御システムプログラム"
+    },
+    "ProgramID": 9,
+    "Rooms": null,
+    "Students": null,
+    "URL": null
+  },
+  {
+    "Building": {
+      "Aliases": null,
+      "Floors": 0,
+      "ID": 10,
+      "Name": "J棟"
+    },
+    "BuildingID": 10,
+    "Chairs": [],
+    "Desks": [],
+    "Group": {
+      "ID": 1,
+      "Name": "Ⅰ類（情報系）"
+    },
+    "GroupID": 1,
+    "ID": 10,
+    "Name": "小林",
+    "Professors": null,
+    "Program": {
+      "ID": 10,
+      "Name": "10.先端ロボティクスプログラム"
+    },
+    "ProgramID": 10,
+    "Rooms": null,
+    "Students": null,
+    "URL": null
+  },
+  {
+    "Building": {
+      "Aliases": null,
+      "Floors": 0,
+      "ID": 11,
+      "Name": "K棟"
+    },
+    "BuildingID": 11,
+    "Chairs": [],
+    "Desks": [],
+    "Group": {
+      "ID": 2,
+      "Name": "Ⅱ類（融合系）"
+    },
+    "GroupID": 2,
+    "ID": 11,
+    "Name": "斎藤",
+    "Professors": null,
+    "Program": {
+      "ID": 11,
+      "Name": "11.機械システムプログラム"
+    },
+    "ProgramID": 11,
+    "Rooms": null,
+    "Students": null,
+    "URL": null
+  },
+  {
+    "Building": {
+      "Aliases": null,
+      "Floors": 0,
+      "ID": 12,
+      "Name": "L棟"
+    },
+    "BuildingID": 12,
+    "Chairs": [],
+    "Desks": [],
+    "Group": {
+      "ID": 3,
+      "Name": "Ⅲ類（理工系）"
+    },
+    "GroupID": 3,
+    "ID": 12,
+    "Name": "加藤",
+    "Professors": null,
+    "Program": {
+      "ID": 12,
+      "Name": "12.電子工学プログラム"
+    },
+    "ProgramID": 12,
+    "Rooms": null,
+    "Students": null,
+    "URL": null
+  },
+  {
+    "Building": {
+      "Aliases": null,
+      "Floors": 0,
+      "ID": 13,
+      "Name": "M棟"
+    },
+    "BuildingID": 13,
+    "Chairs": [],
+    "Desks": [],
+    "Group": {
+      "ID": 1,
+      "Name": "Ⅰ類（情報系）"
+    },
+    "GroupID": 1,
+    "ID": 13,
+    "Name": "吉田",
+    "Professors": null,
+    "Program": {
+      "ID": 13,
+      "Name": "13.光工学プログラム"
+    },
+    "ProgramID": 13,
+    "Rooms": null,
+    "Students": null,
+    "URL": null
+  },
+  {
+    "Building": {
+      "Aliases": null,
+      "Floors": 0,
+      "ID": 1,
+      "Name": "A棟"
+    },
+    "BuildingID": 1,
+    "Chairs": [],
+    "Desks": [],
+    "Group": {
+      "ID": 2,
+      "Name": "Ⅱ類（融合系）"
+    },
+    "GroupID": 2,
+    "ID": 14,
+    "Name": "山田",
+    "Professors": null,
+    "Program": {
+      "ID": 14,
+      "Name": "14.物理工学プログラム"
+    },
+    "ProgramID": 14,
+    "Rooms": null,
+    "Students": null,
+    "URL": null
+  },
+  {
+    "Building": {
+      "Aliases": null,
+      "Floors": 0,
+      "ID": 2,
+      "Name": "B棟"
+    },
+    "BuildingID": 2,
+    "Chairs": [],
+    "Desks": [],
+    "Group": {
+      "ID": 3,
+      "Name": "Ⅲ類（理工系）"
+    },
+    "GroupID": 3,
+    "ID": 15,
+    "Name": "佐々木",
+    "Professors": null,
+    "Program": {
+      "ID": 15,
+      "Name": "15.化学生命工学プログラム"
+    },
+    "ProgramID": 15,
+    "Rooms": null,
+    "Students": null,
+    "URL": null
+  },
+  {
+    "Building": {
+      "Aliases": null,
+      "Floors": 0,
+      "ID": 3,
+      "Name": "C棟"
+    },
+    "BuildingID": 3,
+    "Chairs": [],
+    "Desks": [],
+    "Group": {
+      "ID": 1,
+      "Name": "Ⅰ類（情報系）"
+    },
+    "GroupID": 1,
+    "ID": 16,
+    "Name": "山口",
+    "Professors": null,
+    "Program": {
+      "ID": 1,
+      "Name": "01.メディア情報学プログラム"
+    },
+    "ProgramID": 1,
+    "Rooms": null,
+    "Students": null,
+    "URL": null
+  },
+  {
+    "Building": {
+      "Aliases": null,
+      "Floors": 0,
+      "ID": 4,
+      "Name": "D棟"
+    },
+    "BuildingID": 4,
+    "Chairs": [],
+    "Desks": [],
+    "Group": {
+      "ID": 2,
+      "Name": "Ⅱ類（融合系）"
+    },
+    "GroupID": 2,
+    "ID": 17,
+    "Name": "松本",
+    "Professors": null,
+    "Program": {
+      "ID": 2,
+      "Name": "02.経営・社会情報学プログラム"
+    },
+    "ProgramID": 2,
+    "Rooms": null,
+    "Students": null,
+    "URL": null
+  },
+  {
+    "Building": {
+      "Aliases": null,
+      "Floors": 0,
+      "ID": 5,
+      "Name": "E棟"
+    },
+    "BuildingID": 5,
+    "Chairs": [],
+    "Desks": [],
+    "Group": {
+      "ID": 3,
+      "Name": "Ⅲ類（理工系）"
+    },
+    "GroupID": 3,
+    "ID": 18,
+    "Name": "井上",
+    "Professors": null,
+    "Program": {
+      "ID": 3,
+      "Name": "03.情報数理工学プログラム"
+    },
+    "ProgramID": 3,
+    "Rooms": null,
+    "Students": null,
+    "URL": null
+  },
+  {
+    "Building": {
+      "Aliases": null,
+      "Floors": 0,
+      "ID": 6,
+      "Name": "F棟"
+    },
+    "BuildingID": 6,
+    "Chairs": [],
+    "Desks": [],
+    "Group": {
+      "ID": 1,
+      "Name": "Ⅰ類（情報系）"
+    },
+    "GroupID": 1,
+    "ID": 19,
+    "Name": "木村",
+    "Professors": null,
+    "Program": {
+      "ID": 4,
+      "Name": "04.コンピュータサイエンスプログラム"
+    },
+    "ProgramID": 4,
+    "Rooms": null,
+    "Students": null,
+    "URL": null
+  },
+  {
+    "Building": {
+      "Aliases": null,
+      "Floors": 0,
+      "ID": 7,
+      "Name": "G棟"
+    },
+    "BuildingID": 7,
+    "Chairs": [],
+    "Desks": [],
+    "Group": {
+      "ID": 2,
+      "Name": "Ⅱ類（融合系）"
+    },
+    "GroupID": 2,
+    "ID": 20,
+    "Name": "清水",
+    "Professors": null,
+    "Program": {
+      "ID": 5,
+      "Name": "05.デザイン思考・データサイエンスプログラム"
+    },
+    "ProgramID": 5,
+    "Rooms": null,
+    "Students": null,
+    "URL": null
+  },
+  {
+    "Building": {
+      "Aliases": null,
+      "Floors": 0,
+      "ID": 8,
+      "Name": "H棟"
+    },
+    "BuildingID": 8,
+    "Chairs": [],
+    "Desks": [],
+    "Group": {
+      "ID": 3,
+      "Name": "Ⅲ類（理工系）"
+    },
+    "GroupID": 3,
+    "ID": 21,
+    "Name": "山崎",
+    "Professors": null,
+    "Program": {
+      "ID": 6,
+      "Name": "06.セキュリティ情報学プログラム"
+    },
+    "ProgramID": 6,
+    "Rooms": null,
+    "Students": null,
+    "URL": null
+  },
+  {
+    "Building": {
+      "Aliases": null,
+      "Floors": 0,
+      "ID": 9,
+      "Name": "I棟"
+    },
+    "BuildingID": 9,
+    "Chairs": [],
+    "Desks": [],
+    "Group": {
+      "ID": 1,
+      "Name": "Ⅰ類（情報系）"
+    },
+    "GroupID": 1,
+    "ID": 22,
+    "Name": "中島",
+    "Professors": null,
+    "Program": {
+      "ID": 7,
+      "Name": "07.情報通信工学プログラム"
+    },
+    "ProgramID": 7,
+    "Rooms": null,
+    "Students": null,
+    "URL": null
+  },
+  {
+    "Building": {
+      "Aliases": null,
+      "Floors": 0,
+      "ID": 10,
+      "Name": "J棟"
+    },
+    "BuildingID": 10,
+    "Chairs": [],
+    "Desks": [],
+    "Group": {
+      "ID": 2,
+      "Name": "Ⅱ類（融合系）"
+    },
+    "GroupID": 2,
+    "ID": 23,
+    "Name": "池田",
+    "Professors": null,
+    "Program": {
+      "ID": 8,
+      "Name": "08.電子情報学プログラム"
+    },
+    "ProgramID": 8,
+    "Rooms": null,
+    "Students": null,
+    "URL": null
+  },
+  {
+    "Building": {
+      "Aliases": null,
+      "Floors": 0,
+      "ID": 11,
+      "Name": "K棟"
+    },
+    "BuildingID": 11,
+    "Chairs": [],
+    "Desks": [],
+    "Group": {
+      "ID": 3,
+      "Name": "Ⅲ類（理工系）"
+    },
+    "GroupID": 3,
+    "ID": 24,
+    "Name": "阿部",
+    "Professors": null,
+    "Program": {
+      "ID": 9,
+      "Name": "09.計測・制御システムプログラム"
+    },
+    "ProgramID": 9,
+    "Rooms": null,
+    "Students": null,
+    "URL": null
+  },
+  {
+    "Building": {
+      "Aliases": null,
+      "Floors": 0,
+      "ID": 12,
+      "Name": "L棟"
+    },
+    "BuildingID": 12,
+    "Chairs": [],
+    "Desks": [],
+    "Group": {
+      "ID": 1,
+      "Name": "Ⅰ類（情報系）"
+    },
+    "GroupID": 1,
+    "ID": 25,
+    "Name": "橋本",
+    "Professors": null,
+    "Program": {
+      "ID": 10,
+      "Name": "10.先端ロボティクスプログラム"
+    },
+    "ProgramID": 10,
+    "Rooms": null,
+    "Students": null,
+    "URL": null
+  },
+  {
+    "Building": {
+      "Aliases": null,
+      "Floors": 0,
+      "ID": 13,
+      "Name": "M棟"
+    },
+    "BuildingID": 13,
+    "Chairs": [],
+    "Desks": [],
+    "Group": {
+      "ID": 2,
+      "Name": "Ⅱ類（融合系）"
+    },
+    "GroupID": 2,
+    "ID": 26,
+    "Name": "山下",
+    "Professors": null,
+    "Program": {
+      "ID": 11,
+      "Name": "11.機械システムプログラム"
+    },
+    "ProgramID": 11,
+    "Rooms": null,
+    "Students": null,
+    "URL": null
+  },
+  {
+    "Building": {
+      "Aliases": null,
+      "Floors": 0,
+      "ID": 1,
+      "Name": "A棟"
+    },
+    "BuildingID": 1,
+    "Chairs": [],
+    "Desks": [],
+    "Group": {
+      "ID": 3,
+      "Name": "Ⅲ類（理工系）"
+    },
+    "GroupID": 3,
+    "ID": 27,
+    "Name": "石川",
+    "Professors": null,
+    "Program": {
+      "ID": 12,
+      "Name": "12.電子工学プログラム"
+    },
+    "ProgramID": 12,
+    "Rooms": null,
+    "Students": null,
+    "URL": null
+  },
+  {
+    "Building": {
+      "Aliases": null,
+      "Floors": 0,
+      "ID": 2,
+      "Name": "B棟"
+    },
+    "BuildingID": 2,
+    "Chairs": [],
+    "Desks": [],
+    "Group": {
+      "ID": 1,
+      "Name": "Ⅰ類（情報系）"
+    },
+    "GroupID": 1,
+    "ID": 28,
+    "Name": "前田",
+    "Professors": null,
+    "Program": {
+      "ID": 13,
+      "Name": "13.光工学プログラム"
+    },
+    "ProgramID": 13,
+    "Rooms": null,
+    "Students": null,
+    "URL": null
+  },
+  {
+    "Building": {
+      "Aliases": null,
+      "Floors": 0,
+      "ID": 3,
+      "Name": "C棟"
+    },
+    "BuildingID": 3,
+    "Chairs": [],
+    "Desks": [],
+    "Group": {
+      "ID": 2,
+      "Name": "Ⅱ類（融合系）"
+    },
+    "GroupID": 2,
+    "ID": 29,
+    "Name": "小川",
+    "Professors": null,
+    "Program": {
+      "ID": 14,
+      "Name": "14.物理工学プログラム"
+    },
+    "ProgramID": 14,
+    "Rooms": null,
+    "Students": null,
+    "URL": null
+  },
+  {
+    "Building": {
+      "Aliases": null,
+      "Floors": 0,
+      "ID": 5,
+      "Name": "E棟"
+    },
+    "BuildingID": 5,
+    "Chairs": [],
+    "Desks": [
+      {
+        "ID": 1,
+        "LaboID": 30,
+        "Name": "テーブルA"
+      },
+      {
+        "ID": 2,
+        "LaboID": 30,
+        "Name": "テーブルB"
+      }
+    ],
+    "Group": {
+      "ID": 3,
+      "Name": "Ⅲ類（理工系）"
+    },
+    "GroupID": 3,
+    "ID": 30,
+    "Name": "藤田テスト",
+    "Professors": null,
+    "Program": {
+      "ID": 15,
+      "Name": "15.化学生命工学プログラム"
+    },
+    "ProgramID": 15,
+    "Rooms": null,
+    "Students": null,
+    "URL": null
+  }
+]

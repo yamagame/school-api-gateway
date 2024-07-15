@@ -9,9 +9,11 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"github.com/yamagame/school-api-gateway/infra"
+	"github.com/yamagame/school-api-gateway/infra/dao/query"
 	"github.com/yamagame/school-api-gateway/infra/infconv"
 	"github.com/yamagame/school-api-gateway/infra/model"
 	"github.com/yamagame/school-api-gateway/irmodel"
+	"github.com/yamagame/school-api-gateway/pkg/irconv"
 	irmodel1 "github.com/yamagame/school-api-gateway/pkg/irconv"
 	"github.com/yamagame/school-api-gateway/pkg/snapshot"
 	"gorm.io/gorm"
@@ -165,6 +167,49 @@ func TestFind(t *testing.T) {
 		labos := repo.Find(ctx, []int32{1, 2, 3}).MustShallowCopy()
 		out := snapshot.Delete(t, labos, "CreatedAt", "UpdatedAt")
 		snapshot.Match(t, out, "find-labos.json")
+		return fmt.Errorf("restore")
+	})
+}
+
+func TestDao(t *testing.T) {
+	ctx := context.Background()
+	db := infra.DB()
+	infra.ResetAutoIncrementForTest(db)
+	db.Transaction(func(tx *gorm.DB) error {
+		q := query.Use(tx)
+		lb := q.Labo
+		labos, err := lb.WithContext(ctx).
+			Joins(lb.Building, lb.Group, lb.Program).
+			Find()
+		require.NoError(t, err)
+
+		last := labos[len(labos)-1]
+
+		last.BuildingID = irconv.ToPtr(int32(5))
+		lb.Building.WithContext(ctx).Model(last).Replace(&model.Building{
+			ID: 5,
+		})
+
+		lb.Desks.WithContext(ctx).Model(last).Append(&model.Desk{
+			Name: "テーブルA",
+		}, &model.Desk{
+			Name: "テーブルB",
+		})
+
+		last.Name = irconv.ToPtr("藤田テスト")
+		lb.WithContext(ctx).Updates(last)
+
+		{
+			labos, err := lb.WithContext(ctx).
+				Preload(lb.Desks, lb.Chairs).
+				Joins(lb.Building, lb.Group, lb.Program).
+				Find()
+			require.NoError(t, err)
+
+			snapshot.Update(t)
+			out := snapshot.Delete(t, labos, "CreatedAt", "UpdatedAt")
+			snapshot.Match(t, out, "test-dao.json")
+		}
 		return fmt.Errorf("restore")
 	})
 }
