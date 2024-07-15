@@ -38,8 +38,7 @@ func TestCreateUpdate(t *testing.T) {
 
 		out := labos.ValueMap()
 
-		snapshot.Equal(t, out, "create-update.json")
-		// snapshot.Save(t, out, "create-update.json")
+		snapshot.Match(t, out, "create-update.json")
 
 		// 中間モデルからdaoに変換
 		models := infconv.Labos.ToStruct(labos)
@@ -90,8 +89,7 @@ func TestLabosInfraToIRModel(t *testing.T) {
 
 	out := labos.ValueMap()
 
-	snapshot.Equal(t, out, "test-labos.json")
-	// snapshot.Save(t, out, "test-labos.json")
+	snapshot.Match(t, out, "test-labos.json")
 }
 
 func TestLabosCSVToIRModel(t *testing.T) {
@@ -106,6 +104,18 @@ func TestLabosCSVToIRModel(t *testing.T) {
 
 	out := labos.ValueMap()
 
-	snapshot.Equal(t, out, "create-labos.json")
-	// snapshot.Save(t, out, "create-labos.json")
+	snapshot.Match(t, out, "create-labos.json")
+}
+
+func TestFind(t *testing.T) {
+	ctx := context.Background()
+	db := infra.DB()
+
+	repo := NewLabo(db)
+
+	labos := repo.Find(ctx, []int32{1, 2, 3}).ShallowCopy()
+
+	out := snapshot.Delete(t, labos, "CreatedAt", "UpdatedAt")
+
+	snapshot.Match(t, out, "find-labos.json")
 }

@@ -40,8 +40,7 @@ func TestLabo(t *testing.T) {
 	chairs.NewOne().Set(".id", int32(22)).Set(".labo_id", int32(20))
 
 	out := labo.ValueMap()
-	snapshot.Equal(t, out, "test-labo1.json")
-	// snapshot.Save(t, out, "test-labo1.json")
+	snapshot.Match(t, out, "test-labo1.json")
 }
 
 func TestLaboCSV(t *testing.T) {
@@ -55,8 +54,7 @@ func TestLaboCSV(t *testing.T) {
 		NewRecords(records)
 	out := labos.ValueMap()
 
-	snapshot.Equal(t, out, "test-labo.json")
-	// snapshot.Save(t, out, "test-labo.json")
+	snapshot.Match(t, out, "test-labo.json")
 }
 
 func TestLaboHasManyCSV(t *testing.T) {
@@ -73,8 +71,7 @@ func TestLaboHasManyCSV(t *testing.T) {
 
 	out := labos.ValueMap()
 
-	snapshot.Equal(t, out, "test-many.json")
-	// snapshot.Save(t, out, "test-many.json")
+	snapshot.Match(t, out, "test-many.json")
 }
 
 func TestLaboFillCSV(t *testing.T) {
@@ -85,8 +82,7 @@ func TestLaboFillCSV(t *testing.T) {
 	records, err := irconv.ReadCSV(fp)
 	assert.NoError(t, err)
 
-	snapshot.Equal(t, records, "test-fill.json")
-	// snapshot.Save(t, records, "test-fill.json")
+	snapshot.Match(t, records, "test-fill.json")
 
 	labos := NewLabo().
 		NewRecords(records)
@@ -94,6 +90,5 @@ func TestLaboFillCSV(t *testing.T) {
 
 	out := labos.ValueMap()
 
-	snapshot.Equal(t, out, "test-labos.json")
-	// snapshot.Save(t, out, "test-labos.json")
+	snapshot.Match(t, out, "test-labos.json")
 }

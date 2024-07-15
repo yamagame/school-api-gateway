@@ -62,7 +62,7 @@ func TestLabo(t *testing.T) {
 		require.NoError(t, err)
 		require.Equal(t, copyname, labo3.Name)
 
-		return nil
+		return fmt.Errorf("restore")
 	})
 }
 
@@ -129,6 +129,5 @@ func TestList(t *testing.T) {
 		results = append(results, labos)
 	}
 
-	snapshot.Equal(t, results, "test-list.json")
-	// snapshot.Save(t, results, "test-list.json")
+	snapshot.Match(t, results, "test-list.json")
 }

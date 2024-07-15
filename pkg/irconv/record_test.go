@@ -24,8 +24,7 @@ func TestField(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, 1.234, value3)
 
-		snapshot.Equal(t, rec.ValueMap(), "test1.json")
-		// snapshot.Save(t, rec.ValueMap(), "test1.json")
+		snapshot.Match(t, rec.ValueMap(), "test1.json")
 	})
 	t.Run("struct_conv", func(t *testing.T) {
 		type Field struct {
@@ -181,17 +180,14 @@ func TestRecordUpdates(t *testing.T) {
 	rec.SetHasOne("value5", one2)
 	rec.SetHasMany("value6", NewMany(many1).Append(many1, many2))
 
-	snapshot.Equal(t, rec.ValueMap(), "update-test1.json")
-	// snapshot.Save(t, rec.ValueMap(), "update-test1.json")
+	snapshot.Match(t, rec.ValueMap(), "update-test1.json")
 
 	m1 := rec.Updates()
-	snapshot.Equal(t, m1, "update-test2.json")
-	// snapshot.Save(t, m1, "update-test2.json")
+	snapshot.Match(t, m1, "update-test2.json")
 
 	rec.Update(".value1", 200)
 	rec.Update(".value4.one_value1", 20)
 	rec.Update(".value6[0].many_value1", 30)
 	m2 := rec.Updates()
-	snapshot.Equal(t, m2, "update-test3.json")
-	// snapshot.Save(t, m2, "update-test3.json")
+	snapshot.Match(t, m2, "update-test3.json")
 }

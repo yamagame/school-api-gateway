@@ -1,0 +1,83 @@
+[
+  {
+    "Building": {
+      "Aliases": null,
+      "Floors": 0,
+      "ID": 1,
+      "Name": "A棟"
+    },
+    "BuildingID": 1,
+    "Chairs": null,
+    "Desks": null,
+    "Group": {
+      "ID": 1,
+      "Name": "Ⅰ類（情報系）"
+    },
+    "GroupID": 1,
+    "ID": 1,
+    "Name": "佐藤",
+    "Professors": null,
+    "Program": {
+      "ID": 1,
+      "Name": "01.メディア情報学プログラム"
+    },
+    "ProgramID": 1,
+    "Rooms": null,
+    "Students": null,
+    "URL": null
+  },
+  {
+    "Building": {
+      "Aliases": null,
+      "Floors": 0,
+      "ID": 2,
+      "Name": "B棟"
+    },
+    "BuildingID": 2,
+    "Chairs": null,
+    "Desks": null,
+    "Group": {
+      "ID": 2,
+      "Name": "Ⅱ類（融合系）"
+    },
+    "GroupID": 2,
+    "ID": 2,
+    "Name": "清水",
+    "Professors": null,
+    "Program": {
+      "ID": 2,
+      "Name": "02.経営・社会情報学プログラム"
+    },
+    "ProgramID": 2,
+    "Rooms": null,
+    "Students": null,
+    "URL": null
+  },
+  {
+    "Building": {
+      "Aliases": null,
+      "Floors": 0,
+      "ID": 3,
+      "Name": "C棟"
+    },
+    "BuildingID": 3,
+    "Chairs": null,
+    "Desks": null,
+    "Group": {
+      "ID": 3,
+      "Name": "Ⅲ類（理工系）"
+    },
+    "GroupID": 3,
+    "ID": 3,
+    "Name": "鈴木",
+    "Professors": null,
+    "Program": {
+      "ID": 3,
+      "Name": "03.情報数理工学プログラム"
+    },
+    "ProgramID": 3,
+    "Rooms": null,
+    "Students": null,
+    "URL": null
+  }
+]

@@ -86,7 +86,9 @@ func (r *Labo) Update(ctx context.Context, labos *model.Labos) error {
 func (r *Labo) Find(ctx context.Context, ids []int32) *model.Labos {
 	q := query.Use(r.db)
 	lb := q.Labo
-	records, err := lb.WithContext(ctx).Where(lb.ID.In(ids...)).Find()
+	records, err := lb.WithContext(ctx).
+		Joins(lb.Building, lb.Group, lb.Program).
+		Where(lb.ID.In(ids...)).Find()
 	ret := infconv.Labo.NewSlice()
 	if err != nil {
 		ret.Error = err

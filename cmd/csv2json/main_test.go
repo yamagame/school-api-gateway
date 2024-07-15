@@ -21,6 +21,5 @@ func TestCSV2JSON(t *testing.T) {
 	err = json.Unmarshal(v, &out)
 	assert.NoError(t, err)
 
-	snapshot.Equal(t, out, "test-data.json")
-	// snapshot.Save(t, out, "test-data.json")
+	snapshot.Match(t, out, "test-data.json")
 }

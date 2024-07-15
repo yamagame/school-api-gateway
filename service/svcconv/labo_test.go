@@ -33,6 +33,5 @@ func TestLabo(t *testing.T) {
 	s, err := Labo.ToStruct(e)
 	assert.NoError(t, err)
 
-	snapshot.Equal(t, s, "test1.json")
-	// snapshot.Save(t, s, "test1.json")
+	snapshot.Match(t, s, "test1.json")
 }
