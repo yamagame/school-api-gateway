@@ -38,7 +38,7 @@ func (c Convs[M, N, B]) ToStruct(in *Records) *N {
 
 func (c Convs[M, N, B]) ToIRModel(in []*M, err ...error) *Records {
 	r := &Records{}
-	if err != nil {
+	if len(err) > 0 && err[0] != nil {
 		r.Error = errors.Join(err...)
 		return r
 	}
