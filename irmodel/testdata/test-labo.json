@@ -17,11 +17,13 @@
     "desk": [
       {
         "id": 1,
-        "labo_id": 0
+        "labo_id": 0,
+        "name": ""
       },
       {
         "id": 2,
-        "labo_id": 0
+        "labo_id": 0,
+        "name": ""
       }
     ],
     "group": {
@@ -54,11 +56,13 @@
     "desk": [
       {
         "id": 1,
-        "labo_id": 0
+        "labo_id": 0,
+        "name": ""
       },
       {
         "id": 2,
-        "labo_id": 0
+        "labo_id": 0,
+        "name": ""
       }
     ],
     "group": {
@@ -91,11 +95,13 @@
     "desk": [
       {
         "id": 1,
-        "labo_id": 0
+        "labo_id": 0,
+        "name": ""
       },
       {
         "id": 2,
-        "labo_id": 0
+        "labo_id": 0,
+        "name": ""
       }
     ],
     "group": {

@@ -37,5 +37,6 @@ func TestLaboConv(t *testing.T) {
 	out, err := Labo.ToStruct(irmodel)
 	assert.NoError(t, err)
 
+	snapshot.Update(t)
 	snapshot.Match(t, out, "test1.json")
 }

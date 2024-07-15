@@ -16,15 +16,18 @@
   "desk": [
     {
       "id": 11,
-      "labo_id": 1
+      "labo_id": 1,
+      "name": ""
     },
     {
       "id": 12,
-      "labo_id": 5
+      "labo_id": 5,
+      "name": ""
     },
     {
       "id": 13,
-      "labo_id": 3
+      "labo_id": 3,
+      "name": ""
     }
   ],
   "group": {

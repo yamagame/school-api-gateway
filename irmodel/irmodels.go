@@ -29,6 +29,7 @@ var NewClass = irconv.NewRecord().
 var NewDesk = irconv.NewRecord().
 	SetValue("id", int32(0), irconv.PRIMARY).
 	SetValue("labo_id", int32(0)).
+	SetValue("name", "").
 	Func()
 
 var NewEmployee = irconv.NewRecord().
