@@ -1,5 +1,7 @@
 package irconv
 
+import "errors"
+
 type ConvsInterface[M any] interface {
 	Append(...*M) *Slice[M]
 	SetError(err error) *Slice[M]
@@ -34,8 +36,12 @@ func (c Convs[M, N, B]) ToStruct(in *Records) *N {
 	return r
 }
 
-func (c Convs[M, N, B]) ToIRModel(in []*M) *Records {
+func (c Convs[M, N, B]) ToIRModel(in []*M, err ...error) *Records {
 	r := &Records{}
+	if err != nil {
+		r.Error = errors.Join(err...)
+		return r
+	}
 	for _, v := range in {
 		t, err := c.Conv.ToIRModel(v)
 		if err != nil {

@@ -60,9 +60,9 @@ func (LaboConv) NewSlice() *school.Labos {
 }
 
 func (c LaboConv) ProtoToInfra(labos *school.Labos) *model.Labos {
-	return infconv.Labos.ToStruct(Labos.ToIRModel(labos.MustShallowCopy()))
+	return infconv.Labos.ToStruct(Labos.ToIRModel(labos.ShallowCopy()))
 }
 
 func (c LaboConv) InfraToProto(labos *model.Labos) *school.Labos {
-	return Labos.ToStruct(infconv.Labos.ToIRModel(labos.MustShallowCopy()))
+	return Labos.ToStruct(infconv.Labos.ToIRModel(labos.ShallowCopy()))
 }

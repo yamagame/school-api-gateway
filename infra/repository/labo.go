@@ -34,11 +34,15 @@ func NewLabo(db *gorm.DB) *Labo {
 func (r *Labo) UpsertInBatches(ctx context.Context, labos *model.Labos, columns []string) error {
 	q := query.Use(r.db)
 	lb := q.Labo
+	records, err := labos.ShallowCopy()
+	if err != nil {
+		return err
+	}
 	return lb.WithContext(ctx).
 		Clauses(clause.OnConflict{
 			DoUpdates: clause.AssignmentColumns(columns),
 		}).
-		CreateInBatches(labos.MustShallowCopy(), r.batchSize)
+		CreateInBatches(records, r.batchSize)
 }
 
 func (r *Labo) Upsert(ctx context.Context, labos *model.Labos) error {
@@ -66,7 +70,11 @@ func (r *Labo) Upsert(ctx context.Context, labos *model.Labos) error {
 func (r *Labo) Create(ctx context.Context, labos *model.Labos) error {
 	q := query.Use(r.db)
 	lb := q.Labo
-	return lb.WithContext(ctx).CreateInBatches(labos.MustShallowCopy(), r.batchSize)
+	records, err := labos.ShallowCopy()
+	if err != nil {
+		return err
+	}
+	return lb.WithContext(ctx).CreateInBatches(records, r.batchSize)
 }
 
 func (r *Labo) Update(ctx context.Context, labos *model.Labos) error {

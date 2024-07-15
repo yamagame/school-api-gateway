@@ -90,7 +90,7 @@ func TestLabosInfraToIRModel(t *testing.T) {
 	res := repo.List(ctx, 10, 0)
 	assert.NoError(t, res.Error)
 
-	labos := infconv.Labos.ToIRModel(res.MustShallowCopy())
+	labos := infconv.Labos.ToIRModel(res.ShallowCopy())
 	assert.NoError(t, labos.Error)
 
 	out := labos.ValueMap()
@@ -142,8 +142,7 @@ func TestFind(t *testing.T) {
 
 		{
 			records := repo.Find(ctx, []int32{1, 2, 3})
-			labos := infconv.Labos.ToIRModel(records.MustShallowCopy())
-			out := labos.ValueMap()
+			out := infconv.Labos.ToIRModel(records.ShallowCopy()).ValueMap()
 			snapshot.Match(t, out, "find-irmodels-1.json")
 		}
 
@@ -159,8 +158,7 @@ func TestFind(t *testing.T) {
 
 		{
 			records := repo.Find(ctx, []int32{1, 2, 3})
-			labos := infconv.Labos.ToIRModel(records.MustShallowCopy())
-			out := labos.ValueMap()
+			out := infconv.Labos.ToIRModel(records.ShallowCopy()).ValueMap()
 			snapshot.Match(t, out, "find-irmodels-2.json")
 		}
 
