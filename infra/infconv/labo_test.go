@@ -31,8 +31,8 @@ func TestLaboConv(t *testing.T) {
 			{ID: 3, LaboID: 13},
 		},
 	}
-	irmodel, err := Labo.ToIRModel(in)
-	assert.NoError(t, err)
+	irmodel := Labo.ToIRModel(in)
+	assert.NoError(t, irmodel.Error)
 
 	out, err := Labo.ToStruct(irmodel)
 	assert.NoError(t, err)

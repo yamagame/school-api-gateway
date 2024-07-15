@@ -28,8 +28,8 @@ func TestLabo(t *testing.T) {
 	}
 
 	// dao -> entity -> proto 変換
-	e, err := infconv.Labo.ToIRModel(m)
-	assert.NoError(t, err)
+	e := infconv.Labo.ToIRModel(m)
+	assert.NoError(t, e.Error)
 	s, err := Labo.ToStruct(e)
 	assert.NoError(t, err)
 

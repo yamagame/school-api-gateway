@@ -9,7 +9,7 @@ type ConvsInterface[M any] interface {
 
 type ConvInterface[M any, N any] interface {
 	ToStruct(*Record) (*M, error)
-	ToIRModel(*M) (*Record, error)
+	ToIRModel(*M) *Record
 	NewSlice() *N
 }
 
@@ -43,9 +43,9 @@ func (c Convs[M, N, B]) ToIRModel(in []*M, err ...error) *Records {
 		return r
 	}
 	for _, v := range in {
-		t, err := c.Conv.ToIRModel(v)
-		if err != nil {
-			r.Error = err
+		t := c.Conv.ToIRModel(v)
+		if t.HasError() {
+			r.Error = t.Error
 			return r
 		}
 		r.Append(t)

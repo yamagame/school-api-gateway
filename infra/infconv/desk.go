@@ -20,16 +20,12 @@ func (DeskConv) ToStruct(in *irmodel1.Record) (*model.Desk, error) {
 	return out, nil
 }
 
-func (DeskConv) ToIRModel(in *model.Desk) (*irmodel1.Record, error) {
+func (DeskConv) ToIRModel(in *model.Desk) *irmodel1.Record {
 	out := irmodel.NewDesk()
-	if err := out.
+	return out.
 		FromStruct(".ID", ".id", in).
 		FromStruct(".LaboID", ".labo_id", in).
-		FromStruct(".Name", ".name", in).
-		Error; err != nil {
-		return nil, err
-	}
-	return out, nil
+		FromStruct(".Name", ".name", in)
 }
 
 func (DeskConv) NewSlice() *model.Desks {

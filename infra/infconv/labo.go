@@ -36,9 +36,9 @@ func (LaboConv) ToStruct(in *irmodel1.Record) (*model.Labo, error) {
 	return out, nil
 }
 
-func (LaboConv) ToIRModel(in *model.Labo) (*irmodel1.Record, error) {
+func (LaboConv) ToIRModel(in *model.Labo) *irmodel1.Record {
 	out := irmodel.NewLabo()
-	if err := out.
+	return out.
 		FromStruct(".ID", ".id", in).
 		FromStruct(".Name", ".name", in, irmodel1.PtrStr).
 		FromStruct(".URL", ".url", in, irmodel1.PtrStr).
@@ -56,10 +56,7 @@ func (LaboConv) ToIRModel(in *model.Labo) (*irmodel1.Record, error) {
 		}).
 		IfNotNil(".Desks", in, func(v *irmodel1.Record) {
 			v.SetHasManyRecords("desk", Desks.ToIRModel(in.Desks))
-		}).Error; err != nil {
-		return nil, err
-	}
-	return out, nil
+		})
 }
 
 func (LaboConv) NewSlice() *model.Labos {

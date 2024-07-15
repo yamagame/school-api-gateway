@@ -34,8 +34,8 @@ func (c LaboConv) ToStruct(in *irmodel1.Record) (*school.Labo, error) {
 	return out, nil
 }
 
-func (c LaboConv) ToIRModel(in *school.Labo) (*irmodel1.Record, error) {
-	out := irmodel.NewLabo().
+func (c LaboConv) ToIRModel(in *school.Labo) *irmodel1.Record {
+	return irmodel.NewLabo().
 		FromStruct(".Id", ".id", in).
 		FromStruct(".Name", ".name", in).
 		IfNotNil(".Group", in, func(v *irmodel1.Record) {
@@ -50,7 +50,6 @@ func (c LaboConv) ToIRModel(in *school.Labo) (*irmodel1.Record, error) {
 			v.FromStruct(".Building.Id", ".building.id", in).
 				FromStruct(".Building.Name", ".building.name", in)
 		})
-	return out, nil
 }
 
 func (LaboConv) NewSlice() *school.Labos {
