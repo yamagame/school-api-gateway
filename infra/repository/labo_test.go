@@ -188,11 +188,24 @@ func TestDao(t *testing.T) {
 			ID: 5,
 		})
 
-		lb.Desks.WithContext(ctx).Model(last).Append(&model.Desk{
-			Name: "テーブルA",
-		}, &model.Desk{
-			Name: "テーブルB",
-		})
+		lb.Desks.WithContext(ctx).Model(last).Append(
+			&model.Desk{
+				Name:        "テーブルA-1",
+				ProductCode: "1234",
+			},
+			&model.Desk{
+				Name: "テーブルB",
+			},
+		)
+
+		dk := q.Desk
+		dk.WithContext(ctx).Updates(
+			&model.Desk{
+				ID:          1,
+				Name:        "テーブルA",
+				ProductCode: "1234",
+			},
+		)
 
 		last.Name = irconv.ToPtr("藤田テスト")
 		lb.WithContext(ctx).Updates(last)
@@ -204,7 +217,6 @@ func TestDao(t *testing.T) {
 				Find()
 			require.NoError(t, err)
 
-			snapshot.Update(t)
 			out := snapshot.Delete(t, labos, "CreatedAt", "UpdatedAt")
 			snapshot.Match(t, out, "test-dao.json")
 		}

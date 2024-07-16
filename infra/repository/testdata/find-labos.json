@@ -14,7 +14,8 @@
         "Error": null,
         "ID": 1,
         "LaboID": 1,
-        "Name": "机1-A"
+        "Name": "机1-A",
+        "ProductCode": ""
       }
     ],
     "Error": null,
@@ -52,13 +53,15 @@
         "Error": null,
         "ID": 2,
         "LaboID": 2,
-        "Name": "机2"
+        "Name": "机2",
+        "ProductCode": ""
       },
       {
         "Error": null,
         "ID": 3,
         "LaboID": 2,
-        "Name": "机3"
+        "Name": "机3",
+        "ProductCode": ""
       }
     ],
     "Error": null,

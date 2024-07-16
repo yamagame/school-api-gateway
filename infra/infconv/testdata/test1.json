@@ -36,18 +36,21 @@
       "ID": 1,
       "LaboID": 10,
       "Name": "",
+      "ProductCode": "",
       "Error": null
     },
     {
       "ID": 2,
       "LaboID": 11,
       "Name": "",
+      "ProductCode": "",
       "Error": null
     },
     {
       "ID": 3,
       "LaboID": 13,
       "Name": "",
+      "ProductCode": "",
       "Error": null
     }
   ],

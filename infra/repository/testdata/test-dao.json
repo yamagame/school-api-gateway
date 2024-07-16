@@ -913,13 +913,15 @@
         "Error": null,
         "ID": 1,
         "LaboID": 30,
-        "Name": "テーブルA"
+        "Name": "テーブルA",
+        "ProductCode": "1234"
       },
       {
         "Error": null,
         "ID": 2,
         "LaboID": 30,
-        "Name": "テーブルB"
+        "Name": "テーブルB",
+        "ProductCode": ""
       }
     ],
     "Error": null,

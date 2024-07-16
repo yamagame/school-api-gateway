@@ -30,6 +30,7 @@ func newDesk(db *gorm.DB, opts ...gen.DOOption) desk {
 	_desk.ID = field.NewInt32(tableName, "id")
 	_desk.LaboID = field.NewInt32(tableName, "labo_id")
 	_desk.Name = field.NewString(tableName, "name")
+	_desk.ProductCode = field.NewString(tableName, "product_code")
 
 	_desk.fillFieldMap()
 
@@ -39,10 +40,11 @@ func newDesk(db *gorm.DB, opts ...gen.DOOption) desk {
 type desk struct {
 	deskDo
 
-	ALL    field.Asterisk
-	ID     field.Int32
-	LaboID field.Int32
-	Name   field.String
+	ALL         field.Asterisk
+	ID          field.Int32
+	LaboID      field.Int32
+	Name        field.String
+	ProductCode field.String
 
 	fieldMap map[string]field.Expr
 }
@@ -62,6 +64,7 @@ func (d *desk) updateTableName(table string) *desk {
 	d.ID = field.NewInt32(table, "id")
 	d.LaboID = field.NewInt32(table, "labo_id")
 	d.Name = field.NewString(table, "name")
+	d.ProductCode = field.NewString(table, "product_code")
 
 	d.fillFieldMap()
 
@@ -78,10 +81,11 @@ func (d *desk) GetFieldByName(fieldName string) (field.OrderExpr, bool) {
 }
 
 func (d *desk) fillFieldMap() {
-	d.fieldMap = make(map[string]field.Expr, 3)
+	d.fieldMap = make(map[string]field.Expr, 4)
 	d.fieldMap["id"] = d.ID
 	d.fieldMap["labo_id"] = d.LaboID
 	d.fieldMap["name"] = d.Name
+	d.fieldMap["product_code"] = d.ProductCode
 }
 
 func (d desk) clone(db *gorm.DB) desk {
