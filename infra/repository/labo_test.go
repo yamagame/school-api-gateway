@@ -107,10 +107,44 @@ func TestLabosCSVToIRModel(t *testing.T) {
 
 	labos := irmodel.NewLabo().
 		NewRecords(records)
+	assert.NoError(t, labos.Error)
 
 	out := labos.ValueMap()
 
-	snapshot.Match(t, out, "create-labos.json")
+	snapshot.Match(t, out, "create-labos-1.json")
+
+	ctx := context.Background()
+	db := infra.DB()
+	infra.ResetAutoIncrementForTest(db)
+	db.Transaction(func(tx *gorm.DB) error {
+		repo := NewLabo(tx)
+
+		// 中間モデルからdaoに変換
+		models := infconv.Labos.ToStruct(labos)
+		assert.NoError(t, models.Error)
+
+		// Upsertする
+		err := repo.Upsert(ctx, models)
+		assert.NoError(t, err)
+
+		{
+			results := repo.Find(ctx, []int32{1, 2})
+			assert.NoError(t, results.Error)
+			records := results.MustShallowCopy()
+			out := snapshot.Delete(t, records, "CreatedAt", "UpdatedAt")
+			snapshot.Match(t, out, "create-labos-2.json")
+		}
+
+		{
+			results := repo.FindWithName(ctx, []string{"スズキ"})
+			assert.NoError(t, results.Error)
+			records := results.MustShallowCopy()
+			out := snapshot.Delete(t, records, "CreatedAt", "UpdatedAt")
+			snapshot.Match(t, out, "create-labos-3.json")
+		}
+
+		return fmt.Errorf("restore")
+	})
 }
 
 func TestFind(t *testing.T) {

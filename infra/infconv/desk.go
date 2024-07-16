@@ -14,6 +14,7 @@ func (DeskConv) ToStruct(in *irmodel1.Record) (*model.Desk, error) {
 		ToStruct(".id", ".ID", out).
 		ToStruct(".labo_id", ".LaboID", out).
 		ToStruct(".name", ".Name", out).
+		ToStruct(".product_code", ".ProductCode", out).
 		Error
 	return out, out.Error
 }
@@ -27,7 +28,8 @@ func (DeskConv) ToIRModel(in *model.Desk) *irmodel1.Record {
 	return out.
 		FromStruct(".ID", ".id", in).
 		FromStruct(".LaboID", ".labo_id", in).
-		FromStruct(".Name", ".name", in)
+		FromStruct(".Name", ".name", in).
+		FromStruct(".ProductCode", ".product_code", in)
 }
 
 func (DeskConv) NewSlice() *model.Desks {

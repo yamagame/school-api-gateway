@@ -1,0 +1,110 @@
+[
+  {
+    "building": {
+      "id": 0,
+      "name": ""
+    },
+    "chair": [],
+    "desk": [
+      {
+        "id": 1,
+        "labo_id": 0,
+        "name": "",
+        "product_code": "123A"
+      },
+      {
+        "id": 2,
+        "labo_id": 0,
+        "name": "",
+        "product_code": "123B"
+      }
+    ],
+    "group": {
+      "id": 0,
+      "name": ""
+    },
+    "id": 1,
+    "name": "サトウ",
+    "program": {
+      "id": 0,
+      "name": ""
+    },
+    "url": ""
+  },
+  {
+    "building": {
+      "id": 0,
+      "name": ""
+    },
+    "chair": [],
+    "desk": [
+      {
+        "id": 3,
+        "labo_id": 0,
+        "name": "",
+        "product_code": "456A"
+      },
+      {
+        "id": 4,
+        "labo_id": 0,
+        "name": "",
+        "product_code": "456B"
+      }
+    ],
+    "group": {
+      "id": 0,
+      "name": ""
+    },
+    "id": 2,
+    "name": "シミズ",
+    "program": {
+      "id": 0,
+      "name": ""
+    },
+    "url": ""
+  },
+  {
+    "building": {
+      "id": 0,
+      "name": ""
+    },
+    "chair": [],
+    "desk": [
+      {
+        "id": 0,
+        "labo_id": 0,
+        "name": "",
+        "product_code": "789A"
+      },
+      {
+        "id": 0,
+        "labo_id": 0,
+        "name": "",
+        "product_code": "789B"
+      },
+      {
+        "id": 0,
+        "labo_id": 0,
+        "name": "",
+        "product_code": "789C"
+      },
+      {
+        "id": 0,
+        "labo_id": 0,
+        "name": "",
+        "product_code": "789D"
+      }
+    ],
+    "group": {
+      "id": 0,
+      "name": ""
+    },
+    "id": 0,
+    "name": "スズキ",
+    "program": {
+      "id": 0,
+      "name": ""
+    },
+    "url": ""
+  }
+]

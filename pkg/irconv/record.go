@@ -162,7 +162,7 @@ func (m *Record) GetValue(key string) (interface{}, error) {
 			return v.Get(), nil
 		}
 	}
-	return nil, ErrNotFound
+	return nil, errors.Join(ErrNotFound, fmt.Errorf("GetValue key: %v", key))
 }
 
 func (m *Record) GetBelongTo(key string) (*Record, error) {
@@ -171,7 +171,7 @@ func (m *Record) GetBelongTo(key string) (*Record, error) {
 			return v, nil
 		}
 	}
-	return nil, ErrNotFound
+	return nil, errors.Join(ErrNotFound, fmt.Errorf("GetBelongTo key: %v", key))
 }
 
 func (m *Record) GetHasOne(key string) (*Record, error) {
@@ -180,7 +180,7 @@ func (m *Record) GetHasOne(key string) (*Record, error) {
 			return v, nil
 		}
 	}
-	return nil, ErrNotFound
+	return nil, errors.Join(ErrNotFound, fmt.Errorf("GetHasOne key: %v", key))
 }
 
 func (m *Record) GetHasMany(key string) (*HasMany, error) {
@@ -189,7 +189,7 @@ func (m *Record) GetHasMany(key string) (*HasMany, error) {
 			return v, nil
 		}
 	}
-	return nil, ErrNotFound
+	return nil, errors.Join(ErrNotFound, fmt.Errorf("GetHasMany key: %v", key))
 }
 
 func (m *Record) GetHasManyRecords(key string) *Records {
@@ -201,7 +201,7 @@ func (m *Record) GetHasManyRecords(key string) *Records {
 		}
 	}
 	return &Records{
-		Error: ErrNotFound,
+		Error: errors.Join(ErrNotFound, fmt.Errorf("GetHasManyRecords key: %v", key)),
 	}
 }
 
@@ -213,7 +213,7 @@ func (m *Record) Value(jsonpath string) (*Value, error) {
 			return value, nil
 		}
 	}
-	return nil, ErrNotFound
+	return nil, errors.Join(ErrNotFound, fmt.Errorf("Value jsonpath: %v", jsonpath))
 }
 
 func (m *Record) HasOne(jsonpath string) (*Record, error) {
@@ -224,7 +224,7 @@ func (m *Record) HasOne(jsonpath string) (*Record, error) {
 			return field, nil
 		}
 	}
-	return nil, ErrNotFound
+	return nil, errors.Join(ErrNotFound, fmt.Errorf("HasOne jsonpath: %v", jsonpath))
 }
 
 func (m *Record) HasMany(jsonpath string) (*HasMany, error) {
@@ -235,14 +235,14 @@ func (m *Record) HasMany(jsonpath string) (*HasMany, error) {
 			return field, nil
 		}
 	}
-	return nil, ErrNotFound
+	return nil, errors.Join(ErrNotFound, fmt.Errorf("HasMany jsonpath: %v", jsonpath))
 }
 
 func (m *Record) Set(jsonpath string, val interface{}) *Record {
 	if v, err := m.getVal(jsonpath); err == nil {
 		m.Error = v.(*Value).Set(val)
 	} else {
-		m.Error = ErrNotFound
+		m.Error = errors.Join(ErrNotFound, fmt.Errorf("Set jsonpath: %v", jsonpath))
 	}
 	return m
 }
@@ -251,7 +251,7 @@ func (m *Record) Update(jsonpath string, val interface{}) *Record {
 	if v, err := m.getVal(jsonpath); err == nil {
 		m.Error = v.(*Value).Update(val)
 	} else {
-		m.Error = ErrNotFound
+		m.Error = errors.Join(ErrNotFound, fmt.Errorf("Update jsonpath: %v", jsonpath))
 	}
 	return m
 }
@@ -263,7 +263,7 @@ func (m *Record) Get(jsonpath string) (interface{}, error) {
 		}
 		return v, nil
 	}
-	return nil, ErrNotFound
+	return nil, errors.Join(ErrNotFound, fmt.Errorf("Get jsonpath: %v", jsonpath))
 }
 
 func (m *Record) ValueMap() map[string]interface{} {

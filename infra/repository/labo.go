@@ -74,7 +74,10 @@ func (r *Labo) Create(ctx context.Context, labos *model.Labos) error {
 	if err != nil {
 		return err
 	}
-	return lb.WithContext(ctx).CreateInBatches(records, r.batchSize)
+	if err := lb.WithContext(ctx).CreateInBatches(records, r.batchSize); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (r *Labo) Update(ctx context.Context, labos *model.Labos) error {
@@ -111,7 +114,10 @@ func (r *Labo) Find(ctx context.Context, ids []int32) *model.Labos {
 func (r *Labo) FindWithName(ctx context.Context, names []string) *model.Labos {
 	q := query.Use(r.db)
 	lb := q.Labo
-	records, err := lb.WithContext(ctx).Where(lb.Name.In(names...)).Find()
+	records, err := lb.WithContext(ctx).
+		Preload(lb.Desks, lb.Chairs).
+		Joins(lb.Building, lb.Group, lb.Program).
+		Where(lb.Name.In(names...)).Find()
 	ret := infconv.Labo.NewSlice()
 	if err != nil {
 		ret.Error = err

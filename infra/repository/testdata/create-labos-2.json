@@ -1,0 +1,94 @@
+[
+  {
+    "Building": {
+      "Aliases": null,
+      "Error": null,
+      "Floors": 0,
+      "ID": 1,
+      "Name": "A棟"
+    },
+    "BuildingID": 1,
+    "Chairs": [],
+    "Desks": [
+      {
+        "Error": null,
+        "ID": 1,
+        "LaboID": 1,
+        "Name": "",
+        "ProductCode": "123A"
+      },
+      {
+        "Error": null,
+        "ID": 2,
+        "LaboID": 1,
+        "Name": "",
+        "ProductCode": "123B"
+      }
+    ],
+    "Error": null,
+    "Group": {
+      "Error": null,
+      "ID": 1,
+      "Name": "Ⅰ類（情報系）"
+    },
+    "GroupID": 1,
+    "ID": 1,
+    "Name": "サトウ",
+    "Professors": null,
+    "Program": {
+      "Error": null,
+      "ID": 1,
+      "Name": "01.メディア情報学プログラム"
+    },
+    "ProgramID": 1,
+    "Rooms": null,
+    "Students": null,
+    "URL": null
+  },
+  {
+    "Building": {
+      "Aliases": null,
+      "Error": null,
+      "Floors": 0,
+      "ID": 2,
+      "Name": "B棟"
+    },
+    "BuildingID": 2,
+    "Chairs": [],
+    "Desks": [
+      {
+        "Error": null,
+        "ID": 3,
+        "LaboID": 2,
+        "Name": "",
+        "ProductCode": "456A"
+      },
+      {
+        "Error": null,
+        "ID": 4,
+        "LaboID": 2,
+        "Name": "",
+        "ProductCode": "456B"
+      }
+    ],
+    "Error": null,
+    "Group": {
+      "Error": null,
+      "ID": 2,
+      "Name": "Ⅱ類（融合系）"
+    },
+    "GroupID": 2,
+    "ID": 2,
+    "Name": "シミズ",
+    "Professors": null,
+    "Program": {
+      "Error": null,
+      "ID": 2,
+      "Name": "02.経営・社会情報学プログラム"
+    },
+    "ProgramID": 2,
+    "Rooms": null,
+    "Students": null,
+    "URL": null
+  }
+]

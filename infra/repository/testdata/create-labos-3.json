@@ -1,0 +1,62 @@
+[
+  {
+    "Building": {
+      "Aliases": null,
+      "Error": null,
+      "Floors": 0,
+      "ID": 0,
+      "Name": ""
+    },
+    "BuildingID": null,
+    "Chairs": [],
+    "Desks": [
+      {
+        "Error": null,
+        "ID": 5,
+        "LaboID": 31,
+        "Name": "",
+        "ProductCode": "789A"
+      },
+      {
+        "Error": null,
+        "ID": 6,
+        "LaboID": 31,
+        "Name": "",
+        "ProductCode": "789B"
+      },
+      {
+        "Error": null,
+        "ID": 7,
+        "LaboID": 31,
+        "Name": "",
+        "ProductCode": "789C"
+      },
+      {
+        "Error": null,
+        "ID": 8,
+        "LaboID": 31,
+        "Name": "",
+        "ProductCode": "789D"
+      }
+    ],
+    "Error": null,
+    "Group": {
+      "Error": null,
+      "ID": 0,
+      "Name": ""
+    },
+    "GroupID": null,
+    "ID": 31,
+    "Name": "スズキ",
+    "Professors": null,
+    "Program": {
+      "Error": null,
+      "ID": 0,
+      "Name": ""
+    },
+    "ProgramID": null,
+    "Rooms": null,
+    "Students": null,
+    "URL": null
+  }
+]
