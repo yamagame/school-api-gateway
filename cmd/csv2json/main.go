@@ -129,7 +129,7 @@ func dumpCSV(in io.Reader) ([]byte, error) {
 	jsondata = mergeRecords(jsondata)
 
 	// JSONに変換
-	return json.MarshalIndent(jsondata, "", "    ")
+	return json.MarshalIndent(jsondata, "", "  ")
 }
 
 func main() {
