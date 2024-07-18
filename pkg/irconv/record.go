@@ -392,6 +392,10 @@ func (m *Record) Func() func() *Record {
 	}
 }
 
+func (m *Record) Self() *Record {
+	return m
+}
+
 func (m *Record) getVal(template string) (interface{}, error) {
 	data := m.allValues()
 	return GetVal(data, template)

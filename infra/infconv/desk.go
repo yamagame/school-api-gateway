@@ -29,7 +29,8 @@ func (DeskConv) ToIRModel(in *model.Desk) *irconv.Record {
 		FromStruct(".ID", ".id", in).
 		FromStruct(".LaboID", ".labo_id", in).
 		FromStruct(".Name", ".name", in).
-		FromStruct(".ProductCode", ".product_code", in)
+		FromStruct(".ProductCode", ".product_code", in).
+		Self()
 }
 
 func (DeskConv) NewSlice() *model.Desks {

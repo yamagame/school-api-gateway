@@ -30,7 +30,8 @@ func (c LaboConv) ToStruct(in *irconv.Record) (*school.Labo, error) {
 			out.Building = &school.Building{}
 			v.ToStruct(".building.id", ".Building.Id", out).
 				ToStruct(".building.name", ".Building.Name", out)
-		})
+		}).
+		Self()
 	return out, nil
 }
 
@@ -49,7 +50,8 @@ func (c LaboConv) ToIRModel(in *school.Labo) *irconv.Record {
 		IfNotNil(".Building", in, func(v *irconv.Record) {
 			v.FromStruct(".Building.Id", ".building.id", in).
 				FromStruct(".Building.Name", ".building.name", in)
-		})
+		}).
+		Self()
 }
 
 func (LaboConv) NewSlice() *school.Labos {

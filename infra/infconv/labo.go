@@ -30,7 +30,8 @@ func (LaboConv) ToStruct(in *irconv.Record) (*model.Labo, error) {
 			if desks, err := Desks.ToStruct(v.GetHasManyRecords("desk")).ShallowCopy(); err == nil {
 				out.Desks = desks
 			}
-		}).Error
+		}).
+		Error
 	return out, out.Error
 }
 
@@ -58,7 +59,8 @@ func (LaboConv) ToIRModel(in *model.Labo) *irconv.Record {
 		}).
 		IfNotNil(".Desks", in, func(v *irconv.Record) {
 			v.SetHasManyRecords("desk", Desks.ToIRModel(in.Desks))
-		})
+		}).
+		Self()
 }
 
 func (LaboConv) NewSlice() *model.Labos {
