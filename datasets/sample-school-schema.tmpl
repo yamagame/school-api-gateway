@@ -1,0 +1,19 @@
+package model
+
+import (
+  "github.com/yamagame/school-api-gateway/pkg/conv"
+)
+
+type {{.class}} struct {
+{{- range .attributes}}{{ .COLUMN_NAME | nindent 4}}  {{.COLUMN_TYPE}}  //`{{ .COLUMN_COMMENT }}`{{end}}
+}
+
+type {{.classes}} struct {
+  *conv.Variables[{{.class}}]
+}
+
+func New{{.classes}}(variables ...*{{.class}}) *{{.classes}} {
+  return &{{.classes}}{
+    Variables: conv.NewVariables(variables...),
+  }
+}

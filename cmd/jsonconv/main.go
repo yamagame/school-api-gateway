@@ -29,17 +29,22 @@ type COLUMN struct {
 func exec(jsondata []byte) {
 	columns := []COLUMN{}
 	json.Unmarshal(jsondata, &columns)
-	ret := map[string]*TABLE{}
+	tmap := map[string]*TABLE{}
 	for _, col := range columns {
-		if _, ok := ret[col.TableName]; !ok {
-			ret[col.TableName] = &TABLE{
+		if _, ok := tmap[col.TableName]; !ok {
+			tmap[col.TableName] = &TABLE{
 				Filename:   inflection.Singular(col.TableName) + ".go",
 				Class:      xstrings.ToPascalCase(inflection.Singular(col.TableName)),
 				Classes:    xstrings.ToPascalCase(col.TableName),
 				Attributes: []*COLUMN{},
 			}
 		}
-		ret[col.TableName].Attributes = append(ret[col.TableName].Attributes, &col)
+		tmap[col.TableName].Attributes = append(tmap[col.TableName].Attributes, &col)
+	}
+
+	ret := []*TABLE{}
+	for _, v := range tmap {
+		ret = append(ret, v)
 	}
 
 	b, _ := json.MarshalIndent(ret, "", "  ")

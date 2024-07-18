@@ -1,5 +1,5 @@
-{
-  "addresses": {
+[
+  {
     "filename": "address.go",
     "class": "Address",
     "classes": "Addresses",
@@ -70,18 +70,64 @@
       }
     ]
   },
-  "aliases": {
-    "filename": "alias.go",
-    "class": "Alias",
-    "classes": "Aliases",
+  {
+    "filename": "class_room.go",
+    "class": "ClassRoom",
+    "classes": "ClassRooms",
+    "attributes": [
+      {
+        "COLUMN_COMMENT": "主キーの標準フィールド",
+        "COLUMN_KEY": "PRI",
+        "COLUMN_NAME": "class_id",
+        "COLUMN_TYPE": "int",
+        "IS_NULLABLE": "NO",
+        "TABLE_NAME": "class_rooms"
+      },
+      {
+        "COLUMN_COMMENT": "主キーの標準フィールド",
+        "COLUMN_KEY": "PRI",
+        "COLUMN_NAME": "room_id",
+        "COLUMN_TYPE": "int",
+        "IS_NULLABLE": "NO",
+        "TABLE_NAME": "class_rooms"
+      }
+    ]
+  },
+  {
+    "filename": "labo_professor.go",
+    "class": "LaboProfessor",
+    "classes": "LaboProfessors",
+    "attributes": [
+      {
+        "COLUMN_COMMENT": "主キーの標準フィールド",
+        "COLUMN_KEY": "PRI",
+        "COLUMN_NAME": "labo_id",
+        "COLUMN_TYPE": "int",
+        "IS_NULLABLE": "NO",
+        "TABLE_NAME": "labo_professors"
+      },
+      {
+        "COLUMN_COMMENT": "主キーの標準フィールド",
+        "COLUMN_KEY": "PRI",
+        "COLUMN_NAME": "professor_id",
+        "COLUMN_TYPE": "int",
+        "IS_NULLABLE": "NO",
+        "TABLE_NAME": "labo_professors"
+      }
+    ]
+  },
+  {
+    "filename": "program.go",
+    "class": "Program",
+    "classes": "Programs",
     "attributes": [
       {
         "COLUMN_COMMENT": "GORMによって自動的に管理される作成時間",
-        "COLUMN_KEY": "PRI",
+        "COLUMN_KEY": "MUL",
         "COLUMN_NAME": "created_at",
         "COLUMN_TYPE": "datetime(3)",
         "IS_NULLABLE": "YES",
-        "TABLE_NAME": "aliases"
+        "TABLE_NAME": "programs"
       },
       {
         "COLUMN_COMMENT": "主キーの標準フィールド",
@@ -89,15 +135,15 @@
         "COLUMN_NAME": "id",
         "COLUMN_TYPE": "int",
         "IS_NULLABLE": "NO",
-        "TABLE_NAME": "aliases"
+        "TABLE_NAME": "programs"
       },
       {
-        "COLUMN_COMMENT": "別名",
+        "COLUMN_COMMENT": "プログラム名",
         "COLUMN_KEY": "PRI",
         "COLUMN_NAME": "name",
-        "COLUMN_TYPE": "longtext",
+        "COLUMN_TYPE": "varchar(255)",
         "IS_NULLABLE": "YES",
-        "TABLE_NAME": "aliases"
+        "TABLE_NAME": "programs"
       },
       {
         "COLUMN_COMMENT": "GORMによって自動的に管理される更新時間",
@@ -105,11 +151,34 @@
         "COLUMN_NAME": "updated_at",
         "COLUMN_TYPE": "datetime(3)",
         "IS_NULLABLE": "YES",
-        "TABLE_NAME": "aliases"
+        "TABLE_NAME": "programs"
       }
     ]
   },
-  "areas": {
+  {
+    "filename": "school_person.go",
+    "class": "SchoolPerson",
+    "classes": "SchoolPersons",
+    "attributes": [
+      {
+        "COLUMN_COMMENT": "主キーの標準フィールド",
+        "COLUMN_KEY": "PRI",
+        "COLUMN_NAME": "person_id",
+        "COLUMN_TYPE": "int",
+        "IS_NULLABLE": "NO",
+        "TABLE_NAME": "school_persons"
+      },
+      {
+        "COLUMN_COMMENT": "主キーの標準フィールド",
+        "COLUMN_KEY": "PRI",
+        "COLUMN_NAME": "school_id",
+        "COLUMN_TYPE": "int",
+        "IS_NULLABLE": "NO",
+        "TABLE_NAME": "school_persons"
+      }
+    ]
+  },
+  {
     "filename": "area.go",
     "class": "Area",
     "classes": "Areas",
@@ -148,30 +217,7 @@
       }
     ]
   },
-  "building_aliases": {
-    "filename": "building_alias.go",
-    "class": "BuildingAlias",
-    "classes": "BuildingAliases",
-    "attributes": [
-      {
-        "COLUMN_COMMENT": "主キーの標準フィールド",
-        "COLUMN_KEY": "PRI",
-        "COLUMN_NAME": "alias_id",
-        "COLUMN_TYPE": "int",
-        "IS_NULLABLE": "NO",
-        "TABLE_NAME": "building_aliases"
-      },
-      {
-        "COLUMN_COMMENT": "主キーの標準フィールド",
-        "COLUMN_KEY": "PRI",
-        "COLUMN_NAME": "building_id",
-        "COLUMN_TYPE": "int",
-        "IS_NULLABLE": "NO",
-        "TABLE_NAME": "building_aliases"
-      }
-    ]
-  },
-  "buildings": {
+  {
     "filename": "building.go",
     "class": "Building",
     "classes": "Buildings",
@@ -218,53 +264,7 @@
       }
     ]
   },
-  "chairs": {
-    "filename": "chair.go",
-    "class": "Chair",
-    "classes": "Chairs",
-    "attributes": [
-      {
-        "COLUMN_COMMENT": "主キーの標準フィールド",
-        "COLUMN_KEY": "PRI",
-        "COLUMN_NAME": "id",
-        "COLUMN_TYPE": "int",
-        "IS_NULLABLE": "NO",
-        "TABLE_NAME": "chairs"
-      },
-      {
-        "COLUMN_COMMENT": "主キーの標準フィールド",
-        "COLUMN_KEY": "MUL",
-        "COLUMN_NAME": "labo_id",
-        "COLUMN_TYPE": "int",
-        "IS_NULLABLE": "YES",
-        "TABLE_NAME": "chairs"
-      }
-    ]
-  },
-  "class_rooms": {
-    "filename": "class_room.go",
-    "class": "ClassRoom",
-    "classes": "ClassRooms",
-    "attributes": [
-      {
-        "COLUMN_COMMENT": "主キーの標準フィールド",
-        "COLUMN_KEY": "PRI",
-        "COLUMN_NAME": "class_id",
-        "COLUMN_TYPE": "int",
-        "IS_NULLABLE": "NO",
-        "TABLE_NAME": "class_rooms"
-      },
-      {
-        "COLUMN_COMMENT": "主キーの標準フィールド",
-        "COLUMN_KEY": "PRI",
-        "COLUMN_NAME": "room_id",
-        "COLUMN_TYPE": "int",
-        "IS_NULLABLE": "NO",
-        "TABLE_NAME": "class_rooms"
-      }
-    ]
-  },
-  "classes": {
+  {
     "filename": "class.go",
     "class": "Class",
     "classes": "Classes",
@@ -303,46 +303,7 @@
       }
     ]
   },
-  "courses": {
-    "filename": "course.go",
-    "class": "Course",
-    "classes": "Courses",
-    "attributes": [
-      {
-        "COLUMN_COMMENT": "GORMによって自動的に管理される作成時間",
-        "COLUMN_KEY": "PRI",
-        "COLUMN_NAME": "created_at",
-        "COLUMN_TYPE": "datetime(3)",
-        "IS_NULLABLE": "YES",
-        "TABLE_NAME": "courses"
-      },
-      {
-        "COLUMN_COMMENT": "主キーの標準フィールド",
-        "COLUMN_KEY": "PRI",
-        "COLUMN_NAME": "id",
-        "COLUMN_TYPE": "int",
-        "IS_NULLABLE": "NO",
-        "TABLE_NAME": "courses"
-      },
-      {
-        "COLUMN_COMMENT": "コース名",
-        "COLUMN_KEY": "PRI",
-        "COLUMN_NAME": "name",
-        "COLUMN_TYPE": "longtext",
-        "IS_NULLABLE": "YES",
-        "TABLE_NAME": "courses"
-      },
-      {
-        "COLUMN_COMMENT": "GORMによって自動的に管理される更新時間",
-        "COLUMN_KEY": "PRI",
-        "COLUMN_NAME": "updated_at",
-        "COLUMN_TYPE": "datetime(3)",
-        "IS_NULLABLE": "YES",
-        "TABLE_NAME": "courses"
-      }
-    ]
-  },
-  "desks": {
+  {
     "filename": "desk.go",
     "class": "Desk",
     "classes": "Desks",
@@ -381,26 +342,34 @@
       }
     ]
   },
-  "employees": {
-    "filename": "employee.go",
-    "class": "Employee",
-    "classes": "Employees",
+  {
+    "filename": "person.go",
+    "class": "Person",
+    "classes": "People",
     "attributes": [
+      {
+        "COLUMN_COMMENT": ":住所ID",
+        "COLUMN_KEY": "MUL",
+        "COLUMN_NAME": "address_id",
+        "COLUMN_TYPE": "int",
+        "IS_NULLABLE": "YES",
+        "TABLE_NAME": "people"
+      },
+      {
+        "COLUMN_COMMENT": "生年月日",
+        "COLUMN_KEY": "MUL",
+        "COLUMN_NAME": "birthday",
+        "COLUMN_TYPE": "date",
+        "IS_NULLABLE": "YES",
+        "TABLE_NAME": "people"
+      },
       {
         "COLUMN_COMMENT": "GORMによって自動的に管理される作成時間",
         "COLUMN_KEY": "MUL",
         "COLUMN_NAME": "created_at",
         "COLUMN_TYPE": "datetime(3)",
         "IS_NULLABLE": "YES",
-        "TABLE_NAME": "employees"
-      },
-      {
-        "COLUMN_COMMENT": "専門領域",
-        "COLUMN_KEY": "MUL",
-        "COLUMN_NAME": "field",
-        "COLUMN_TYPE": "longtext",
-        "IS_NULLABLE": "YES",
-        "TABLE_NAME": "employees"
+        "TABLE_NAME": "people"
       },
       {
         "COLUMN_COMMENT": "主キーの標準フィールド",
@@ -408,70 +377,101 @@
         "COLUMN_NAME": "id",
         "COLUMN_TYPE": "int",
         "IS_NULLABLE": "NO",
-        "TABLE_NAME": "employees"
+        "TABLE_NAME": "people"
       },
       {
-        "COLUMN_COMMENT": "人物ID",
-        "COLUMN_KEY": "MUL",
-        "COLUMN_NAME": "person_id",
-        "COLUMN_TYPE": "int",
-        "IS_NULLABLE": "YES",
-        "TABLE_NAME": "employees"
-      },
-      {
-        "COLUMN_COMMENT": "部署ID",
-        "COLUMN_KEY": "MUL",
-        "COLUMN_NAME": "post_id",
-        "COLUMN_TYPE": "int",
-        "IS_NULLABLE": "YES",
-        "TABLE_NAME": "employees"
-      },
-      {
-        "COLUMN_COMMENT": "部屋ID",
-        "COLUMN_KEY": "MUL",
-        "COLUMN_NAME": "room_id",
-        "COLUMN_TYPE": "int",
-        "IS_NULLABLE": "YES",
-        "TABLE_NAME": "employees"
-      },
-      {
-        "COLUMN_COMMENT": "GORMによって自動的に管理される更新時間",
-        "COLUMN_KEY": "MUL",
-        "COLUMN_NAME": "updated_at",
-        "COLUMN_TYPE": "datetime(3)",
-        "IS_NULLABLE": "YES",
-        "TABLE_NAME": "employees"
-      }
-    ]
-  },
-  "groups": {
-    "filename": "group.go",
-    "class": "Group",
-    "classes": "Groups",
-    "attributes": [
-      {
-        "COLUMN_COMMENT": "GORMによって自動的に管理される作成時間",
-        "COLUMN_KEY": "MUL",
-        "COLUMN_NAME": "created_at",
-        "COLUMN_TYPE": "datetime(3)",
-        "IS_NULLABLE": "YES",
-        "TABLE_NAME": "groups"
-      },
-      {
-        "COLUMN_COMMENT": "主キーの標準フィールド",
-        "COLUMN_KEY": "PRI",
-        "COLUMN_NAME": "id",
-        "COLUMN_TYPE": "int",
-        "IS_NULLABLE": "NO",
-        "TABLE_NAME": "groups"
-      },
-      {
-        "COLUMN_COMMENT": "専門領域名",
+        "COLUMN_COMMENT": "名前",
         "COLUMN_KEY": "PRI",
         "COLUMN_NAME": "name",
         "COLUMN_TYPE": "varchar(255)",
         "IS_NULLABLE": "YES",
-        "TABLE_NAME": "groups"
+        "TABLE_NAME": "people"
+      },
+      {
+        "COLUMN_COMMENT": "役割ID",
+        "COLUMN_KEY": "MUL",
+        "COLUMN_NAME": "role_id",
+        "COLUMN_TYPE": "int",
+        "IS_NULLABLE": "YES",
+        "TABLE_NAME": "people"
+      },
+      {
+        "COLUMN_COMMENT": "GORMによって自動的に管理される更新時間",
+        "COLUMN_KEY": "MUL",
+        "COLUMN_NAME": "updated_at",
+        "COLUMN_TYPE": "datetime(3)",
+        "IS_NULLABLE": "YES",
+        "TABLE_NAME": "people"
+      }
+    ]
+  },
+  {
+    "filename": "school_building.go",
+    "class": "SchoolBuilding",
+    "classes": "SchoolBuildings",
+    "attributes": [
+      {
+        "COLUMN_COMMENT": "主キーの標準フィールド",
+        "COLUMN_KEY": "PRI",
+        "COLUMN_NAME": "building_id",
+        "COLUMN_TYPE": "int",
+        "IS_NULLABLE": "NO",
+        "TABLE_NAME": "school_buildings"
+      },
+      {
+        "COLUMN_COMMENT": "主キーの標準フィールド",
+        "COLUMN_KEY": "PRI",
+        "COLUMN_NAME": "school_id",
+        "COLUMN_TYPE": "int",
+        "IS_NULLABLE": "NO",
+        "TABLE_NAME": "school_buildings"
+      }
+    ]
+  },
+  {
+    "filename": "room.go",
+    "class": "Room",
+    "classes": "Rooms",
+    "attributes": [
+      {
+        "COLUMN_COMMENT": "建物ID",
+        "COLUMN_KEY": "MUL",
+        "COLUMN_NAME": "building_id",
+        "COLUMN_TYPE": "int",
+        "IS_NULLABLE": "YES",
+        "TABLE_NAME": "rooms"
+      },
+      {
+        "COLUMN_COMMENT": "GORMによって自動的に管理される作成時間",
+        "COLUMN_KEY": "MUL",
+        "COLUMN_NAME": "created_at",
+        "COLUMN_TYPE": "datetime(3)",
+        "IS_NULLABLE": "YES",
+        "TABLE_NAME": "rooms"
+      },
+      {
+        "COLUMN_COMMENT": "階数",
+        "COLUMN_KEY": "MUL",
+        "COLUMN_NAME": "floor",
+        "COLUMN_TYPE": "int",
+        "IS_NULLABLE": "YES",
+        "TABLE_NAME": "rooms"
+      },
+      {
+        "COLUMN_COMMENT": "主キーの標準フィールド",
+        "COLUMN_KEY": "PRI",
+        "COLUMN_NAME": "id",
+        "COLUMN_TYPE": "int",
+        "IS_NULLABLE": "NO",
+        "TABLE_NAME": "rooms"
+      },
+      {
+        "COLUMN_COMMENT": "部屋名",
+        "COLUMN_KEY": "PRI",
+        "COLUMN_NAME": "name",
+        "COLUMN_TYPE": "longtext",
+        "IS_NULLABLE": "YES",
+        "TABLE_NAME": "rooms"
       },
       {
         "COLUMN_COMMENT": "GORMによって自動的に管理される更新時間",
@@ -479,80 +479,11 @@
         "COLUMN_NAME": "updated_at",
         "COLUMN_TYPE": "datetime(3)",
         "IS_NULLABLE": "YES",
-        "TABLE_NAME": "groups"
+        "TABLE_NAME": "rooms"
       }
     ]
   },
-  "labo_professors": {
-    "filename": "labo_professor.go",
-    "class": "LaboProfessor",
-    "classes": "LaboProfessors",
-    "attributes": [
-      {
-        "COLUMN_COMMENT": "主キーの標準フィールド",
-        "COLUMN_KEY": "PRI",
-        "COLUMN_NAME": "labo_id",
-        "COLUMN_TYPE": "int",
-        "IS_NULLABLE": "NO",
-        "TABLE_NAME": "labo_professors"
-      },
-      {
-        "COLUMN_COMMENT": "主キーの標準フィールド",
-        "COLUMN_KEY": "PRI",
-        "COLUMN_NAME": "professor_id",
-        "COLUMN_TYPE": "int",
-        "IS_NULLABLE": "NO",
-        "TABLE_NAME": "labo_professors"
-      }
-    ]
-  },
-  "labo_rooms": {
-    "filename": "labo_room.go",
-    "class": "LaboRoom",
-    "classes": "LaboRooms",
-    "attributes": [
-      {
-        "COLUMN_COMMENT": "主キーの標準フィールド",
-        "COLUMN_KEY": "PRI",
-        "COLUMN_NAME": "labo_id",
-        "COLUMN_TYPE": "int",
-        "IS_NULLABLE": "NO",
-        "TABLE_NAME": "labo_rooms"
-      },
-      {
-        "COLUMN_COMMENT": "主キーの標準フィールド",
-        "COLUMN_KEY": "PRI",
-        "COLUMN_NAME": "room_id",
-        "COLUMN_TYPE": "int",
-        "IS_NULLABLE": "NO",
-        "TABLE_NAME": "labo_rooms"
-      }
-    ]
-  },
-  "labo_students": {
-    "filename": "labo_student.go",
-    "class": "LaboStudent",
-    "classes": "LaboStudents",
-    "attributes": [
-      {
-        "COLUMN_COMMENT": "主キーの標準フィールド",
-        "COLUMN_KEY": "PRI",
-        "COLUMN_NAME": "labo_id",
-        "COLUMN_TYPE": "int",
-        "IS_NULLABLE": "NO",
-        "TABLE_NAME": "labo_students"
-      },
-      {
-        "COLUMN_COMMENT": "主キーの標準フィールド",
-        "COLUMN_KEY": "PRI",
-        "COLUMN_NAME": "student_id",
-        "COLUMN_TYPE": "int",
-        "IS_NULLABLE": "NO",
-        "TABLE_NAME": "labo_students"
-      }
-    ]
-  },
-  "labos": {
+  {
     "filename": "labo.go",
     "class": "Labo",
     "classes": "Labos",
@@ -623,187 +554,7 @@
       }
     ]
   },
-  "people": {
-    "filename": "person.go",
-    "class": "Person",
-    "classes": "People",
-    "attributes": [
-      {
-        "COLUMN_COMMENT": ":住所ID",
-        "COLUMN_KEY": "MUL",
-        "COLUMN_NAME": "address_id",
-        "COLUMN_TYPE": "int",
-        "IS_NULLABLE": "YES",
-        "TABLE_NAME": "people"
-      },
-      {
-        "COLUMN_COMMENT": "生年月日",
-        "COLUMN_KEY": "MUL",
-        "COLUMN_NAME": "birthday",
-        "COLUMN_TYPE": "date",
-        "IS_NULLABLE": "YES",
-        "TABLE_NAME": "people"
-      },
-      {
-        "COLUMN_COMMENT": "GORMによって自動的に管理される作成時間",
-        "COLUMN_KEY": "MUL",
-        "COLUMN_NAME": "created_at",
-        "COLUMN_TYPE": "datetime(3)",
-        "IS_NULLABLE": "YES",
-        "TABLE_NAME": "people"
-      },
-      {
-        "COLUMN_COMMENT": "主キーの標準フィールド",
-        "COLUMN_KEY": "PRI",
-        "COLUMN_NAME": "id",
-        "COLUMN_TYPE": "int",
-        "IS_NULLABLE": "NO",
-        "TABLE_NAME": "people"
-      },
-      {
-        "COLUMN_COMMENT": "名前",
-        "COLUMN_KEY": "PRI",
-        "COLUMN_NAME": "name",
-        "COLUMN_TYPE": "varchar(255)",
-        "IS_NULLABLE": "YES",
-        "TABLE_NAME": "people"
-      },
-      {
-        "COLUMN_COMMENT": "役割ID",
-        "COLUMN_KEY": "MUL",
-        "COLUMN_NAME": "role_id",
-        "COLUMN_TYPE": "int",
-        "IS_NULLABLE": "YES",
-        "TABLE_NAME": "people"
-      },
-      {
-        "COLUMN_COMMENT": "GORMによって自動的に管理される更新時間",
-        "COLUMN_KEY": "MUL",
-        "COLUMN_NAME": "updated_at",
-        "COLUMN_TYPE": "datetime(3)",
-        "IS_NULLABLE": "YES",
-        "TABLE_NAME": "people"
-      }
-    ]
-  },
-  "posts": {
-    "filename": "post.go",
-    "class": "Post",
-    "classes": "Posts",
-    "attributes": [
-      {
-        "COLUMN_COMMENT": "主キーの標準フィールド",
-        "COLUMN_KEY": "PRI",
-        "COLUMN_NAME": "id",
-        "COLUMN_TYPE": "int",
-        "IS_NULLABLE": "NO",
-        "TABLE_NAME": "posts"
-      },
-      {
-        "COLUMN_COMMENT": "部署名",
-        "COLUMN_KEY": "PRI",
-        "COLUMN_NAME": "name",
-        "COLUMN_TYPE": "longtext",
-        "IS_NULLABLE": "YES",
-        "TABLE_NAME": "posts"
-      }
-    ]
-  },
-  "professors": {
-    "filename": "professor.go",
-    "class": "Professor",
-    "classes": "Professors",
-    "attributes": [
-      {
-        "COLUMN_COMMENT": "GORMによって自動的に管理される作成時間",
-        "COLUMN_KEY": "PRI",
-        "COLUMN_NAME": "created_at",
-        "COLUMN_TYPE": "datetime(3)",
-        "IS_NULLABLE": "YES",
-        "TABLE_NAME": "professors"
-      },
-      {
-        "COLUMN_COMMENT": "専門領域",
-        "COLUMN_KEY": "PRI",
-        "COLUMN_NAME": "field",
-        "COLUMN_TYPE": "longtext",
-        "IS_NULLABLE": "YES",
-        "TABLE_NAME": "professors"
-      },
-      {
-        "COLUMN_COMMENT": "主キーの標準フィールド",
-        "COLUMN_KEY": "PRI",
-        "COLUMN_NAME": "id",
-        "COLUMN_TYPE": "int",
-        "IS_NULLABLE": "NO",
-        "TABLE_NAME": "professors"
-      },
-      {
-        "COLUMN_COMMENT": "人物ID",
-        "COLUMN_KEY": "MUL",
-        "COLUMN_NAME": "person_id",
-        "COLUMN_TYPE": "int",
-        "IS_NULLABLE": "YES",
-        "TABLE_NAME": "professors"
-      },
-      {
-        "COLUMN_COMMENT": "部屋ID",
-        "COLUMN_KEY": "MUL",
-        "COLUMN_NAME": "room_id",
-        "COLUMN_TYPE": "int",
-        "IS_NULLABLE": "YES",
-        "TABLE_NAME": "professors"
-      },
-      {
-        "COLUMN_COMMENT": "GORMによって自動的に管理される更新時間",
-        "COLUMN_KEY": "MUL",
-        "COLUMN_NAME": "updated_at",
-        "COLUMN_TYPE": "datetime(3)",
-        "IS_NULLABLE": "YES",
-        "TABLE_NAME": "professors"
-      }
-    ]
-  },
-  "programs": {
-    "filename": "program.go",
-    "class": "Program",
-    "classes": "Programs",
-    "attributes": [
-      {
-        "COLUMN_COMMENT": "GORMによって自動的に管理される作成時間",
-        "COLUMN_KEY": "MUL",
-        "COLUMN_NAME": "created_at",
-        "COLUMN_TYPE": "datetime(3)",
-        "IS_NULLABLE": "YES",
-        "TABLE_NAME": "programs"
-      },
-      {
-        "COLUMN_COMMENT": "主キーの標準フィールド",
-        "COLUMN_KEY": "PRI",
-        "COLUMN_NAME": "id",
-        "COLUMN_TYPE": "int",
-        "IS_NULLABLE": "NO",
-        "TABLE_NAME": "programs"
-      },
-      {
-        "COLUMN_COMMENT": "プログラム名",
-        "COLUMN_KEY": "PRI",
-        "COLUMN_NAME": "name",
-        "COLUMN_TYPE": "varchar(255)",
-        "IS_NULLABLE": "YES",
-        "TABLE_NAME": "programs"
-      },
-      {
-        "COLUMN_COMMENT": "GORMによって自動的に管理される更新時間",
-        "COLUMN_KEY": "PRI",
-        "COLUMN_NAME": "updated_at",
-        "COLUMN_TYPE": "datetime(3)",
-        "IS_NULLABLE": "YES",
-        "TABLE_NAME": "programs"
-      }
-    ]
-  },
-  "roles": {
+  {
     "filename": "role.go",
     "class": "Role",
     "classes": "Roles",
@@ -842,85 +593,30 @@
       }
     ]
   },
-  "rooms": {
-    "filename": "room.go",
-    "class": "Room",
-    "classes": "Rooms",
-    "attributes": [
-      {
-        "COLUMN_COMMENT": "建物ID",
-        "COLUMN_KEY": "MUL",
-        "COLUMN_NAME": "building_id",
-        "COLUMN_TYPE": "int",
-        "IS_NULLABLE": "YES",
-        "TABLE_NAME": "rooms"
-      },
-      {
-        "COLUMN_COMMENT": "GORMによって自動的に管理される作成時間",
-        "COLUMN_KEY": "MUL",
-        "COLUMN_NAME": "created_at",
-        "COLUMN_TYPE": "datetime(3)",
-        "IS_NULLABLE": "YES",
-        "TABLE_NAME": "rooms"
-      },
-      {
-        "COLUMN_COMMENT": "階数",
-        "COLUMN_KEY": "MUL",
-        "COLUMN_NAME": "floor",
-        "COLUMN_TYPE": "int",
-        "IS_NULLABLE": "YES",
-        "TABLE_NAME": "rooms"
-      },
-      {
-        "COLUMN_COMMENT": "主キーの標準フィールド",
-        "COLUMN_KEY": "PRI",
-        "COLUMN_NAME": "id",
-        "COLUMN_TYPE": "int",
-        "IS_NULLABLE": "NO",
-        "TABLE_NAME": "rooms"
-      },
-      {
-        "COLUMN_COMMENT": "部屋名",
-        "COLUMN_KEY": "PRI",
-        "COLUMN_NAME": "name",
-        "COLUMN_TYPE": "longtext",
-        "IS_NULLABLE": "YES",
-        "TABLE_NAME": "rooms"
-      },
-      {
-        "COLUMN_COMMENT": "GORMによって自動的に管理される更新時間",
-        "COLUMN_KEY": "PRI",
-        "COLUMN_NAME": "updated_at",
-        "COLUMN_TYPE": "datetime(3)",
-        "IS_NULLABLE": "YES",
-        "TABLE_NAME": "rooms"
-      }
-    ]
-  },
-  "school_buildings": {
-    "filename": "school_building.go",
-    "class": "SchoolBuilding",
-    "classes": "SchoolBuildings",
+  {
+    "filename": "labo_student.go",
+    "class": "LaboStudent",
+    "classes": "LaboStudents",
     "attributes": [
       {
         "COLUMN_COMMENT": "主キーの標準フィールド",
         "COLUMN_KEY": "PRI",
-        "COLUMN_NAME": "building_id",
+        "COLUMN_NAME": "labo_id",
         "COLUMN_TYPE": "int",
         "IS_NULLABLE": "NO",
-        "TABLE_NAME": "school_buildings"
+        "TABLE_NAME": "labo_students"
       },
       {
         "COLUMN_COMMENT": "主キーの標準フィールド",
         "COLUMN_KEY": "PRI",
-        "COLUMN_NAME": "school_id",
+        "COLUMN_NAME": "student_id",
         "COLUMN_TYPE": "int",
         "IS_NULLABLE": "NO",
-        "TABLE_NAME": "school_buildings"
+        "TABLE_NAME": "labo_students"
       }
     ]
   },
-  "school_classes": {
+  {
     "filename": "school_class.go",
     "class": "SchoolClass",
     "classes": "SchoolClasses",
@@ -943,69 +639,7 @@
       }
     ]
   },
-  "school_persons": {
-    "filename": "school_person.go",
-    "class": "SchoolPerson",
-    "classes": "SchoolPersons",
-    "attributes": [
-      {
-        "COLUMN_COMMENT": "主キーの標準フィールド",
-        "COLUMN_KEY": "PRI",
-        "COLUMN_NAME": "person_id",
-        "COLUMN_TYPE": "int",
-        "IS_NULLABLE": "NO",
-        "TABLE_NAME": "school_persons"
-      },
-      {
-        "COLUMN_COMMENT": "主キーの標準フィールド",
-        "COLUMN_KEY": "PRI",
-        "COLUMN_NAME": "school_id",
-        "COLUMN_TYPE": "int",
-        "IS_NULLABLE": "NO",
-        "TABLE_NAME": "school_persons"
-      }
-    ]
-  },
-  "schools": {
-    "filename": "school.go",
-    "class": "School",
-    "classes": "Schools",
-    "attributes": [
-      {
-        "COLUMN_COMMENT": "GORMによって自動的に管理される作成時間",
-        "COLUMN_KEY": "PRI",
-        "COLUMN_NAME": "created_at",
-        "COLUMN_TYPE": "datetime(3)",
-        "IS_NULLABLE": "YES",
-        "TABLE_NAME": "schools"
-      },
-      {
-        "COLUMN_COMMENT": "主キーの標準フィールド",
-        "COLUMN_KEY": "PRI",
-        "COLUMN_NAME": "id",
-        "COLUMN_TYPE": "int",
-        "IS_NULLABLE": "NO",
-        "TABLE_NAME": "schools"
-      },
-      {
-        "COLUMN_COMMENT": "学校名",
-        "COLUMN_KEY": "PRI",
-        "COLUMN_NAME": "name",
-        "COLUMN_TYPE": "longtext",
-        "IS_NULLABLE": "YES",
-        "TABLE_NAME": "schools"
-      },
-      {
-        "COLUMN_COMMENT": "GORMによって自動的に管理される更新時間",
-        "COLUMN_KEY": "PRI",
-        "COLUMN_NAME": "updated_at",
-        "COLUMN_TYPE": "datetime(3)",
-        "IS_NULLABLE": "YES",
-        "TABLE_NAME": "schools"
-      }
-    ]
-  },
-  "students": {
+  {
     "filename": "student.go",
     "class": "Student",
     "classes": "Students",
@@ -1075,5 +709,371 @@
         "TABLE_NAME": "students"
       }
     ]
+  },
+  {
+    "filename": "chair.go",
+    "class": "Chair",
+    "classes": "Chairs",
+    "attributes": [
+      {
+        "COLUMN_COMMENT": "主キーの標準フィールド",
+        "COLUMN_KEY": "PRI",
+        "COLUMN_NAME": "id",
+        "COLUMN_TYPE": "int",
+        "IS_NULLABLE": "NO",
+        "TABLE_NAME": "chairs"
+      },
+      {
+        "COLUMN_COMMENT": "主キーの標準フィールド",
+        "COLUMN_KEY": "MUL",
+        "COLUMN_NAME": "labo_id",
+        "COLUMN_TYPE": "int",
+        "IS_NULLABLE": "YES",
+        "TABLE_NAME": "chairs"
+      }
+    ]
+  },
+  {
+    "filename": "employee.go",
+    "class": "Employee",
+    "classes": "Employees",
+    "attributes": [
+      {
+        "COLUMN_COMMENT": "GORMによって自動的に管理される作成時間",
+        "COLUMN_KEY": "MUL",
+        "COLUMN_NAME": "created_at",
+        "COLUMN_TYPE": "datetime(3)",
+        "IS_NULLABLE": "YES",
+        "TABLE_NAME": "employees"
+      },
+      {
+        "COLUMN_COMMENT": "専門領域",
+        "COLUMN_KEY": "MUL",
+        "COLUMN_NAME": "field",
+        "COLUMN_TYPE": "longtext",
+        "IS_NULLABLE": "YES",
+        "TABLE_NAME": "employees"
+      },
+      {
+        "COLUMN_COMMENT": "主キーの標準フィールド",
+        "COLUMN_KEY": "PRI",
+        "COLUMN_NAME": "id",
+        "COLUMN_TYPE": "int",
+        "IS_NULLABLE": "NO",
+        "TABLE_NAME": "employees"
+      },
+      {
+        "COLUMN_COMMENT": "人物ID",
+        "COLUMN_KEY": "MUL",
+        "COLUMN_NAME": "person_id",
+        "COLUMN_TYPE": "int",
+        "IS_NULLABLE": "YES",
+        "TABLE_NAME": "employees"
+      },
+      {
+        "COLUMN_COMMENT": "部署ID",
+        "COLUMN_KEY": "MUL",
+        "COLUMN_NAME": "post_id",
+        "COLUMN_TYPE": "int",
+        "IS_NULLABLE": "YES",
+        "TABLE_NAME": "employees"
+      },
+      {
+        "COLUMN_COMMENT": "部屋ID",
+        "COLUMN_KEY": "MUL",
+        "COLUMN_NAME": "room_id",
+        "COLUMN_TYPE": "int",
+        "IS_NULLABLE": "YES",
+        "TABLE_NAME": "employees"
+      },
+      {
+        "COLUMN_COMMENT": "GORMによって自動的に管理される更新時間",
+        "COLUMN_KEY": "MUL",
+        "COLUMN_NAME": "updated_at",
+        "COLUMN_TYPE": "datetime(3)",
+        "IS_NULLABLE": "YES",
+        "TABLE_NAME": "employees"
+      }
+    ]
+  },
+  {
+    "filename": "building_alias.go",
+    "class": "BuildingAlias",
+    "classes": "BuildingAliases",
+    "attributes": [
+      {
+        "COLUMN_COMMENT": "主キーの標準フィールド",
+        "COLUMN_KEY": "PRI",
+        "COLUMN_NAME": "alias_id",
+        "COLUMN_TYPE": "int",
+        "IS_NULLABLE": "NO",
+        "TABLE_NAME": "building_aliases"
+      },
+      {
+        "COLUMN_COMMENT": "主キーの標準フィールド",
+        "COLUMN_KEY": "PRI",
+        "COLUMN_NAME": "building_id",
+        "COLUMN_TYPE": "int",
+        "IS_NULLABLE": "NO",
+        "TABLE_NAME": "building_aliases"
+      }
+    ]
+  },
+  {
+    "filename": "course.go",
+    "class": "Course",
+    "classes": "Courses",
+    "attributes": [
+      {
+        "COLUMN_COMMENT": "GORMによって自動的に管理される作成時間",
+        "COLUMN_KEY": "PRI",
+        "COLUMN_NAME": "created_at",
+        "COLUMN_TYPE": "datetime(3)",
+        "IS_NULLABLE": "YES",
+        "TABLE_NAME": "courses"
+      },
+      {
+        "COLUMN_COMMENT": "主キーの標準フィールド",
+        "COLUMN_KEY": "PRI",
+        "COLUMN_NAME": "id",
+        "COLUMN_TYPE": "int",
+        "IS_NULLABLE": "NO",
+        "TABLE_NAME": "courses"
+      },
+      {
+        "COLUMN_COMMENT": "コース名",
+        "COLUMN_KEY": "PRI",
+        "COLUMN_NAME": "name",
+        "COLUMN_TYPE": "longtext",
+        "IS_NULLABLE": "YES",
+        "TABLE_NAME": "courses"
+      },
+      {
+        "COLUMN_COMMENT": "GORMによって自動的に管理される更新時間",
+        "COLUMN_KEY": "PRI",
+        "COLUMN_NAME": "updated_at",
+        "COLUMN_TYPE": "datetime(3)",
+        "IS_NULLABLE": "YES",
+        "TABLE_NAME": "courses"
+      }
+    ]
+  },
+  {
+    "filename": "group.go",
+    "class": "Group",
+    "classes": "Groups",
+    "attributes": [
+      {
+        "COLUMN_COMMENT": "GORMによって自動的に管理される作成時間",
+        "COLUMN_KEY": "MUL",
+        "COLUMN_NAME": "created_at",
+        "COLUMN_TYPE": "datetime(3)",
+        "IS_NULLABLE": "YES",
+        "TABLE_NAME": "groups"
+      },
+      {
+        "COLUMN_COMMENT": "主キーの標準フィールド",
+        "COLUMN_KEY": "PRI",
+        "COLUMN_NAME": "id",
+        "COLUMN_TYPE": "int",
+        "IS_NULLABLE": "NO",
+        "TABLE_NAME": "groups"
+      },
+      {
+        "COLUMN_COMMENT": "専門領域名",
+        "COLUMN_KEY": "PRI",
+        "COLUMN_NAME": "name",
+        "COLUMN_TYPE": "varchar(255)",
+        "IS_NULLABLE": "YES",
+        "TABLE_NAME": "groups"
+      },
+      {
+        "COLUMN_COMMENT": "GORMによって自動的に管理される更新時間",
+        "COLUMN_KEY": "PRI",
+        "COLUMN_NAME": "updated_at",
+        "COLUMN_TYPE": "datetime(3)",
+        "IS_NULLABLE": "YES",
+        "TABLE_NAME": "groups"
+      }
+    ]
+  },
+  {
+    "filename": "post.go",
+    "class": "Post",
+    "classes": "Posts",
+    "attributes": [
+      {
+        "COLUMN_COMMENT": "主キーの標準フィールド",
+        "COLUMN_KEY": "PRI",
+        "COLUMN_NAME": "id",
+        "COLUMN_TYPE": "int",
+        "IS_NULLABLE": "NO",
+        "TABLE_NAME": "posts"
+      },
+      {
+        "COLUMN_COMMENT": "部署名",
+        "COLUMN_KEY": "PRI",
+        "COLUMN_NAME": "name",
+        "COLUMN_TYPE": "longtext",
+        "IS_NULLABLE": "YES",
+        "TABLE_NAME": "posts"
+      }
+    ]
+  },
+  {
+    "filename": "alias.go",
+    "class": "Alias",
+    "classes": "Aliases",
+    "attributes": [
+      {
+        "COLUMN_COMMENT": "GORMによって自動的に管理される作成時間",
+        "COLUMN_KEY": "PRI",
+        "COLUMN_NAME": "created_at",
+        "COLUMN_TYPE": "datetime(3)",
+        "IS_NULLABLE": "YES",
+        "TABLE_NAME": "aliases"
+      },
+      {
+        "COLUMN_COMMENT": "主キーの標準フィールド",
+        "COLUMN_KEY": "PRI",
+        "COLUMN_NAME": "id",
+        "COLUMN_TYPE": "int",
+        "IS_NULLABLE": "NO",
+        "TABLE_NAME": "aliases"
+      },
+      {
+        "COLUMN_COMMENT": "別名",
+        "COLUMN_KEY": "PRI",
+        "COLUMN_NAME": "name",
+        "COLUMN_TYPE": "longtext",
+        "IS_NULLABLE": "YES",
+        "TABLE_NAME": "aliases"
+      },
+      {
+        "COLUMN_COMMENT": "GORMによって自動的に管理される更新時間",
+        "COLUMN_KEY": "PRI",
+        "COLUMN_NAME": "updated_at",
+        "COLUMN_TYPE": "datetime(3)",
+        "IS_NULLABLE": "YES",
+        "TABLE_NAME": "aliases"
+      }
+    ]
+  },
+  {
+    "filename": "labo_room.go",
+    "class": "LaboRoom",
+    "classes": "LaboRooms",
+    "attributes": [
+      {
+        "COLUMN_COMMENT": "主キーの標準フィールド",
+        "COLUMN_KEY": "PRI",
+        "COLUMN_NAME": "labo_id",
+        "COLUMN_TYPE": "int",
+        "IS_NULLABLE": "NO",
+        "TABLE_NAME": "labo_rooms"
+      },
+      {
+        "COLUMN_COMMENT": "主キーの標準フィールド",
+        "COLUMN_KEY": "PRI",
+        "COLUMN_NAME": "room_id",
+        "COLUMN_TYPE": "int",
+        "IS_NULLABLE": "NO",
+        "TABLE_NAME": "labo_rooms"
+      }
+    ]
+  },
+  {
+    "filename": "professor.go",
+    "class": "Professor",
+    "classes": "Professors",
+    "attributes": [
+      {
+        "COLUMN_COMMENT": "GORMによって自動的に管理される作成時間",
+        "COLUMN_KEY": "PRI",
+        "COLUMN_NAME": "created_at",
+        "COLUMN_TYPE": "datetime(3)",
+        "IS_NULLABLE": "YES",
+        "TABLE_NAME": "professors"
+      },
+      {
+        "COLUMN_COMMENT": "専門領域",
+        "COLUMN_KEY": "PRI",
+        "COLUMN_NAME": "field",
+        "COLUMN_TYPE": "longtext",
+        "IS_NULLABLE": "YES",
+        "TABLE_NAME": "professors"
+      },
+      {
+        "COLUMN_COMMENT": "主キーの標準フィールド",
+        "COLUMN_KEY": "PRI",
+        "COLUMN_NAME": "id",
+        "COLUMN_TYPE": "int",
+        "IS_NULLABLE": "NO",
+        "TABLE_NAME": "professors"
+      },
+      {
+        "COLUMN_COMMENT": "人物ID",
+        "COLUMN_KEY": "MUL",
+        "COLUMN_NAME": "person_id",
+        "COLUMN_TYPE": "int",
+        "IS_NULLABLE": "YES",
+        "TABLE_NAME": "professors"
+      },
+      {
+        "COLUMN_COMMENT": "部屋ID",
+        "COLUMN_KEY": "MUL",
+        "COLUMN_NAME": "room_id",
+        "COLUMN_TYPE": "int",
+        "IS_NULLABLE": "YES",
+        "TABLE_NAME": "professors"
+      },
+      {
+        "COLUMN_COMMENT": "GORMによって自動的に管理される更新時間",
+        "COLUMN_KEY": "MUL",
+        "COLUMN_NAME": "updated_at",
+        "COLUMN_TYPE": "datetime(3)",
+        "IS_NULLABLE": "YES",
+        "TABLE_NAME": "professors"
+      }
+    ]
+  },
+  {
+    "filename": "school.go",
+    "class": "School",
+    "classes": "Schools",
+    "attributes": [
+      {
+        "COLUMN_COMMENT": "GORMによって自動的に管理される作成時間",
+        "COLUMN_KEY": "PRI",
+        "COLUMN_NAME": "created_at",
+        "COLUMN_TYPE": "datetime(3)",
+        "IS_NULLABLE": "YES",
+        "TABLE_NAME": "schools"
+      },
+      {
+        "COLUMN_COMMENT": "主キーの標準フィールド",
+        "COLUMN_KEY": "PRI",
+        "COLUMN_NAME": "id",
+        "COLUMN_TYPE": "int",
+        "IS_NULLABLE": "NO",
+        "TABLE_NAME": "schools"
+      },
+      {
+        "COLUMN_COMMENT": "学校名",
+        "COLUMN_KEY": "PRI",
+        "COLUMN_NAME": "name",
+        "COLUMN_TYPE": "longtext",
+        "IS_NULLABLE": "YES",
+        "TABLE_NAME": "schools"
+      },
+      {
+        "COLUMN_COMMENT": "GORMによって自動的に管理される更新時間",
+        "COLUMN_KEY": "PRI",
+        "COLUMN_NAME": "updated_at",
+        "COLUMN_TYPE": "datetime(3)",
+        "IS_NULLABLE": "YES",
+        "TABLE_NAME": "schools"
+      }
+    ]
   }
-}
+]
