@@ -3,30 +3,30 @@ package infconv
 import (
 	"github.com/yamagame/school-api-gateway/infra/model"
 	"github.com/yamagame/school-api-gateway/irmodel"
-	irmodel1 "github.com/yamagame/school-api-gateway/pkg/irconv"
+	"github.com/yamagame/school-api-gateway/pkg/irconv"
 )
 
 type LaboConv struct{}
 
-func (LaboConv) ToStruct(in *irmodel1.Record) (*model.Labo, error) {
+func (LaboConv) ToStruct(in *irconv.Record) (*model.Labo, error) {
 	out := &model.Labo{}
 	out.Error = in.
 		ToStruct(".id", ".ID", out).
-		ToStruct(".name", ".Name", out, irmodel1.StrPtr).
-		ToStruct(".url", ".URL", out, irmodel1.StrPtr).
-		IfExist(".group", func(v *irmodel1.Record) {
-			v.ToStruct(".group.id", ".GroupID", out, irmodel1.Int32Ptr).
+		ToStruct(".name", ".Name", out, irconv.StrPtr).
+		ToStruct(".url", ".URL", out, irconv.StrPtr).
+		IfExist(".group", func(v *irconv.Record) {
+			v.ToStruct(".group.id", ".GroupID", out, irconv.Int32Ptr).
 				ToStruct(".group.name", ".Group.Name", out)
 		}).
-		IfExist(".program", func(v *irmodel1.Record) {
-			v.ToStruct(".program.id", ".ProgramID", out, irmodel1.Int32Ptr).
+		IfExist(".program", func(v *irconv.Record) {
+			v.ToStruct(".program.id", ".ProgramID", out, irconv.Int32Ptr).
 				ToStruct(".program.name", ".Program.Name", out)
 		}).
-		IfExist(".building", func(v *irmodel1.Record) {
-			v.ToStruct(".building.id", ".BuildingID", out, irmodel1.Int32Ptr).
+		IfExist(".building", func(v *irconv.Record) {
+			v.ToStruct(".building.id", ".BuildingID", out, irconv.Int32Ptr).
 				ToStruct(".building.name", ".Building.Name", out)
 		}).
-		IfExist(".desk", func(v *irmodel1.Record) {
+		IfExist(".desk", func(v *irconv.Record) {
 			if desks, err := Desks.ToStruct(v.GetHasManyRecords("desk")).ShallowCopy(); err == nil {
 				out.Desks = desks
 			}
@@ -34,7 +34,7 @@ func (LaboConv) ToStruct(in *irmodel1.Record) (*model.Labo, error) {
 	return out, out.Error
 }
 
-func (LaboConv) ToIRModel(in *model.Labo) *irmodel1.Record {
+func (LaboConv) ToIRModel(in *model.Labo) *irconv.Record {
 	out := irmodel.NewLabo()
 	if in.HasError() {
 		out.Error = in.Error
@@ -42,27 +42,27 @@ func (LaboConv) ToIRModel(in *model.Labo) *irmodel1.Record {
 	}
 	return out.
 		FromStruct(".ID", ".id", in).
-		FromStruct(".Name", ".name", in, irmodel1.PtrStr).
-		FromStruct(".URL", ".url", in, irmodel1.PtrStr).
-		IfNotNil(".GroupID", in, func(v *irmodel1.Record) {
-			v.FromStruct(".GroupID", ".group.id", in, irmodel1.PtrInt32).
+		FromStruct(".Name", ".name", in, irconv.PtrStr).
+		FromStruct(".URL", ".url", in, irconv.PtrStr).
+		IfNotNil(".GroupID", in, func(v *irconv.Record) {
+			v.FromStruct(".GroupID", ".group.id", in, irconv.PtrInt32).
 				FromStruct(".Group.Name", ".group.name", in)
 		}).
-		IfNotNil(".ProgramID", in, func(v *irmodel1.Record) {
-			v.FromStruct(".ProgramID", ".program.id", in, irmodel1.PtrInt32).
+		IfNotNil(".ProgramID", in, func(v *irconv.Record) {
+			v.FromStruct(".ProgramID", ".program.id", in, irconv.PtrInt32).
 				FromStruct(".Program.Name", ".program.name", in)
 		}).
-		IfNotNil(".BuildingID", in, func(v *irmodel1.Record) {
-			v.FromStruct(".BuildingID", ".building.id", in, irmodel1.PtrInt32).
+		IfNotNil(".BuildingID", in, func(v *irconv.Record) {
+			v.FromStruct(".BuildingID", ".building.id", in, irconv.PtrInt32).
 				FromStruct(".Building.Name", ".building.name", in)
 		}).
-		IfNotNil(".Desks", in, func(v *irmodel1.Record) {
+		IfNotNil(".Desks", in, func(v *irconv.Record) {
 			v.SetHasManyRecords("desk", Desks.ToIRModel(in.Desks))
 		})
 }
 
 func (LaboConv) NewSlice() *model.Labos {
 	return &model.Labos{
-		Slice: irmodel1.NewSlice[model.Labo](),
+		Slice: irconv.NewSlice[model.Labo](),
 	}
 }

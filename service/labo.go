@@ -9,7 +9,7 @@ import (
 	"github.com/yamagame/school-api-gateway/infra/model"
 	"github.com/yamagame/school-api-gateway/infra/repository"
 	"github.com/yamagame/school-api-gateway/irmodel"
-	irmodel1 "github.com/yamagame/school-api-gateway/pkg/irconv"
+	"github.com/yamagame/school-api-gateway/pkg/irconv"
 	"github.com/yamagame/school-api-gateway/proto/school"
 	"github.com/yamagame/school-api-gateway/service/svcconv"
 )
@@ -87,7 +87,7 @@ func (s *Labo) Find(ctx context.Context, id int32) (*school.Labo, error) {
 
 func (s *Labo) Update(ctx context.Context, in *school.Labo) (int32, error) {
 	zero := int32(0)
-	labos := svcconv.Labo.ProtoToInfra(&school.Labos{Slice: irmodel1.NewSlice(in)})
+	labos := svcconv.Labo.ProtoToInfra(&school.Labos{Slice: irconv.NewSlice(in)})
 	if labos.HasError() {
 		return zero, labos.Error
 	}

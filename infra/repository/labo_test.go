@@ -14,7 +14,6 @@ import (
 	"github.com/yamagame/school-api-gateway/infra/model"
 	"github.com/yamagame/school-api-gateway/irmodel"
 	"github.com/yamagame/school-api-gateway/pkg/irconv"
-	irmodel1 "github.com/yamagame/school-api-gateway/pkg/irconv"
 	"github.com/yamagame/school-api-gateway/pkg/snapshot"
 	"gorm.io/gorm"
 )
@@ -25,7 +24,7 @@ func TestCreateUpdate(t *testing.T) {
 	db.Transaction(func(tx *gorm.DB) error {
 		repo := NewLabo(tx)
 
-		labos := &irmodel1.Records{}
+		labos := &irconv.Records{}
 		labos.Append(
 			irmodel.NewLabo().
 				Set(".id", int32(1)).
@@ -102,7 +101,7 @@ func TestLabosCSVToIRModel(t *testing.T) {
 	fp, _ := os.Open("./testdata/create-labos.csv")
 	defer fp.Close()
 
-	records, err := irmodel1.ReadCSV(fp)
+	records, err := irconv.ReadCSV(fp)
 	assert.NoError(t, err)
 
 	labos := irmodel.NewLabo().
