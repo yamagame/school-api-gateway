@@ -22,8 +22,23 @@ type COLUMN struct {
 	Key       string `json:"COLUMN_KEY"`
 	Name      string `json:"COLUMN_NAME"`
 	Type      string `json:"COLUMN_TYPE"`
+	GoType    string `json:"GO_TYPE"`
 	Nullable  string `json:"IS_NULLABLE"`
 	TableName string `json:"TABLE_NAME"`
+}
+
+func sqlTypeToGoType(in string) string {
+	switch in {
+	case "longtext":
+		return "string"
+	case "datetime(3)":
+		return "*time.Time"
+	case "varchar(255)":
+		return "string"
+	case "int":
+		return "int32"
+	}
+	return in
 }
 
 func exec(jsondata []byte) {
@@ -31,6 +46,7 @@ func exec(jsondata []byte) {
 	json.Unmarshal(jsondata, &columns)
 	tmap := map[string]*TABLE{}
 	for _, col := range columns {
+		col.GoType = sqlTypeToGoType(col.Type)
 		if _, ok := tmap[col.TableName]; !ok {
 			tmap[col.TableName] = &TABLE{
 				Filename:   inflection.Singular(col.TableName) + ".go",

@@ -3,3 +3,9 @@
 linters:
   enable:
     - revive
+
+linters-settings:
+  revive:
+    rules:
+      - name: var-naming
+        arguments: [["ID"], []]
