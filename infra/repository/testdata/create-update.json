@@ -16,6 +16,11 @@
       "id": 0,
       "name": ""
     },
+    "property": {
+      "id": 0,
+      "labo_id": 0,
+      "name": ""
+    },
     "url": "http://sato.com"
   },
   {
@@ -35,6 +40,11 @@
       "id": 0,
       "name": ""
     },
+    "property": {
+      "id": 0,
+      "labo_id": 0,
+      "name": ""
+    },
     "url": ""
   },
   {
@@ -52,6 +62,11 @@
     "name": "スズキ3",
     "program": {
       "id": 0,
+      "name": ""
+    },
+    "property": {
+      "id": 0,
+      "labo_id": 0,
       "name": ""
     },
     "url": "http://zuzuki.com"

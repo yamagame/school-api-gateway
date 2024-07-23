@@ -26,6 +26,7 @@
       "Name": "01.メディア情報学プログラム"
     },
     "ProgramID": 1,
+    "Property": null,
     "Rooms": null,
     "Students": null,
     "URL": null
@@ -57,6 +58,7 @@
       "Name": "02.経営・社会情報学プログラム"
     },
     "ProgramID": 2,
+    "Property": null,
     "Rooms": null,
     "Students": null,
     "URL": null
@@ -88,6 +90,7 @@
       "Name": "03.情報数理工学プログラム"
     },
     "ProgramID": 3,
+    "Property": null,
     "Rooms": null,
     "Students": null,
     "URL": null
@@ -119,6 +122,7 @@
       "Name": "04.コンピュータサイエンスプログラム"
     },
     "ProgramID": 4,
+    "Property": null,
     "Rooms": null,
     "Students": null,
     "URL": null
@@ -150,6 +154,7 @@
       "Name": "05.デザイン思考・データサイエンスプログラム"
     },
     "ProgramID": 5,
+    "Property": null,
     "Rooms": null,
     "Students": null,
     "URL": null
@@ -181,6 +186,7 @@
       "Name": "06.セキュリティ情報学プログラム"
     },
     "ProgramID": 6,
+    "Property": null,
     "Rooms": null,
     "Students": null,
     "URL": null
@@ -212,6 +218,7 @@
       "Name": "07.情報通信工学プログラム"
     },
     "ProgramID": 7,
+    "Property": null,
     "Rooms": null,
     "Students": null,
     "URL": null
@@ -243,6 +250,7 @@
       "Name": "08.電子情報学プログラム"
     },
     "ProgramID": 8,
+    "Property": null,
     "Rooms": null,
     "Students": null,
     "URL": null
@@ -274,6 +282,7 @@
       "Name": "09.計測・制御システムプログラム"
     },
     "ProgramID": 9,
+    "Property": null,
     "Rooms": null,
     "Students": null,
     "URL": null
@@ -305,6 +314,7 @@
       "Name": "10.先端ロボティクスプログラム"
     },
     "ProgramID": 10,
+    "Property": null,
     "Rooms": null,
     "Students": null,
     "URL": null
@@ -336,6 +346,7 @@
       "Name": "11.機械システムプログラム"
     },
     "ProgramID": 11,
+    "Property": null,
     "Rooms": null,
     "Students": null,
     "URL": null
@@ -367,6 +378,7 @@
       "Name": "12.電子工学プログラム"
     },
     "ProgramID": 12,
+    "Property": null,
     "Rooms": null,
     "Students": null,
     "URL": null
@@ -398,6 +410,7 @@
       "Name": "13.光工学プログラム"
     },
     "ProgramID": 13,
+    "Property": null,
     "Rooms": null,
     "Students": null,
     "URL": null
@@ -429,6 +442,7 @@
       "Name": "14.物理工学プログラム"
     },
     "ProgramID": 14,
+    "Property": null,
     "Rooms": null,
     "Students": null,
     "URL": null
@@ -460,6 +474,7 @@
       "Name": "15.化学生命工学プログラム"
     },
     "ProgramID": 15,
+    "Property": null,
     "Rooms": null,
     "Students": null,
     "URL": null
@@ -491,6 +506,7 @@
       "Name": "01.メディア情報学プログラム"
     },
     "ProgramID": 1,
+    "Property": null,
     "Rooms": null,
     "Students": null,
     "URL": null
@@ -522,6 +538,7 @@
       "Name": "02.経営・社会情報学プログラム"
     },
     "ProgramID": 2,
+    "Property": null,
     "Rooms": null,
     "Students": null,
     "URL": null
@@ -553,6 +570,7 @@
       "Name": "03.情報数理工学プログラム"
     },
     "ProgramID": 3,
+    "Property": null,
     "Rooms": null,
     "Students": null,
     "URL": null
@@ -584,6 +602,7 @@
       "Name": "04.コンピュータサイエンスプログラム"
     },
     "ProgramID": 4,
+    "Property": null,
     "Rooms": null,
     "Students": null,
     "URL": null
@@ -615,6 +634,7 @@
       "Name": "05.デザイン思考・データサイエンスプログラム"
     },
     "ProgramID": 5,
+    "Property": null,
     "Rooms": null,
     "Students": null,
     "URL": null
@@ -646,6 +666,7 @@
       "Name": "06.セキュリティ情報学プログラム"
     },
     "ProgramID": 6,
+    "Property": null,
     "Rooms": null,
     "Students": null,
     "URL": null
@@ -677,6 +698,7 @@
       "Name": "07.情報通信工学プログラム"
     },
     "ProgramID": 7,
+    "Property": null,
     "Rooms": null,
     "Students": null,
     "URL": null
@@ -708,6 +730,7 @@
       "Name": "08.電子情報学プログラム"
     },
     "ProgramID": 8,
+    "Property": null,
     "Rooms": null,
     "Students": null,
     "URL": null
@@ -739,6 +762,7 @@
       "Name": "09.計測・制御システムプログラム"
     },
     "ProgramID": 9,
+    "Property": null,
     "Rooms": null,
     "Students": null,
     "URL": null
@@ -770,6 +794,7 @@
       "Name": "10.先端ロボティクスプログラム"
     },
     "ProgramID": 10,
+    "Property": null,
     "Rooms": null,
     "Students": null,
     "URL": null
@@ -801,6 +826,7 @@
       "Name": "11.機械システムプログラム"
     },
     "ProgramID": 11,
+    "Property": null,
     "Rooms": null,
     "Students": null,
     "URL": null
@@ -832,6 +858,7 @@
       "Name": "12.電子工学プログラム"
     },
     "ProgramID": 12,
+    "Property": null,
     "Rooms": null,
     "Students": null,
     "URL": null
@@ -863,6 +890,7 @@
       "Name": "13.光工学プログラム"
     },
     "ProgramID": 13,
+    "Property": null,
     "Rooms": null,
     "Students": null,
     "URL": null
@@ -894,6 +922,7 @@
       "Name": "14.物理工学プログラム"
     },
     "ProgramID": 14,
+    "Property": null,
     "Rooms": null,
     "Students": null,
     "URL": null
@@ -940,6 +969,7 @@
       "Name": "15.化学生命工学プログラム"
     },
     "ProgramID": 15,
+    "Property": null,
     "Rooms": null,
     "Students": null,
     "URL": null

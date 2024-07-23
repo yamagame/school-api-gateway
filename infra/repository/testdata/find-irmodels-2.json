@@ -9,7 +9,8 @@
       {
         "id": 1,
         "labo_id": 1,
-        "name": "机1-A"
+        "name": "机1-A",
+        "product_code": ""
       }
     ],
     "group": {
@@ -21,6 +22,11 @@
     "program": {
       "id": 1,
       "name": "01.メディア情報学プログラム"
+    },
+    "property": {
+      "id": 0,
+      "labo_id": 0,
+      "name": ""
     },
     "url": ""
   },
@@ -34,12 +40,14 @@
       {
         "id": 2,
         "labo_id": 2,
-        "name": "机2"
+        "name": "机2",
+        "product_code": ""
       },
       {
         "id": 3,
         "labo_id": 2,
-        "name": "机3"
+        "name": "机3",
+        "product_code": ""
       }
     ],
     "group": {
@@ -51,6 +59,11 @@
     "program": {
       "id": 2,
       "name": "02.経営・社会情報学プログラム"
+    },
+    "property": {
+      "id": 0,
+      "labo_id": 0,
+      "name": ""
     },
     "url": ""
   },
@@ -70,6 +83,11 @@
     "program": {
       "id": 3,
       "name": "03.情報数理工学プログラム"
+    },
+    "property": {
+      "id": 0,
+      "labo_id": 0,
+      "name": ""
     },
     "url": ""
   }

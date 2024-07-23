@@ -18,17 +18,20 @@
       {
         "id": 1,
         "labo_id": 0,
-        "name": ""
+        "name": "",
+        "product_code": ""
       },
       {
         "id": 2,
         "labo_id": 0,
-        "name": ""
+        "name": "",
+        "product_code": ""
       },
       {
         "id": 3,
         "labo_id": 0,
-        "name": ""
+        "name": "",
+        "product_code": ""
       }
     ],
     "group": {
@@ -39,6 +42,11 @@
     "name": "佐藤",
     "program": {
       "id": 0,
+      "name": ""
+    },
+    "property": {
+      "id": 0,
+      "labo_id": 0,
       "name": ""
     },
     "url": "https://www.sato-labo.com"
@@ -62,17 +70,20 @@
       {
         "id": 4,
         "labo_id": 0,
-        "name": ""
+        "name": "",
+        "product_code": ""
       },
       {
         "id": 5,
         "labo_id": 0,
-        "name": ""
+        "name": "",
+        "product_code": ""
       },
       {
         "id": 6,
         "labo_id": 0,
-        "name": ""
+        "name": "",
+        "product_code": ""
       }
     ],
     "group": {
@@ -83,6 +94,11 @@
     "name": "清水",
     "program": {
       "id": 0,
+      "name": ""
+    },
+    "property": {
+      "id": 0,
+      "labo_id": 0,
       "name": ""
     },
     "url": "https://www.shimizu-labo.com"
@@ -106,17 +122,20 @@
       {
         "id": 7,
         "labo_id": 0,
-        "name": ""
+        "name": "",
+        "product_code": ""
       },
       {
         "id": 9,
         "labo_id": 0,
-        "name": ""
+        "name": "",
+        "product_code": ""
       },
       {
         "id": 9,
         "labo_id": 0,
-        "name": ""
+        "name": "",
+        "product_code": ""
       }
     ],
     "group": {
@@ -127,6 +146,11 @@
     "name": "鈴木",
     "program": {
       "id": 0,
+      "name": ""
+    },
+    "property": {
+      "id": 0,
+      "labo_id": 0,
       "name": ""
     },
     "url": "https://www.suzuki-labo.com"

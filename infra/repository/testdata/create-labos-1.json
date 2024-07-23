@@ -29,6 +29,11 @@
       "id": 0,
       "name": ""
     },
+    "property": {
+      "id": 0,
+      "labo_id": 0,
+      "name": ""
+    },
     "url": ""
   },
   {
@@ -59,6 +64,11 @@
     "name": "シミズ",
     "program": {
       "id": 0,
+      "name": ""
+    },
+    "property": {
+      "id": 0,
+      "labo_id": 0,
       "name": ""
     },
     "url": ""
@@ -103,6 +113,11 @@
     "name": "スズキ",
     "program": {
       "id": 0,
+      "name": ""
+    },
+    "property": {
+      "id": 0,
+      "labo_id": 0,
       "name": ""
     },
     "url": ""

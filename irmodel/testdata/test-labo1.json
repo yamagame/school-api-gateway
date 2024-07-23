@@ -17,17 +17,20 @@
     {
       "id": 11,
       "labo_id": 1,
-      "name": ""
+      "name": "",
+      "product_code": ""
     },
     {
       "id": 12,
       "labo_id": 5,
-      "name": ""
+      "name": "",
+      "product_code": ""
     },
     {
       "id": 13,
       "labo_id": 3,
-      "name": ""
+      "name": "",
+      "product_code": ""
     }
   ],
   "group": {
@@ -38,6 +41,11 @@
   "name": "名前",
   "program": {
     "id": 0,
+    "name": ""
+  },
+  "property": {
+    "id": 0,
+    "labo_id": 0,
     "name": ""
   },
   "url": ""

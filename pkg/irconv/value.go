@@ -20,6 +20,7 @@ type Value struct {
 	exist     bool
 	synced    bool
 	primary   bool
+	Error     error
 }
 
 type valueInternal struct {
@@ -118,4 +119,8 @@ func (x *Value) UnmarshalJSON(b []byte) error {
 	x.exist = aux.Exist
 	x.synced = aux.Synced
 	return nil
+}
+
+func (x *Value) HasError() bool {
+	return x.Error != nil
 }

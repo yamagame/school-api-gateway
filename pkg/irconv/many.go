@@ -3,18 +3,22 @@ package irconv
 type HasMany struct {
 	Error   error
 	Model   *Record
-	records []*Record
+	records *Records
 }
 
 func NewMany(model *Record) *HasMany {
 	return &HasMany{
 		Model:   model,
-		records: []*Record{},
+		records: NewRecords(model),
 	}
 }
 
+func (m *HasMany) Records() *Records {
+	return m.records
+}
+
 func (m *HasMany) NewIterator() *Iterator[Record] {
-	return NewIterator(m.records)
+	return NewIterator(m.records.Records())
 }
 
 func (m *HasMany) Take(jsonp string, val interface{}) *Record {
@@ -34,14 +38,14 @@ func (m *HasMany) Take(jsonp string, val interface{}) *Record {
 
 func (m *HasMany) ValueMap() []map[string]interface{} {
 	r := []map[string]interface{}{}
-	for _, v := range m.records {
+	for _, v := range m.records.Records() {
 		r = append(r, v.ValueMap())
 	}
 	return r
 }
 
 func (m *HasMany) IsExist() bool {
-	for _, v := range m.records {
+	for _, v := range m.records.Records() {
 		if v.IsExist() {
 			return true
 		}
@@ -53,7 +57,7 @@ func (m *HasMany) Append(records ...*Record) *HasMany {
 	if m.HasError() {
 		return m
 	}
-	m.records = append(m.records, records...)
+	m.records.Append(records...)
 	return m
 }
 
@@ -61,7 +65,7 @@ func (m *HasMany) Clear() *HasMany {
 	if m.HasError() {
 		return m
 	}
-	m.records = []*Record{}
+	m.records = NewRecords(m.Model)
 	return m
 }
 
@@ -69,16 +73,16 @@ func (m *HasMany) Copy() *HasMany {
 	r := &HasMany{}
 	r.Error = m.Error
 	r.Model = m.Model.Copy()
-	r.records = []*Record{}
-	for _, v := range m.records {
-		r.records = append(r.records, v.Copy())
+	r.records = NewRecords(m.Model)
+	for _, v := range m.records.Records() {
+		r.records.Append(v.Copy())
 	}
 	return r
 }
 
 func (m *HasMany) NewOne() *Record {
 	r := m.Model.Copy()
-	m.records = append(m.records, r)
+	m.records.Append(r)
 	return r
 }
 

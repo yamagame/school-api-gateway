@@ -34,6 +34,7 @@
       "Name": "01.メディア情報学プログラム"
     },
     "ProgramID": 1,
+    "Property": null,
     "Rooms": null,
     "Students": null,
     "URL": null
@@ -80,6 +81,7 @@
       "Name": "02.経営・社会情報学プログラム"
     },
     "ProgramID": 2,
+    "Property": null,
     "Rooms": null,
     "Students": null,
     "URL": null
@@ -111,6 +113,7 @@
       "Name": "03.情報数理工学プログラム"
     },
     "ProgramID": 3,
+    "Property": null,
     "Rooms": null,
     "Students": null,
     "URL": null

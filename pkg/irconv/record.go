@@ -142,68 +142,90 @@ func (m *Record) SetHasMany(key string, many *HasMany) *Record {
 	if m.Error != nil {
 		return m
 	}
-	m.HasManys[key] = many
+	m.HasManys[key] = many.Copy()
 	return m
 }
 
-func (m *Record) SetHasManyRecords(key string, records *Records) *Record {
-	if m.Error != nil {
-		return m
-	}
-	if v, ok := m.HasManys[key]; ok {
-		v.Append(records.Records()...)
-	}
-	return m
-}
+// func (m *Record) SetHasManyRecords(key string, records *Records) *Record {
+// 	if m.Error != nil {
+// 		return m
+// 	}
+// 	if v, ok := m.HasManys[key]; ok {
+// 		v.Append(records.Records()...)
+// 	}
+// 	return m
+// }
 
-func (m *Record) GetValue(key string) (interface{}, error) {
+func (m *Record) GetValue(key string) *Value {
 	if v, ok := m.Values[key]; ok {
 		if reflect.TypeOf(v) == reflect.TypeOf(&Value{}) {
-			return v.Get(), nil
+			return v
 		}
 	}
-	return nil, errors.Join(ErrNotFound, fmt.Errorf("GetValue key: %v", key))
+	return &Value{
+		Error: errors.Join(ErrNotFound, fmt.Errorf("GetValue key: %v", key)),
+	}
 }
 
-func (m *Record) GetBelongTo(key string) (*Record, error) {
+func (m *Record) GetBelongTo(key string) *Record {
+	if m.HasError() {
+		return m
+	}
 	if v, ok := m.BelongTos[key]; ok {
 		if reflect.TypeOf(v) == reflect.TypeOf(&Record{}) {
-			return v, nil
+			return v
 		}
 	}
-	return nil, errors.Join(ErrNotFound, fmt.Errorf("GetBelongTo key: %v", key))
+	m.Error = errors.Join(ErrNotFound, fmt.Errorf("GetBelongTo key: %v", key))
+	return m
 }
 
-func (m *Record) GetHasOne(key string) (*Record, error) {
+func (m *Record) GetHasOne(key string) *Record {
+	if m.HasError() {
+		return m
+	}
 	if v, ok := m.HasOnes[key]; ok {
 		if reflect.TypeOf(v) == reflect.TypeOf(&Record{}) {
-			return v, nil
+			return v
 		}
 	}
-	return nil, errors.Join(ErrNotFound, fmt.Errorf("GetHasOne key: %v", key))
+	m.Error = errors.Join(ErrNotFound, fmt.Errorf("GetHasOne key: %v", key))
+	return m
 }
 
-func (m *Record) GetHasMany(key string) (*HasMany, error) {
-	if v, ok := m.HasManys[key]; ok {
-		if reflect.TypeOf(v) == reflect.TypeOf(&HasMany{}) {
-			return v, nil
+func (m *Record) GetHasMany(key string) *HasMany {
+	if m.HasError() {
+		return &HasMany{
+			Error: m.Error,
 		}
 	}
-	return nil, errors.Join(ErrNotFound, fmt.Errorf("GetHasMany key: %v", key))
+	if v, ok := m.HasManys[key]; ok {
+		if reflect.TypeOf(v) == reflect.TypeOf(&HasMany{}) {
+			return v
+		}
+	}
+	return &HasMany{
+		Error: errors.Join(ErrNotFound, fmt.Errorf("GetHasMany key: %v", key)),
+	}
 }
 
-func (m *Record) GetHasManyRecords(key string) *Records {
-	if v, ok := m.HasManys[key]; ok {
-		if reflect.TypeOf(v) == reflect.TypeOf(&HasMany{}) {
-			r := NewRecords(v.Model.Copy())
-			r.Append(v.records...)
-			return r
-		}
-	}
-	return &Records{
-		Error: errors.Join(ErrNotFound, fmt.Errorf("GetHasManyRecords key: %v", key)),
-	}
-}
+// func (m *Record) GetHasManyRecords(key string) *Records {
+// 	if m.HasError() {
+// 		return &Records{
+// 			Error: m.Error,
+// 		}
+// 	}
+// 	if v, ok := m.HasManys[key]; ok {
+// 		if reflect.TypeOf(v) == reflect.TypeOf(&HasMany{}) {
+// 			r := NewRecords(v.Model.Copy())
+// 			r.Append(v.records...)
+// 			return r
+// 		}
+// 	}
+// 	return &Records{
+// 		Error: errors.Join(ErrNotFound, fmt.Errorf("GetHasManyRecords key: %v", key)),
+// 	}
+// }
 
 func (m *Record) Value(jsonpath string) (*Value, error) {
 	values := m.allValues()
@@ -279,7 +301,9 @@ func (m *Record) ValueMap() map[string]interface{} {
 	}
 	for key, v := range m.HasManys {
 		m := []map[string]interface{}{}
-		for _, t := range v.records {
+		it := v.NewIterator()
+		for it.HasNext() {
+			t := it.Next()
 			m = append(m, t.ValueMap())
 		}
 		ret[key] = m
@@ -300,7 +324,9 @@ func (m *Record) allValues() map[string]interface{} {
 	}
 	for key, v := range m.HasManys {
 		m := []map[string]interface{}{}
-		for _, t := range v.records {
+		it := v.NewIterator()
+		for it.HasNext() {
+			t := it.Next()
 			m = append(m, t.allValues())
 		}
 		ret[key] = m
@@ -321,7 +347,9 @@ func (m *Record) allHasOne() map[string]interface{} {
 	}
 	for key, v := range m.HasManys {
 		m := []map[string]interface{}{}
-		for _, t := range v.records {
+		it := v.NewIterator()
+		for it.HasNext() {
+			t := it.Next()
 			m = append(m, t.allHasOne())
 		}
 		ret[key] = m
@@ -550,8 +578,10 @@ func (m *Record) UpdateHasManyes() map[string]interface{} {
 	ret := map[string]interface{}{}
 	for key, v := range m.HasManys {
 		m := []map[string]interface{}{}
-		for _, t := range v.records {
-			t := t.Updates()
+		it := v.NewIterator()
+		for it.HasNext() {
+			v := it.Next()
+			t := v.Updates()
 			if len(t) > 0 {
 				m = append(m, t)
 			}
@@ -580,7 +610,9 @@ func (m *Record) IsExist() bool {
 		}
 	}
 	for _, m := range m.HasManys {
-		for _, v := range m.records {
+		it := m.NewIterator()
+		for it.HasNext() {
+			v := it.Next()
 			if v.IsExist() {
 				return true
 			}

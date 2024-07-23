@@ -109,3 +109,7 @@ type Rooms struct {
 // type SchoolBuildings struct {
 //   *irconv.Slice[SchoolBuilding]
 // }
+
+type Properties struct {
+	*irconv.Slice[Property]
+}

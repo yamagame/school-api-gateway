@@ -19,6 +19,7 @@ type Labo struct {
 	Rooms      []*Room      `gorm:"many2many:labo_rooms; comment:教室;"`
 	Desks      []*Desk      `gorm:"comment:研究室のテーブル;"`
 	Chairs     []*Chair     `gorm:"comment:研究室の椅子;"`
+	Property   *Property    `gorm:"foreignKey:LaboID;comment:属性;"`
 	CreatedAt  *time.Time   `gorm:"comment:GORMによって自動的に管理される作成時間;"`
 	UpdatedAt  *time.Time   `gorm:"comment:GORMによって自動的に管理される更新時間;"`
 	Error      error        `gorm:"-"`

@@ -26,8 +26,16 @@ func (LaboConv) ToStruct(in *irconv.Record) (*model.Labo, error) {
 			v.ToStruct(".building.id", ".BuildingID", out, irconv.Int32Ptr).
 				ToStruct(".building.name", ".Building.Name", out)
 		}).
+		IfExist(".property", func(v *irconv.Record) {
+			val, err := Property.ToStruct(v.GetHasOne("property"))
+			if err != nil {
+				out.Error = err
+				return
+			}
+			out.Property = val
+		}).
 		IfExist(".desk", func(v *irconv.Record) {
-			if desks, err := Desks.ToStruct(v.GetHasManyRecords("desk")).ShallowCopy(); err == nil {
+			if desks, err := Desks.ToStruct(v.GetHasMany("desk").Records()).ShallowCopy(); err == nil {
 				out.Desks = desks
 			}
 		}).
@@ -57,8 +65,11 @@ func (LaboConv) ToIRModel(in *model.Labo) *irconv.Record {
 			v.FromStruct(".BuildingID", ".building.id", in, irconv.PtrInt32).
 				FromStruct(".Building.Name", ".building.name", in)
 		}).
+		IfNotNil(".Property", in, func(v *irconv.Record) {
+			v.SetHasOne("property", Property.ToIRModel(in.Property))
+		}).
 		IfNotNil(".Desks", in, func(v *irconv.Record) {
-			v.SetHasManyRecords("desk", Desks.ToIRModel(in.Desks))
+			v.SetHasMany("desk", out.GetHasMany("desk").Append(Desks.ToIRModel(in.Desks).Records()...))
 		}).
 		Self()
 }

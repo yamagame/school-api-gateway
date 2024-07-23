@@ -32,7 +32,7 @@ func sqlTypeToGoType(in string) string {
 	case "longtext":
 		return "string"
 	case "datetime(3)":
-		return "*time.Time"
+		return "time.Time"
 	case "varchar(255)":
 		return "string"
 	case "int":
@@ -47,6 +47,9 @@ func exec(jsondata []byte) {
 	tmap := map[string]*TABLE{}
 	for _, col := range columns {
 		col.GoType = sqlTypeToGoType(col.Type)
+		if col.Nullable == "YES" {
+			col.GoType += "*" + col.GoType
+		}
 		if _, ok := tmap[col.TableName]; !ok {
 			tmap[col.TableName] = &TABLE{
 				Filename:   inflection.Singular(col.TableName) + ".go",

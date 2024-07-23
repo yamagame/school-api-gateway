@@ -1,0 +1,38 @@
+package infconv
+
+import (
+  "github.com/yamagame/school-api-gateway/infra/model"
+  "github.com/yamagame/school-api-gateway/irmodel"
+  "github.com/yamagame/school-api-gateway/pkg/irconv"
+)
+
+type {{.class}}Conv struct{}
+
+func ({{.class}}Conv) ToStruct(in *irconv.Record) (*model.{{.class}}, error) {
+  out := &model.{{.class}}{}
+  out.Error = in.
+    ToStruct(".id", ".ID", out).
+    {{- range .attributes}}ToStruct(".{{.COLUMN_NAME}}", ".{{.COLUMN_NAME}}", out{{if eq .IS_NULLABLE "YES"}}, irconv.StrPtr{{end}}).
+    {{end -}}
+    Error
+  return out, out.Error
+}
+
+func ({{.class}}Conv) ToIRModel(in *model.{{.class}}) *irconv.Record {
+  out := irmodel.New{{.class}}()
+  if in.HasError() {
+    out.Error = in.Error
+    return out
+  }
+  return out.
+    FromStruct(".ID", ".id", in).
+    {{range .attributes}}FromStruct(".{{.COLUMN_NAME}}", ".{{.COLUMN_NAME}}", in{{if eq .IS_NULLABLE "YES"}}, irconv.PtrStr{{end}}).
+    {{end -}}
+    Self()
+}
+
+func ({{.class}}Conv) NewSlice() *model.{{.class}}s {
+  return &model.{{.class}}s{
+    Slice: irconv.NewSlice[model.{{.class}}](),
+  }
+}

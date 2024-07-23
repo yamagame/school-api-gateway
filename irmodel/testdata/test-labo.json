@@ -18,12 +18,14 @@
       {
         "id": 1,
         "labo_id": 0,
-        "name": ""
+        "name": "",
+        "product_code": ""
       },
       {
         "id": 2,
         "labo_id": 0,
-        "name": ""
+        "name": "",
+        "product_code": ""
       }
     ],
     "group": {
@@ -34,6 +36,11 @@
     "name": "佐藤",
     "program": {
       "id": 4,
+      "name": ""
+    },
+    "property": {
+      "id": 0,
+      "labo_id": 0,
       "name": ""
     },
     "url": ""
@@ -57,12 +64,14 @@
       {
         "id": 1,
         "labo_id": 0,
-        "name": ""
+        "name": "",
+        "product_code": ""
       },
       {
         "id": 2,
         "labo_id": 0,
-        "name": ""
+        "name": "",
+        "product_code": ""
       }
     ],
     "group": {
@@ -73,6 +82,11 @@
     "name": "清水",
     "program": {
       "id": 5,
+      "name": ""
+    },
+    "property": {
+      "id": 0,
+      "labo_id": 0,
       "name": ""
     },
     "url": ""
@@ -96,12 +110,14 @@
       {
         "id": 1,
         "labo_id": 0,
-        "name": ""
+        "name": "",
+        "product_code": ""
       },
       {
         "id": 2,
         "labo_id": 0,
-        "name": ""
+        "name": "",
+        "product_code": ""
       }
     ],
     "group": {
@@ -112,6 +128,11 @@
     "name": "鈴木",
     "program": {
       "id": 6,
+      "name": ""
+    },
+    "property": {
+      "id": 0,
+      "labo_id": 0,
       "name": ""
     },
     "url": ""

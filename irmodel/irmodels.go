@@ -52,6 +52,7 @@ var NewLabo = irconv.NewRecord().
 	SetBelongTo("building", NewBuilding()).
 	SetHasMany("desk", irconv.NewMany(NewDesk())).
 	SetHasMany("chair", irconv.NewMany(NewChair())).
+	SetHasOne("property", NewProperty()).
 	Func()
 
 var NewLicnese = irconv.NewRecord().
@@ -86,4 +87,10 @@ var NewRoom = irconv.NewRecord().
 
 var NewStudent = irconv.NewRecord().
 	SetValue("id", int32(0), irconv.PRIMARY).
+	Func()
+
+var NewProperty = irconv.NewRecord().
+	SetValue("id", int32(0), irconv.PRIMARY).
+	SetValue("labo_id", int32(0)).
+	SetValue("name", "").
 	Func()
