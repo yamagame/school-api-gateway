@@ -32,7 +32,11 @@ func FromPtr[T any](v *T) T {
 	return *v
 }
 
-func Raw[T any](v T) T {
+func Same[T any](v T) T {
+	return v
+}
+
+func Keep(v interface{}, _ ...interface{}) interface{} {
 	return v
 }
 
