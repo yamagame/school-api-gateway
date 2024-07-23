@@ -2,8 +2,6 @@ package model
 
 import (
 	"time"
-
-	"github.com/yamagame/school-api-gateway/pkg/irconv"
 )
 
 type Group struct {
@@ -12,14 +10,6 @@ type Group struct {
 	CreatedAt *time.Time `gorm:"comment:GORMによって自動的に管理される作成時間;"`
 	UpdatedAt *time.Time `gorm:"comment:GORMによって自動的に管理される更新時間;"`
 	Error     error      `gorm:"-"`
-}
-
-// Ⅰ類（情報系）
-// Ⅱ類（融合系）
-// Ⅲ類（理工系）
-
-type Groups struct {
-	*irconv.Slice[Group]
 }
 
 func (m *Group) HasError() bool {

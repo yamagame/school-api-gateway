@@ -2,8 +2,6 @@ package model
 
 import (
 	"time"
-
-	"github.com/yamagame/school-api-gateway/pkg/irconv"
 )
 
 type Student struct {
@@ -19,10 +17,6 @@ type Student struct {
 	CreatedAt *time.Time `gorm:"comment:GORMによって自動的に管理される作成時間;"`
 	UpdatedAt *time.Time `gorm:"comment:GORMによって自動的に管理される更新時間;"`
 	Error     error      `gorm:"-"`
-}
-
-type Students struct {
-	*irconv.Slice[Student]
 }
 
 func (m *Student) HasError() bool {

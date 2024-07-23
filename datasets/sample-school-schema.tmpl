@@ -1,14 +1,4 @@
-type {{.class}} struct {
-{{- range .attributes}}{{ .COLUMN_NAME | camelcase | title | nindent 4}}  {{.GO_TYPE}}  //`{{ .COLUMN_COMMENT }}`{{end}}
-}
-
 type {{.classes}} struct {
-  *conv.Variables[{{.class}}]
-}
-
-func New{{.classes}}(variables ...*{{.class}}) *{{.classes}} {
-  return &{{.classes}}{
-    Variables: conv.NewVariables(variables...),
-  }
+  *irconv.Slice[{{.class}}]
 }
 

@@ -2,8 +2,6 @@ package model
 
 import (
 	"time"
-
-	"github.com/yamagame/school-api-gateway/pkg/irconv"
 )
 
 type Area struct {
@@ -12,13 +10,6 @@ type Area struct {
 	CreatedAt *time.Time `gorm:"comment:GORMによって自動的に管理される作成時間;"`
 	UpdatedAt *time.Time `gorm:"comment:GORMによって自動的に管理される更新時間;"`
 	Error     error      `gorm:"-"`
-}
-
-// 東地区
-// 西地区
-
-type Areas struct {
-	*irconv.Slice[Area]
 }
 
 func (m *Area) HasError() bool {
