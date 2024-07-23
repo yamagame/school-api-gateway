@@ -14,7 +14,7 @@ func TestCSV2JSON(t *testing.T) {
 	testdata := filepath.Join("testdata", "test-data.csv")
 	fp, err := os.Open(testdata)
 	assert.NoError(t, err)
-	v, err := dumpCSV(fp)
+	v, err := dumpCSV(fp, true)
 	assert.NoError(t, err)
 
 	out := []map[string]interface{}{}

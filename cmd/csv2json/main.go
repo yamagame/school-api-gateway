@@ -11,7 +11,7 @@ import (
 	"strings"
 )
 
-func fillCSV(records [][]string) []map[string]string {
+func fillCSV(records [][]string, fill bool) []map[string]string {
 	ret := []map[string]string{}
 	header := records[0]
 	prevalues := map[string]string{}
@@ -24,7 +24,7 @@ func fillCSV(records [][]string) []map[string]string {
 			} else if r != "" {
 				prevalues[column] = r
 				field[column] = r
-			} else {
+			} else if fill {
 				field[column] = prevalues[column]
 			}
 		}
@@ -92,14 +92,14 @@ func mergeRecords(records []map[string]interface{}) []map[string]interface{} {
 	return ret
 }
 
-func dumpCSV(in io.Reader) ([]byte, error) {
+func dumpCSV(in io.Reader, fill bool) ([]byte, error) {
 	// CSVリーダーを作成
 	reader := csv.NewReader(in)
 	csvdata, err := reader.ReadAll()
 	if err != nil {
 		return nil, err
 	}
-	records := fillCSV(csvdata)
+	records := fillCSV(csvdata, fill)
 
 	// JSONデータを格納するためのスライス
 	var jsondata []map[string]interface{}
@@ -133,7 +133,16 @@ func dumpCSV(in io.Reader) ([]byte, error) {
 }
 
 func main() {
-	v, err := dumpCSV(os.Stdin)
+	args := os.Args
+	fill := false
+	if len(args) > 1 {
+		for _, key := range args[1:] {
+			if key == "fill" {
+				fill = true
+			}
+		}
+	}
+	v, err := dumpCSV(os.Stdin, fill)
 	if err != nil {
 		panic(err)
 	}

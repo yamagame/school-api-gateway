@@ -52,7 +52,7 @@ func exec(jsondata, tempfile []byte, outdir string, tarclasses ...string) {
 
 func main() {
 	args := os.Args
-	if len(args) == 0 {
+	if len(args) == 1 {
 		fmt.Println("json ファイルを指定してください")
 		return
 	}

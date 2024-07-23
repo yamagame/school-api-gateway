@@ -6,4 +6,4 @@
 #
 
 JSONFILE=$1
-jq -n --argjson labs "`cat $JSONFILE | go run cmd/csv2json/main.go`" '{"labs":$labs}' > ${JSONFILE%.*}.json
+jq -n --argjson labs "`cat $JSONFILE | go run cmd/csv2json/main.go fill`" '{"labs":$labs}' > ${JSONFILE%.*}.json
