@@ -18,13 +18,16 @@ type TABLE struct {
 }
 
 type COLUMN struct {
-	Comment   string `json:"COLUMN_COMMENT"`
-	Key       string `json:"COLUMN_KEY"`
-	Name      string `json:"COLUMN_NAME"`
-	Type      string `json:"COLUMN_TYPE"`
-	GoType    string `json:"GO_TYPE"`
-	Nullable  string `json:"IS_NULLABLE"`
-	TableName string `json:"TABLE_NAME"`
+	Comment              string `json:"COLUMN_COMMENT"`
+	Key                  string `json:"COLUMN_KEY"`
+	Name                 string `json:"COLUMN_NAME"`
+	Type                 string `json:"COLUMN_TYPE"`
+	GoType               string `json:"GO_TYPE"`
+	Nullable             string `json:"IS_NULLABLE"`
+	TableName            string `json:"TABLE_NAME"`
+	ConstraintName       string `json:"CONSTRAINT_NAME"`
+	ReferencedTableName  string `json:"REFERENCED_TABLE_NAME"`
+	ReferencedColumnName string `json:"REFERENCED_COLUMN_NAME"`
 }
 
 func sqlTypeToGoType(in string) string {
@@ -48,7 +51,7 @@ func exec(jsondata []byte) {
 	for _, col := range columns {
 		col.GoType = sqlTypeToGoType(col.Type)
 		if col.Nullable == "YES" {
-			col.GoType += "*" + col.GoType
+			col.GoType = "*" + col.GoType
 		}
 		if _, ok := tmap[col.TableName]; !ok {
 			tmap[col.TableName] = &TABLE{
