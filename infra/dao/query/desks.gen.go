@@ -38,7 +38,7 @@ func newDesk(db *gorm.DB, opts ...gen.DOOption) desk {
 }
 
 type desk struct {
-	deskDo
+	deskDo deskDo
 
 	ALL         field.Asterisk
 	ID          field.Int32
@@ -70,6 +70,14 @@ func (d *desk) updateTableName(table string) *desk {
 
 	return d
 }
+
+func (d *desk) WithContext(ctx context.Context) IDeskDo { return d.deskDo.WithContext(ctx) }
+
+func (d desk) TableName() string { return d.deskDo.TableName() }
+
+func (d desk) Alias() string { return d.deskDo.Alias() }
+
+func (d desk) Columns(cols ...field.Expr) gen.Columns { return d.deskDo.Columns(cols...) }
 
 func (d *desk) GetFieldByName(fieldName string) (field.OrderExpr, bool) {
 	_f, ok := d.fieldMap[fieldName]

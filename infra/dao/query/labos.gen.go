@@ -162,7 +162,7 @@ func newLabo(db *gorm.DB, opts ...gen.DOOption) labo {
 }
 
 type labo struct {
-	laboDo
+	laboDo laboDo
 
 	ALL        field.Asterisk
 	ID         field.Int32
@@ -217,6 +217,14 @@ func (l *labo) updateTableName(table string) *labo {
 
 	return l
 }
+
+func (l *labo) WithContext(ctx context.Context) ILaboDo { return l.laboDo.WithContext(ctx) }
+
+func (l labo) TableName() string { return l.laboDo.TableName() }
+
+func (l labo) Alias() string { return l.laboDo.Alias() }
+
+func (l labo) Columns(cols ...field.Expr) gen.Columns { return l.laboDo.Columns(cols...) }
 
 func (l *labo) GetFieldByName(fieldName string) (field.OrderExpr, bool) {
 	_f, ok := l.fieldMap[fieldName]

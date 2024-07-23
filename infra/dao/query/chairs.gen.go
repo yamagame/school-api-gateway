@@ -36,7 +36,7 @@ func newChair(db *gorm.DB, opts ...gen.DOOption) chair {
 }
 
 type chair struct {
-	chairDo
+	chairDo chairDo
 
 	ALL    field.Asterisk
 	ID     field.Int32
@@ -64,6 +64,14 @@ func (c *chair) updateTableName(table string) *chair {
 
 	return c
 }
+
+func (c *chair) WithContext(ctx context.Context) IChairDo { return c.chairDo.WithContext(ctx) }
+
+func (c chair) TableName() string { return c.chairDo.TableName() }
+
+func (c chair) Alias() string { return c.chairDo.Alias() }
+
+func (c chair) Columns(cols ...field.Expr) gen.Columns { return c.chairDo.Columns(cols...) }
 
 func (c *chair) GetFieldByName(fieldName string) (field.OrderExpr, bool) {
 	_f, ok := c.fieldMap[fieldName]
