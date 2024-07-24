@@ -1,0 +1,7 @@
+{{- /* 
+USAGE: export TABLE=labos && cat ./datasets/dump-foreign-key.tmpl | go run cmd/codegen/main.go ./datasets/sample-school-schema.json
+*/ -}}
+{{range .attributes}}
+{{- if eq .REFERENCED_TABLE_NAME (env "TABLE")}}{{ .REFERENCED_TABLE_NAME }}.{{ .REFERENCED_COLUMN_NAME}} : {{ .TABLE_NAME }}
+{{end -}}
+{{end -}}

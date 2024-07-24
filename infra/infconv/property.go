@@ -8,14 +8,14 @@ import (
 
 type PropertyConv struct{}
 
-func (PropertyConv) ToStruct(in *irconv.Record) (*model.Property, error) {
+func (PropertyConv) ToStruct(in *irconv.Record) *model.Property {
 	out := &model.Property{}
 	out.Error = in.
 		ToStruct(".id", ".ID", out).
 		ToStruct(".labo_id", ".LaboID", out).
 		ToStruct(".name", ".Name", out).
 		Error
-	return out, out.Error
+	return out
 }
 
 func (PropertyConv) ToIRModel(in *model.Property) *irconv.Record {

@@ -8,7 +8,7 @@ import (
 
 type LaboConv struct{}
 
-func (LaboConv) ToStruct(in *irconv.Record) (*model.Labo, error) {
+func (LaboConv) ToStruct(in *irconv.Record) *model.Labo {
 	out := &model.Labo{}
 	out.Error = in.
 		ToStruct(".id", ".ID", out, irconv.Keep).
@@ -27,12 +27,7 @@ func (LaboConv) ToStruct(in *irconv.Record) (*model.Labo, error) {
 				ToStruct(".building.name", ".Building.Name", out, irconv.Keep)
 		}).
 		IfExist(".property", func(v *irconv.Record) {
-			val, err := Property.ToStruct(v.GetHasOne("property"))
-			if err != nil {
-				out.Error = err
-				return
-			}
-			out.Property = val
+			out.Property = Property.ToStruct(v.GetHasOne("property"))
 		}).
 		IfExist(".desk", func(v *irconv.Record) {
 			if desks, err := Desks.ToStruct(v.GetHasMany("desk").Records()).ShallowCopy(); err == nil {
@@ -40,7 +35,7 @@ func (LaboConv) ToStruct(in *irconv.Record) (*model.Labo, error) {
 			}
 		}).
 		Error
-	return out, out.Error
+	return out
 }
 
 func (LaboConv) ToIRModel(in *model.Labo) *irconv.Record {

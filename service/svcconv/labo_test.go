@@ -30,8 +30,8 @@ func TestLabo(t *testing.T) {
 	// dao -> entity -> proto 変換
 	e := infconv.Labo.ToIRModel(m)
 	assert.NoError(t, e.Error)
-	s, err := Labo.ToStruct(e)
-	assert.NoError(t, err)
+	s := laboConv.ToStruct(e)
+	// assert.NoError(t, s.Error)
 
 	snapshot.Match(t, s, "test1.json")
 }

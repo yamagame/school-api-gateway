@@ -1,8 +1,6 @@
 package svcconv
 
 import (
-	"github.com/yamagame/school-api-gateway/infra/infconv"
-	"github.com/yamagame/school-api-gateway/infra/model"
 	"github.com/yamagame/school-api-gateway/irmodel"
 	"github.com/yamagame/school-api-gateway/pkg/irconv"
 	"github.com/yamagame/school-api-gateway/proto/school"
@@ -11,7 +9,13 @@ import (
 type LaboConv struct {
 }
 
-func (c LaboConv) ToStruct(in *irconv.Record) (*school.Labo, error) {
+func (LaboConv) NewSlice() *school.Labos {
+	return &school.Labos{
+		Slice: irconv.NewSlice[school.Labo](),
+	}
+}
+
+func (c LaboConv) ToStruct(in *irconv.Record) *school.Labo {
 	out := &school.Labo{}
 	in.
 		ToStruct(".id", ".Id", out, irconv.Keep).
@@ -32,7 +36,7 @@ func (c LaboConv) ToStruct(in *irconv.Record) (*school.Labo, error) {
 				ToStruct(".building.name", ".Building.Name", out, irconv.Keep)
 		}).
 		Self()
-	return out, nil
+	return out
 }
 
 func (c LaboConv) ToIRModel(in *school.Labo) *irconv.Record {
@@ -52,18 +56,4 @@ func (c LaboConv) ToIRModel(in *school.Labo) *irconv.Record {
 				FromStruct(".Building.Name", ".building.name", in, irconv.Keep)
 		}).
 		Self()
-}
-
-func (LaboConv) NewSlice() *school.Labos {
-	return &school.Labos{
-		Slice: irconv.NewSlice[school.Labo](),
-	}
-}
-
-func (c LaboConv) ProtoToInfra(labos *school.Labos) *model.Labos {
-	return infconv.Labos.ToStruct(Labos.ToIRModel(labos.ShallowCopy()))
-}
-
-func (c LaboConv) InfraToProto(labos *model.Labos) *school.Labos {
-	return Labos.ToStruct(infconv.Labos.ToIRModel(labos.ShallowCopy()))
 }

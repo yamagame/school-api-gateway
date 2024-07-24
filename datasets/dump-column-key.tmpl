@@ -1,0 +1,7 @@
+{{- /* 
+USAGE: cat ./datasets/dump-column-key.tmpl | go run cmd/codegen/main.go ./datasets/sample-school-schema.json labos
+*/ -}}
+{{range .attributes}}
+{{- if ne .COLUMN_KEY ""}}{{ .COLUMN_NAME }} {{ .COLUMN_KEY }} : {{ .TABLE_NAME }}
+{{end -}}
+{{end -}}

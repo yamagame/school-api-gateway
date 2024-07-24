@@ -8,7 +8,7 @@ import (
 
 type DeskConv struct{}
 
-func (DeskConv) ToStruct(in *irconv.Record) (*model.Desk, error) {
+func (DeskConv) ToStruct(in *irconv.Record) *model.Desk {
 	out := &model.Desk{}
 	out.Error = in.
 		ToStruct(".id", ".ID", out).
@@ -16,7 +16,7 @@ func (DeskConv) ToStruct(in *irconv.Record) (*model.Desk, error) {
 		ToStruct(".name", ".Name", out).
 		ToStruct(".product_code", ".ProductCode", out).
 		Error
-	return out, out.Error
+	return out
 }
 
 func (DeskConv) ToIRModel(in *model.Desk) *irconv.Record {

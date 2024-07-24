@@ -8,7 +8,7 @@ type ConvsInterface[M any] interface {
 }
 
 type ConvInterface[M any, N any] interface {
-	ToStruct(*Record) (*M, error)
+	ToStruct(*Record) *M
 	ToIRModel(*M) *Record
 	NewSlice() *N
 }
@@ -26,11 +26,7 @@ func (c Convs[M, N, B]) ToStruct(in *Records) *N {
 	it := in.NewIterator()
 	for it.HasNext() {
 		v := it.Next()
-		t, err := c.Conv.ToStruct(v)
-		if err != nil {
-			(*r).SetError(err)
-			return r
-		}
+		t := c.Conv.ToStruct(v)
 		(*r).Append(t)
 	}
 	return r
@@ -60,10 +56,7 @@ type valiables[T any] interface {
 func (c Convs[M, N, B]) ToStructWithMap(in []map[string]interface{}, out valiables[M], factory func() *Record) error {
 	records := factory().NewRecords(in)
 	for _, record := range records.Records() {
-		l, err := c.Conv.ToStruct(record)
-		if err != nil {
-			return err
-		}
+		l := c.Conv.ToStruct(record)
 		out.Append(l)
 	}
 	return nil

@@ -9,9 +9,12 @@ import (
 	"github.com/yamagame/school-api-gateway/infra/model"
 	"github.com/yamagame/school-api-gateway/infra/repository"
 	"github.com/yamagame/school-api-gateway/irmodel"
-	"github.com/yamagame/school-api-gateway/pkg/irconv"
 	"github.com/yamagame/school-api-gateway/proto/school"
 	"github.com/yamagame/school-api-gateway/service/svcconv"
+)
+
+var (
+	labosConv = svcconv.LabosConv{}
 )
 
 type LaboInterface interface {
@@ -75,7 +78,7 @@ func (s *Labo) Find(ctx context.Context, id int32) (*school.Labo, error) {
 	if results.HasError() {
 		return zero, results.Error
 	}
-	labos := svcconv.Labo.InfraToProto(results)
+	labos := labosConv.ToProto(results)
 	if labos.HasError() {
 		return zero, labos.Error
 	}
@@ -87,7 +90,7 @@ func (s *Labo) Find(ctx context.Context, id int32) (*school.Labo, error) {
 
 func (s *Labo) Update(ctx context.Context, in *school.Labo) (int32, error) {
 	zero := int32(0)
-	labos := svcconv.Labo.ProtoToInfra(&school.Labos{Slice: irconv.NewSlice(in)})
+	labos := labosConv.ToInfra(school.NewLabos(in))
 	if labos.HasError() {
 		return zero, labos.Error
 	}
@@ -107,13 +110,13 @@ func (s *Labo) Copy(ctx context.Context, id int32) (int32, error) {
 	if results.HasError() {
 		return zero, results.Error
 	}
-	in := svcconv.Labo.InfraToProto(results)
+	in := labosConv.ToProto(results)
 	if in.HasError() {
 		return zero, in.Error
 	}
 	if top := in.First(); top != nil {
 		top.Id = 0
-		labos := svcconv.Labo.ProtoToInfra(in)
+		labos := labosConv.ToInfra(in)
 		if labos.HasError() {
 			return zero, labos.Error
 		}
@@ -130,7 +133,7 @@ func (s *Labo) List(ctx context.Context, limit, offset int32) ([]*school.Labo, e
 	if results.HasError() {
 		return nil, results.Error
 	}
-	r := svcconv.Labo.InfraToProto(results)
+	r := labosConv.ToProto(results)
 	if r.HasError() {
 		return nil, r.Error
 	}
