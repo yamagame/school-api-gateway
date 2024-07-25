@@ -5,7 +5,7 @@ import "fmt"
 type ConvsInterface[M any] interface {
 	Append(...*M) *SliceWrapper[M]
 	SetError(err error) *SliceWrapper[M]
-	GetSlice() []*M
+	Slice() []*M
 	HasError() bool
 	GetError() string
 }
@@ -41,7 +41,7 @@ func (c Convs[M, N, B]) ToIModel(in *N) *Records {
 		r.Error = fmt.Errorf((*in).GetError())
 		return r
 	}
-	slice := (*in).GetSlice()
+	slice := (*in).Slice()
 	for _, v := range slice {
 		t := c.Conv.ToIModel(v)
 		if t.HasError() {
