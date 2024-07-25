@@ -33,8 +33,22 @@ func (DeskConv) ToIModel(in *model.Desk) *iconv.Record {
 		Self()
 }
 
-func (DeskConv) NewSlice() *model.Desks {
-	return &model.Desks{
-		Slice: iconv.NewSlice[model.Desk](),
+func (DeskConv) NewSlice(models ...*model.Desk) *model.Desks {
+	r := &model.Desks{
+		SliceWrapper: iconv.NewSlice[model.Desk](),
 	}
+	r.Append(models...)
+	return r
+}
+
+func (v DeskConv) ToModels(desks []*iconv.Record) []*model.Desk {
+	ret := []*model.Desk{}
+	for _, desk := range desks {
+		ret = append(ret, Desk.ToStruct(desk))
+	}
+	return ret
+}
+
+func (DeskConv) ToRecords(desks []*model.Desk) []*iconv.Record {
+	return Desks.ToIModel(Desk.NewSlice(desks...)).Slice()
 }

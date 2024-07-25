@@ -30,9 +30,7 @@ func (LaboConv) ToStruct(in *iconv.Record) *model.Labo {
 			out.Property = Property.ToStruct(v.GetHasOne("property"))
 		}).
 		IfExist(".desk", func(v *iconv.Record) {
-			if desks, err := Desks.ToStruct(v.GetHasMany("desk").Records()).ShallowCopy(); err == nil {
-				out.Desks = desks
-			}
+			out.Desks = Desk.ToModels(v.GetHasMany("desk").Records().Slice())
 		}).
 		Error
 	return out
@@ -64,13 +62,15 @@ func (LaboConv) ToIModel(in *model.Labo) *iconv.Record {
 			v.SetHasOne("property", Property.ToIModel(in.Property))
 		}).
 		IfNotNil(".Desks", in, func(v *iconv.Record) {
-			v.SetHasMany("desk", out.GetHasMany("desk").Append(Desks.ToIModel(in.Desks).Records()...))
+			v.SetHasMany("desk", out.GetHasMany("desk").Append(Desk.ToRecords(in.Desks)...))
 		}).
 		Self()
 }
 
-func (LaboConv) NewSlice() *model.Labos {
-	return &model.Labos{
-		Slice: iconv.NewSlice[model.Labo](),
+func (LaboConv) NewSlice(models ...*model.Labo) *model.Labos {
+	r := &model.Labos{
+		SliceWrapper: iconv.NewSlice[model.Labo](),
 	}
+	r.Append(models...)
+	return r
 }

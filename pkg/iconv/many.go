@@ -18,7 +18,7 @@ func (m *HasMany) Records() *Records {
 }
 
 func (m *HasMany) NewIterator() *Iterator[Record] {
-	return NewIterator(m.records.Records())
+	return NewIterator(m.records.Slice())
 }
 
 func (m *HasMany) Take(jsonp string, val interface{}) *Record {
@@ -38,14 +38,14 @@ func (m *HasMany) Take(jsonp string, val interface{}) *Record {
 
 func (m *HasMany) ValueMap() []map[string]interface{} {
 	r := []map[string]interface{}{}
-	for _, v := range m.records.Records() {
+	for _, v := range m.records.Slice() {
 		r = append(r, v.ValueMap())
 	}
 	return r
 }
 
 func (m *HasMany) IsExist() bool {
-	for _, v := range m.records.Records() {
+	for _, v := range m.records.Slice() {
 		if v.IsExist() {
 			return true
 		}
@@ -74,7 +74,7 @@ func (m *HasMany) Copy() *HasMany {
 	r.Error = m.Error
 	r.Model = m.Model.Copy()
 	r.records = NewRecords(m.Model)
-	for _, v := range m.records.Records() {
+	for _, v := range m.records.Slice() {
 		r.records.Append(v.Copy())
 	}
 	return r

@@ -19,7 +19,7 @@ func NewRecords(model *Record) *Records {
 	}
 }
 
-func (f *Records) Records() []*Record {
+func (f *Records) Slice() []*Record {
 	return f.records
 }
 

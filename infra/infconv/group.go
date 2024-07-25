@@ -29,8 +29,10 @@ func (GroupConv) ToIModel(in *model.Group) *iconv.Record {
 		Self()
 }
 
-func (GroupConv) NewSlice() *model.Groups {
-	return &model.Groups{
-		Slice: iconv.NewSlice[model.Group](),
+func (GroupConv) NewSlice(models ...*model.Group) *model.Groups {
+	r := &model.Groups{
+		SliceWrapper: iconv.NewSlice[model.Group](),
 	}
+	r.Append(models...)
+	return r
 }

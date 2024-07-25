@@ -31,8 +31,10 @@ func (PropertyConv) ToIModel(in *model.Property) *iconv.Record {
 		Self()
 }
 
-func (PropertyConv) NewSlice() *model.Properties {
-	return &model.Properties{
-		Slice: iconv.NewSlice[model.Property](),
+func (PropertyConv) NewSlice(models ...*model.Property) *model.Properties {
+	r := &model.Properties{
+		SliceWrapper: iconv.NewSlice[model.Property](),
 	}
+	r.Append(models...)
+	return r
 }

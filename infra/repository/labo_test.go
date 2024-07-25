@@ -89,7 +89,7 @@ func TestLabosInfraToIModel(t *testing.T) {
 	res := repo.List(ctx, 10, 0)
 	assert.NoError(t, res.Error)
 
-	labos := infconv.Labos.ToIModel(res.ShallowCopy())
+	labos := infconv.Labos.ToIModel(res)
 	assert.NoError(t, labos.Error)
 
 	out := labos.ValueMap()
@@ -175,7 +175,7 @@ func TestFind(t *testing.T) {
 
 		{
 			records := repo.Find(ctx, []int32{1, 2, 3})
-			out := infconv.Labos.ToIModel(records.ShallowCopy()).ValueMap()
+			out := infconv.Labos.ToIModel(records).ValueMap()
 			snapshot.Match(t, out, "find-imodels-1.json")
 		}
 
@@ -191,7 +191,7 @@ func TestFind(t *testing.T) {
 
 		{
 			records := repo.Find(ctx, []int32{1, 2, 3})
-			out := infconv.Labos.ToIModel(records.ShallowCopy()).ValueMap()
+			out := infconv.Labos.ToIModel(records).ValueMap()
 			snapshot.Match(t, out, "find-imodels-2.json")
 		}
 

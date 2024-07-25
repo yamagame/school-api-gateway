@@ -10,9 +10,9 @@ type LabosConv struct {
 }
 
 func (c LabosConv) ToInfra(in *school.Labos) *model.Labos {
-	return infconv.Labos.ToStruct(labos.ToIModel(in.ShallowCopy()))
+	return infconv.Labos.ToStruct(labos.ToIModel(in))
 }
 
 func (c LabosConv) ToProto(in *model.Labos) *school.Labos {
-	return labos.ToStruct(infconv.Labos.ToIModel(in.ShallowCopy()))
+	return labos.ToStruct(infconv.Labos.ToIModel(in))
 }

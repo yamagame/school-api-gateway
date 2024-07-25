@@ -1,33 +1,37 @@
 package iconv
 
-type Slice[T any] struct {
+type SliceWrapper[T any] struct {
 	Error   error
 	records []*T
 }
 
-func NewSlice[T any](records ...*T) *Slice[T] {
-	return &Slice[T]{
+func NewSlice[T any](records ...*T) *SliceWrapper[T] {
+	return &SliceWrapper[T]{
 		records: records,
 	}
 }
 
-func (v *Slice[T]) SetError(err error) *Slice[T] {
+func (v *SliceWrapper[T]) SetError(err error) *SliceWrapper[T] {
 	v.Error = err
 	return v
 }
 
-func (v *Slice[T]) HasError() bool {
+func (v *SliceWrapper[T]) HasError() bool {
 	return v.Error != nil
 }
 
-func (v *Slice[T]) GetError() string {
+func (v *SliceWrapper[T]) GetError() string {
 	if v.HasError() {
 		return v.Error.Error()
 	}
 	return ""
 }
 
-func (v *Slice[T]) ShallowCopy() ([]*T, error) {
+func (v *SliceWrapper[T]) Slice() []*T {
+	return v.MustShallowCopy()
+}
+
+func (v *SliceWrapper[T]) ShallowCopy() ([]*T, error) {
 	if v.HasError() {
 		return []*T{}, v.Error
 	}
@@ -38,7 +42,7 @@ func (v *Slice[T]) ShallowCopy() ([]*T, error) {
 	return r, nil
 }
 
-func (v *Slice[T]) MustShallowCopy() []*T {
+func (v *SliceWrapper[T]) MustShallowCopy() []*T {
 	r, err := v.ShallowCopy()
 	if err != nil {
 		panic(err)
@@ -46,7 +50,7 @@ func (v *Slice[T]) MustShallowCopy() []*T {
 	return r
 }
 
-func (v *Slice[T]) Append(records ...*T) *Slice[T] {
+func (v *SliceWrapper[T]) Append(records ...*T) *SliceWrapper[T] {
 	if v.HasError() {
 		return v
 	}
@@ -54,29 +58,29 @@ func (v *Slice[T]) Append(records ...*T) *Slice[T] {
 	return v
 }
 
-func (v *Slice[T]) IndexOf(idx int) *T {
+func (v *SliceWrapper[T]) IndexOf(idx int) *T {
 	if idx >= 0 && idx < v.Length() {
 		return v.records[idx]
 	}
 	return nil
 }
 
-func (v *Slice[T]) NewIterator() *Iterator[T] {
+func (v *SliceWrapper[T]) NewIterator() *Iterator[T] {
 	return NewIterator(v.records)
 }
 
-func (v *Slice[T]) Length() int {
+func (v *SliceWrapper[T]) Length() int {
 	return len(v.records)
 }
 
-func (v *Slice[T]) First() *T {
+func (v *SliceWrapper[T]) First() *T {
 	if len(v.records) > 0 {
 		return v.records[0]
 	}
 	return nil
 }
 
-func (v *Slice[T]) Last() *T {
+func (v *SliceWrapper[T]) Last() *T {
 	if len(v.records) > 0 {
 		return v.records[len(v.records)-1]
 	}

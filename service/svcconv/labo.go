@@ -11,10 +11,12 @@ import (
 type LaboConv struct {
 }
 
-func (LaboConv) NewSlice() *school.Labos {
-	return &school.Labos{
-		Slice: iconv.NewSlice[school.Labo](),
+func (LaboConv) NewSlice(models ...*school.Labo) *school.Labos {
+	ret := &school.Labos{
+		SliceWrapper: iconv.NewSlice[school.Labo](),
 	}
+	ret.Append(models...)
+	return ret
 }
 
 func (c LaboConv) ToStruct(in *iconv.Record) *school.Labo {
@@ -38,9 +40,7 @@ func (c LaboConv) ToStruct(in *iconv.Record) *school.Labo {
 				ToStruct(".building.name", ".Building.Name", out, iconv.Keep)
 		}).
 		Self()
-	if in.HasError() {
-		out.Error = in.Error.Error()
-	}
+	out.Error = in.GetError()
 	return out
 }
 
