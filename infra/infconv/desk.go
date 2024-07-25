@@ -1,14 +1,14 @@
 package infconv
 
 import (
+	"github.com/yamagame/school-api-gateway/imodel"
 	"github.com/yamagame/school-api-gateway/infra/model"
-	"github.com/yamagame/school-api-gateway/irmodel"
-	"github.com/yamagame/school-api-gateway/pkg/irconv"
+	"github.com/yamagame/school-api-gateway/pkg/iconv"
 )
 
 type DeskConv struct{}
 
-func (DeskConv) ToStruct(in *irconv.Record) *model.Desk {
+func (DeskConv) ToStruct(in *iconv.Record) *model.Desk {
 	out := &model.Desk{}
 	out.Error = in.
 		ToStruct(".id", ".ID", out).
@@ -19,8 +19,8 @@ func (DeskConv) ToStruct(in *irconv.Record) *model.Desk {
 	return out
 }
 
-func (DeskConv) ToIRModel(in *model.Desk) *irconv.Record {
-	out := irmodel.NewDesk()
+func (DeskConv) ToIModel(in *model.Desk) *iconv.Record {
+	out := imodel.NewDesk()
 	if in.HasError() {
 		out.Error = in.Error
 		return out
@@ -35,6 +35,6 @@ func (DeskConv) ToIRModel(in *model.Desk) *irconv.Record {
 
 func (DeskConv) NewSlice() *model.Desks {
 	return &model.Desks{
-		Slice: irconv.NewSlice[model.Desk](),
+		Slice: iconv.NewSlice[model.Desk](),
 	}
 }

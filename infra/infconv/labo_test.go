@@ -5,23 +5,23 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/yamagame/school-api-gateway/infra/model"
-	"github.com/yamagame/school-api-gateway/pkg/irconv"
+	"github.com/yamagame/school-api-gateway/pkg/iconv"
 	"github.com/yamagame/school-api-gateway/pkg/snapshot"
 )
 
 func TestLaboConv(t *testing.T) {
 	in := &model.Labo{
 		ID:      10,
-		Name:    irconv.ToPtr("名前"),
-		GroupID: irconv.ToPtr(int32(11)),
+		Name:    iconv.ToPtr("名前"),
+		GroupID: iconv.ToPtr(int32(11)),
 		Group: model.Group{
 			Name: "グループ名",
 		},
-		ProgramID: irconv.ToPtr(int32(12)),
+		ProgramID: iconv.ToPtr(int32(12)),
 		Program: model.Program{
 			Name: "プログラム名",
 		},
-		BuildingID: irconv.ToPtr(int32(12)),
+		BuildingID: iconv.ToPtr(int32(12)),
 		Building: model.Building{
 			Name: "建物名",
 		},
@@ -31,10 +31,10 @@ func TestLaboConv(t *testing.T) {
 			{ID: 3, LaboID: 13},
 		},
 	}
-	irmodel := Labo.ToIRModel(in)
-	assert.NoError(t, irmodel.Error)
+	imodel := Labo.ToIModel(in)
+	assert.NoError(t, imodel.Error)
 
-	out := Labo.ToStruct(irmodel)
+	out := Labo.ToStruct(imodel)
 	assert.NoError(t, out.Error)
 
 	snapshot.Update(t)

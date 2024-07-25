@@ -18,3 +18,10 @@ type Room struct {
 func (m *Room) HasError() bool {
 	return m.Error != nil
 }
+
+func (m *Room) GetError() string {
+	if m.HasError() {
+		return m.Error.Error()
+	}
+	return ""
+}

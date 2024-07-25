@@ -15,3 +15,10 @@ type Course struct {
 func (m *Course) HasError() bool {
 	return m.Error != nil
 }
+
+func (m *Course) GetError() string {
+	if m.HasError() {
+		return m.Error.Error()
+	}
+	return ""
+}

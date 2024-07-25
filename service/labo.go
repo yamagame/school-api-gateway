@@ -5,10 +5,10 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/yamagame/school-api-gateway/imodel"
 	"github.com/yamagame/school-api-gateway/infra/infconv"
 	"github.com/yamagame/school-api-gateway/infra/model"
 	"github.com/yamagame/school-api-gateway/infra/repository"
-	"github.com/yamagame/school-api-gateway/irmodel"
 	"github.com/yamagame/school-api-gateway/proto/school"
 	"github.com/yamagame/school-api-gateway/service/svcconv"
 )
@@ -48,8 +48,8 @@ func (s *Labo) Create(ctx context.Context) (int32, error) {
 
 func (s *Labo) CreateWithMap(ctx context.Context, in []map[string]interface{}) (int32, error) {
 	zero := int32(0)
-	irmodels := irmodel.NewLabo().NewRecords(in)
-	labos := infconv.Labos.ToStruct(irmodels)
+	imodels := imodel.NewLabo().NewRecords(in)
+	labos := infconv.Labos.ToStruct(imodels)
 	if labos.HasError() {
 		return zero, labos.Error
 	}
@@ -61,8 +61,8 @@ func (s *Labo) CreateWithMap(ctx context.Context, in []map[string]interface{}) (
 
 func (s *Labo) UpdateWithMap(ctx context.Context, in []map[string]interface{}) (int32, error) {
 	zero := int32(0)
-	irmodels := irmodel.NewLabo().NewRecords(in)
-	labos := infconv.Labos.ToStruct(irmodels)
+	imodels := imodel.NewLabo().NewRecords(in)
+	labos := infconv.Labos.ToStruct(imodels)
 	if labos.HasError() {
 		return zero, labos.Error
 	}

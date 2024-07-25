@@ -21,3 +21,10 @@ type Employee struct {
 func (m *Employee) HasError() bool {
 	return m.Error != nil
 }
+
+func (m *Employee) GetError() string {
+	if m.HasError() {
+		return m.Error.Error()
+	}
+	return ""
+}

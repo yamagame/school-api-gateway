@@ -18,3 +18,10 @@ type School struct {
 func (m *School) HasError() bool {
 	return m.Error != nil
 }
+
+func (m *School) GetError() string {
+	if m.HasError() {
+		return m.Error.Error()
+	}
+	return ""
+}

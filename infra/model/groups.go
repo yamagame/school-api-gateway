@@ -15,3 +15,10 @@ type Group struct {
 func (m *Group) HasError() bool {
 	return m.Error != nil
 }
+
+func (m *Group) GetError() string {
+	if m.HasError() {
+		return m.Error.Error()
+	}
+	return ""
+}

@@ -1,4 +1,4 @@
-package irconv
+package iconv
 
 import "errors"
 
@@ -9,7 +9,7 @@ type ConvsInterface[M any] interface {
 
 type ConvInterface[M any, N any] interface {
 	ToStruct(*Record) *M
-	ToIRModel(*M) *Record
+	ToIModel(*M) *Record
 	NewSlice() *N
 }
 
@@ -32,14 +32,14 @@ func (c Convs[M, N, B]) ToStruct(in *Records) *N {
 	return r
 }
 
-func (c Convs[M, N, B]) ToIRModel(in []*M, err ...error) *Records {
+func (c Convs[M, N, B]) ToIModel(in []*M, err ...error) *Records {
 	r := &Records{}
 	if len(err) > 0 && err[0] != nil {
 		r.Error = errors.Join(err...)
 		return r
 	}
 	for _, v := range in {
-		t := c.Conv.ToIRModel(v)
+		t := c.Conv.ToIModel(v)
 		if t.HasError() {
 			r.Error = t.Error
 			return r

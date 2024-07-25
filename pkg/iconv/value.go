@@ -1,4 +1,4 @@
-package irconv
+package iconv
 
 import (
 	"encoding/json"
@@ -123,4 +123,11 @@ func (x *Value) UnmarshalJSON(b []byte) error {
 
 func (x *Value) HasError() bool {
 	return x.Error != nil
+}
+
+func (x *Value) GetError() string {
+	if x.HasError() {
+		return x.Error.Error()
+	}
+	return ""
 }

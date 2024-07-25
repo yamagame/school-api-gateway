@@ -17,3 +17,10 @@ type Building struct {
 func (m *Building) HasError() bool {
 	return m.Error != nil
 }
+
+func (m *Building) GetError() string {
+	if m.HasError() {
+		return m.Error.Error()
+	}
+	return ""
+}

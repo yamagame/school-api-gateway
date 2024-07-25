@@ -1,4 +1,4 @@
-package irconv
+package iconv
 
 import (
 	"fmt"
@@ -221,4 +221,11 @@ func (f *Records) SetError(err error) *Records {
 
 func (f *Records) HasError() bool {
 	return f.Error != nil
+}
+
+func (f *Records) GetError() string {
+	if f.HasError() {
+		return f.Error.Error()
+	}
+	return ""
 }

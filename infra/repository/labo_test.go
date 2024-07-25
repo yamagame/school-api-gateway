@@ -8,12 +8,12 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"github.com/yamagame/school-api-gateway/imodel"
 	"github.com/yamagame/school-api-gateway/infra"
 	"github.com/yamagame/school-api-gateway/infra/dao/query"
 	"github.com/yamagame/school-api-gateway/infra/infconv"
 	"github.com/yamagame/school-api-gateway/infra/model"
-	"github.com/yamagame/school-api-gateway/irmodel"
-	"github.com/yamagame/school-api-gateway/pkg/irconv"
+	"github.com/yamagame/school-api-gateway/pkg/iconv"
 	"github.com/yamagame/school-api-gateway/pkg/snapshot"
 	"gorm.io/gorm"
 )
@@ -24,16 +24,16 @@ func TestCreateUpdate(t *testing.T) {
 	db.Transaction(func(tx *gorm.DB) error {
 		repo := NewLabo(tx)
 
-		labos := &irconv.Records{}
+		labos := &iconv.Records{}
 		labos.Append(
-			irmodel.NewLabo().
+			imodel.NewLabo().
 				Set(".id", int32(1)).
 				Set(".name", "サトウ1").
 				Set(".url", "http://sato.com"),
-			irmodel.NewLabo().
+			imodel.NewLabo().
 				Set(".id", int32(2)).
 				Set(".name", "シミズ2"),
-			irmodel.NewLabo().
+			imodel.NewLabo().
 				Set(".id", int32(0)).
 				Set(".name", "スズキ3").
 				Set(".url", "http://zuzuki.com"),
@@ -82,14 +82,14 @@ func TestCreateUpdate(t *testing.T) {
 	})
 }
 
-func TestLabosInfraToIRModel(t *testing.T) {
+func TestLabosInfraToIModel(t *testing.T) {
 	ctx := context.Background()
 	db := infra.DB()
 	repo := NewLabo(db)
 	res := repo.List(ctx, 10, 0)
 	assert.NoError(t, res.Error)
 
-	labos := infconv.Labos.ToIRModel(res.ShallowCopy())
+	labos := infconv.Labos.ToIModel(res.ShallowCopy())
 	assert.NoError(t, labos.Error)
 
 	out := labos.ValueMap()
@@ -97,14 +97,14 @@ func TestLabosInfraToIRModel(t *testing.T) {
 	snapshot.Match(t, out, "test-labos.json")
 }
 
-func TestLabosCSVToIRModel(t *testing.T) {
+func TestLabosCSVToIModel(t *testing.T) {
 	fp, _ := os.Open("./testdata/create-labos.csv")
 	defer fp.Close()
 
-	records, err := irconv.ReadCSV(fp)
+	records, err := iconv.ReadCSV(fp)
 	assert.NoError(t, err)
 
-	labos := irmodel.NewLabo().
+	labos := imodel.NewLabo().
 		NewRecords(records)
 	assert.NoError(t, labos.Error)
 
@@ -175,8 +175,8 @@ func TestFind(t *testing.T) {
 
 		{
 			records := repo.Find(ctx, []int32{1, 2, 3})
-			out := infconv.Labos.ToIRModel(records.ShallowCopy()).ValueMap()
-			snapshot.Match(t, out, "find-irmodels-1.json")
+			out := infconv.Labos.ToIModel(records.ShallowCopy()).ValueMap()
+			snapshot.Match(t, out, "find-imodels-1.json")
 		}
 
 		{
@@ -191,8 +191,8 @@ func TestFind(t *testing.T) {
 
 		{
 			records := repo.Find(ctx, []int32{1, 2, 3})
-			out := infconv.Labos.ToIRModel(records.ShallowCopy()).ValueMap()
-			snapshot.Match(t, out, "find-irmodels-2.json")
+			out := infconv.Labos.ToIModel(records.ShallowCopy()).ValueMap()
+			snapshot.Match(t, out, "find-imodels-2.json")
 		}
 
 		labos := repo.Find(ctx, []int32{1, 2, 3}).MustShallowCopy()
@@ -216,7 +216,7 @@ func TestDao(t *testing.T) {
 
 		last := labos[len(labos)-1]
 
-		last.BuildingID = irconv.ToPtr(int32(5))
+		last.BuildingID = iconv.ToPtr(int32(5))
 		lb.Building.WithContext(ctx).Model(last).Replace(&model.Building{
 			ID: 5,
 		})
@@ -240,7 +240,7 @@ func TestDao(t *testing.T) {
 			},
 		)
 
-		last.Name = irconv.ToPtr("藤田テスト")
+		last.Name = iconv.ToPtr("藤田テスト")
 		lb.WithContext(ctx).Updates(last)
 
 		{

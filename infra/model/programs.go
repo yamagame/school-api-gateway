@@ -15,3 +15,10 @@ type Program struct {
 func (m *Program) HasError() bool {
 	return m.Error != nil
 }
+
+func (m *Program) GetError() string {
+	if m.HasError() {
+		return m.Error.Error()
+	}
+	return ""
+}

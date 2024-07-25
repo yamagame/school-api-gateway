@@ -1,4 +1,4 @@
-package irconv
+package iconv
 
 type HasMany struct {
 	Error   error
@@ -93,4 +93,11 @@ func (m *HasMany) SetError(err error) *HasMany {
 
 func (m *HasMany) HasError() bool {
 	return m.Error != nil
+}
+
+func (m *HasMany) GetError() string {
+	if m.HasError() {
+		return m.Error.Error()
+	}
+	return ""
 }

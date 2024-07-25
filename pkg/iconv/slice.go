@@ -1,4 +1,4 @@
-package irconv
+package iconv
 
 type Slice[T any] struct {
 	Error   error
@@ -18,6 +18,13 @@ func (v *Slice[T]) SetError(err error) *Slice[T] {
 
 func (v *Slice[T]) HasError() bool {
 	return v.Error != nil
+}
+
+func (v *Slice[T]) GetError() string {
+	if v.HasError() {
+		return v.Error.Error()
+	}
+	return ""
 }
 
 func (v *Slice[T]) ShallowCopy() ([]*T, error) {

@@ -15,3 +15,10 @@ type Area struct {
 func (m *Area) HasError() bool {
 	return m.Error != nil
 }
+
+func (m *Area) GetError() string {
+	if m.HasError() {
+		return m.Error.Error()
+	}
+	return ""
+}

@@ -1,14 +1,14 @@
 package infconv
 
 import (
+	"github.com/yamagame/school-api-gateway/imodel"
 	"github.com/yamagame/school-api-gateway/infra/model"
-	"github.com/yamagame/school-api-gateway/irmodel"
-	"github.com/yamagame/school-api-gateway/pkg/irconv"
+	"github.com/yamagame/school-api-gateway/pkg/iconv"
 )
 
 type PropertyConv struct{}
 
-func (PropertyConv) ToStruct(in *irconv.Record) *model.Property {
+func (PropertyConv) ToStruct(in *iconv.Record) *model.Property {
 	out := &model.Property{}
 	out.Error = in.
 		ToStruct(".id", ".ID", out).
@@ -18,8 +18,8 @@ func (PropertyConv) ToStruct(in *irconv.Record) *model.Property {
 	return out
 }
 
-func (PropertyConv) ToIRModel(in *model.Property) *irconv.Record {
-	out := irmodel.NewProperty()
+func (PropertyConv) ToIModel(in *model.Property) *iconv.Record {
+	out := imodel.NewProperty()
 	if in.HasError() {
 		out.Error = in.Error
 		return out
@@ -33,6 +33,6 @@ func (PropertyConv) ToIRModel(in *model.Property) *irconv.Record {
 
 func (PropertyConv) NewSlice() *model.Properties {
 	return &model.Properties{
-		Slice: irconv.NewSlice[model.Property](),
+		Slice: iconv.NewSlice[model.Property](),
 	}
 }

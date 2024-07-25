@@ -22,3 +22,10 @@ type Student struct {
 func (m *Student) HasError() bool {
 	return m.Error != nil
 }
+
+func (m *Student) GetError() string {
+	if m.HasError() {
+		return m.Error.Error()
+	}
+	return ""
+}

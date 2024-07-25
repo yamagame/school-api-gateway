@@ -19,3 +19,10 @@ type Professor struct {
 func (m *Professor) HasError() bool {
 	return m.Error != nil
 }
+
+func (m *Professor) GetError() string {
+	if m.HasError() {
+		return m.Error.Error()
+	}
+	return ""
+}

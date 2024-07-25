@@ -1,13 +1,13 @@
 package model
 
-import "github.com/yamagame/school-api-gateway/pkg/irconv"
+import "github.com/yamagame/school-api-gateway/pkg/iconv"
 
 type Areas struct {
-	*irconv.Slice[Area]
+	*iconv.Slice[Area]
 }
 
 type Courses struct {
-	*irconv.Slice[Course]
+	*iconv.Slice[Course]
 }
 
 // type LaboRooms struct {
@@ -15,11 +15,11 @@ type Courses struct {
 // }
 
 type Schools struct {
-	*irconv.Slice[School]
+	*iconv.Slice[School]
 }
 
 type Addresses struct {
-	*irconv.Slice[Address]
+	*iconv.Slice[Address]
 }
 
 // type ClassRooms struct {
@@ -27,15 +27,15 @@ type Addresses struct {
 // }
 
 type Groups struct {
-	*irconv.Slice[Group]
+	*iconv.Slice[Group]
 }
 
 type Roles struct {
-	*irconv.Slice[Role]
+	*iconv.Slice[Role]
 }
 
 type Students struct {
-	*irconv.Slice[Student]
+	*iconv.Slice[Student]
 }
 
 // type LaboProfessors struct {
@@ -43,7 +43,7 @@ type Students struct {
 // }
 
 type Labos struct {
-	*irconv.Slice[Labo]
+	*iconv.Slice[Labo]
 }
 
 // type SchoolPersons struct {
@@ -51,39 +51,39 @@ type Labos struct {
 // }
 
 type Posts struct {
-	*irconv.Slice[Post]
+	*iconv.Slice[Post]
 }
 
 type Professors struct {
-	*irconv.Slice[Professor]
+	*iconv.Slice[Professor]
 }
 
 type Chairs struct {
-	*irconv.Slice[Chair]
+	*iconv.Slice[Chair]
 }
 
 type Aliases struct {
-	*irconv.Slice[Alias]
+	*iconv.Slice[Alias]
 }
 
 type Buildings struct {
-	*irconv.Slice[Building]
+	*iconv.Slice[Building]
 }
 
 type Desks struct {
-	*irconv.Slice[Desk]
+	*iconv.Slice[Desk]
 }
 
 type People struct {
-	*irconv.Slice[Person]
+	*iconv.Slice[Person]
 }
 
 type Employees struct {
-	*irconv.Slice[Employee]
+	*iconv.Slice[Employee]
 }
 
 type Programs struct {
-	*irconv.Slice[Program]
+	*iconv.Slice[Program]
 }
 
 // type SchoolClasses struct {
@@ -95,7 +95,7 @@ type Programs struct {
 // }
 
 type Classes struct {
-	*irconv.Slice[Class]
+	*iconv.Slice[Class]
 }
 
 // type LaboStudents struct {
@@ -103,7 +103,7 @@ type Classes struct {
 // }
 
 type Rooms struct {
-	*irconv.Slice[Room]
+	*iconv.Slice[Room]
 }
 
 // type SchoolBuildings struct {
@@ -111,5 +111,5 @@ type Rooms struct {
 // }
 
 type Properties struct {
-	*irconv.Slice[Property]
+	*iconv.Slice[Property]
 }

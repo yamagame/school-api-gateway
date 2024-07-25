@@ -15,3 +15,10 @@ type Alias struct {
 func (m *Alias) HasError() bool {
 	return m.Error != nil
 }
+
+func (m *Alias) GetError() string {
+	if m.HasError() {
+		return m.Error.Error()
+	}
+	return ""
+}

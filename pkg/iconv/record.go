@@ -1,4 +1,4 @@
-package irconv
+package iconv
 
 import (
 	"errors"
@@ -628,4 +628,11 @@ func (m *Record) SetError(err error) *Record {
 
 func (m *Record) HasError() bool {
 	return m.Error != nil
+}
+
+func (m *Record) GetError() string {
+	if m.HasError() {
+		return m.Error.Error()
+	}
+	return ""
 }

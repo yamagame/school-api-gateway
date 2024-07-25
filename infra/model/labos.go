@@ -28,3 +28,10 @@ type Labo struct {
 func (m *Labo) HasError() bool {
 	return m.Error != nil
 }
+
+func (m *Labo) GetError() string {
+	if m.HasError() {
+		return m.Error.Error()
+	}
+	return ""
+}

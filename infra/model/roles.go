@@ -15,3 +15,10 @@ type Role struct {
 func (m *Role) HasError() bool {
 	return m.Error != nil
 }
+
+func (m *Role) GetError() string {
+	if m.HasError() {
+		return m.Error.Error()
+	}
+	return ""
+}

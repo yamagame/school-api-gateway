@@ -1,4 +1,4 @@
-package irconv
+package iconv
 
 type Iterator[T any] struct {
 	records []*T

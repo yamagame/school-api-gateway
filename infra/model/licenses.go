@@ -1,6 +1,6 @@
 package model
 
-import "github.com/yamagame/school-api-gateway/pkg/irconv"
+import "github.com/yamagame/school-api-gateway/pkg/iconv"
 
 type License struct {
 	ID       int32  `gorm:"primary; comment:主キーの標準フィールド;"`
@@ -11,9 +11,16 @@ type License struct {
 }
 
 type Licenses struct {
-	*irconv.Slice[License]
+	*iconv.Slice[License]
 }
 
 func (m *License) HasError() bool {
 	return m.Error != nil
+}
+
+func (m *License) GetError() string {
+	if m.HasError() {
+		return m.Error.Error()
+	}
+	return ""
 }

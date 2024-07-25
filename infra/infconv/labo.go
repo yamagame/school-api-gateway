@@ -1,35 +1,35 @@
 package infconv
 
 import (
+	"github.com/yamagame/school-api-gateway/imodel"
 	"github.com/yamagame/school-api-gateway/infra/model"
-	"github.com/yamagame/school-api-gateway/irmodel"
-	"github.com/yamagame/school-api-gateway/pkg/irconv"
+	"github.com/yamagame/school-api-gateway/pkg/iconv"
 )
 
 type LaboConv struct{}
 
-func (LaboConv) ToStruct(in *irconv.Record) *model.Labo {
+func (LaboConv) ToStruct(in *iconv.Record) *model.Labo {
 	out := &model.Labo{}
 	out.Error = in.
-		ToStruct(".id", ".ID", out, irconv.Keep).
-		ToStruct(".name", ".Name", out, irconv.StrPtr).
-		ToStruct(".url", ".URL", out, irconv.StrPtr).
-		IfExist(".group", func(v *irconv.Record) {
-			v.ToStruct(".group.id", ".GroupID", out, irconv.Int32Ptr).
-				ToStruct(".group.name", ".Group.Name", out, irconv.Keep)
+		ToStruct(".id", ".ID", out, iconv.Keep).
+		ToStruct(".name", ".Name", out, iconv.StrPtr).
+		ToStruct(".url", ".URL", out, iconv.StrPtr).
+		IfExist(".group", func(v *iconv.Record) {
+			v.ToStruct(".group.id", ".GroupID", out, iconv.Int32Ptr).
+				ToStruct(".group.name", ".Group.Name", out, iconv.Keep)
 		}).
-		IfExist(".program", func(v *irconv.Record) {
-			v.ToStruct(".program.id", ".ProgramID", out, irconv.Int32Ptr).
-				ToStruct(".program.name", ".Program.Name", out, irconv.Keep)
+		IfExist(".program", func(v *iconv.Record) {
+			v.ToStruct(".program.id", ".ProgramID", out, iconv.Int32Ptr).
+				ToStruct(".program.name", ".Program.Name", out, iconv.Keep)
 		}).
-		IfExist(".building", func(v *irconv.Record) {
-			v.ToStruct(".building.id", ".BuildingID", out, irconv.Int32Ptr).
-				ToStruct(".building.name", ".Building.Name", out, irconv.Keep)
+		IfExist(".building", func(v *iconv.Record) {
+			v.ToStruct(".building.id", ".BuildingID", out, iconv.Int32Ptr).
+				ToStruct(".building.name", ".Building.Name", out, iconv.Keep)
 		}).
-		IfExist(".property", func(v *irconv.Record) {
+		IfExist(".property", func(v *iconv.Record) {
 			out.Property = Property.ToStruct(v.GetHasOne("property"))
 		}).
-		IfExist(".desk", func(v *irconv.Record) {
+		IfExist(".desk", func(v *iconv.Record) {
 			if desks, err := Desks.ToStruct(v.GetHasMany("desk").Records()).ShallowCopy(); err == nil {
 				out.Desks = desks
 			}
@@ -38,39 +38,39 @@ func (LaboConv) ToStruct(in *irconv.Record) *model.Labo {
 	return out
 }
 
-func (LaboConv) ToIRModel(in *model.Labo) *irconv.Record {
-	out := irmodel.NewLabo()
+func (LaboConv) ToIModel(in *model.Labo) *iconv.Record {
+	out := imodel.NewLabo()
 	if in.HasError() {
 		out.Error = in.Error
 		return out
 	}
 	return out.
-		FromStruct(".ID", ".id", in, irconv.Keep).
-		FromStruct(".Name", ".name", in, irconv.PtrStr).
-		FromStruct(".URL", ".url", in, irconv.PtrStr).
-		IfNotNil(".GroupID", in, func(v *irconv.Record) {
-			v.FromStruct(".GroupID", ".group.id", in, irconv.PtrInt32).
-				FromStruct(".Group.Name", ".group.name", in, irconv.Keep)
+		FromStruct(".ID", ".id", in, iconv.Keep).
+		FromStruct(".Name", ".name", in, iconv.PtrStr).
+		FromStruct(".URL", ".url", in, iconv.PtrStr).
+		IfNotNil(".GroupID", in, func(v *iconv.Record) {
+			v.FromStruct(".GroupID", ".group.id", in, iconv.PtrInt32).
+				FromStruct(".Group.Name", ".group.name", in, iconv.Keep)
 		}).
-		IfNotNil(".ProgramID", in, func(v *irconv.Record) {
-			v.FromStruct(".ProgramID", ".program.id", in, irconv.PtrInt32).
-				FromStruct(".Program.Name", ".program.name", in, irconv.Keep)
+		IfNotNil(".ProgramID", in, func(v *iconv.Record) {
+			v.FromStruct(".ProgramID", ".program.id", in, iconv.PtrInt32).
+				FromStruct(".Program.Name", ".program.name", in, iconv.Keep)
 		}).
-		IfNotNil(".BuildingID", in, func(v *irconv.Record) {
-			v.FromStruct(".BuildingID", ".building.id", in, irconv.PtrInt32).
-				FromStruct(".Building.Name", ".building.name", in, irconv.Keep)
+		IfNotNil(".BuildingID", in, func(v *iconv.Record) {
+			v.FromStruct(".BuildingID", ".building.id", in, iconv.PtrInt32).
+				FromStruct(".Building.Name", ".building.name", in, iconv.Keep)
 		}).
-		IfNotNil(".Property", in, func(v *irconv.Record) {
-			v.SetHasOne("property", Property.ToIRModel(in.Property))
+		IfNotNil(".Property", in, func(v *iconv.Record) {
+			v.SetHasOne("property", Property.ToIModel(in.Property))
 		}).
-		IfNotNil(".Desks", in, func(v *irconv.Record) {
-			v.SetHasMany("desk", out.GetHasMany("desk").Append(Desks.ToIRModel(in.Desks).Records()...))
+		IfNotNil(".Desks", in, func(v *iconv.Record) {
+			v.SetHasMany("desk", out.GetHasMany("desk").Append(Desks.ToIModel(in.Desks).Records()...))
 		}).
 		Self()
 }
 
 func (LaboConv) NewSlice() *model.Labos {
 	return &model.Labos{
-		Slice: irconv.NewSlice[model.Labo](),
+		Slice: iconv.NewSlice[model.Labo](),
 	}
 }

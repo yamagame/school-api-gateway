@@ -10,7 +10,7 @@ import (
 	"github.com/stretchr/testify/require"
 	"github.com/yamagame/school-api-gateway/infra"
 	"github.com/yamagame/school-api-gateway/infra/repository"
-	"github.com/yamagame/school-api-gateway/pkg/irconv"
+	"github.com/yamagame/school-api-gateway/pkg/iconv"
 	"github.com/yamagame/school-api-gateway/pkg/snapshot"
 	"github.com/yamagame/school-api-gateway/proto/school"
 	"gorm.io/gorm"
@@ -71,7 +71,7 @@ func TestCreateWithMap(t *testing.T) {
 
 	fp, _ := os.Open("./testdata/create-labo.csv")
 	defer fp.Close()
-	records, err := irconv.ReadCSV(fp)
+	records, err := iconv.ReadCSV(fp)
 	assert.NoError(t, err)
 
 	ctx := context.Background()
@@ -92,7 +92,7 @@ func TestUpdateWithMap(t *testing.T) {
 
 	fp, _ := os.Open("./testdata/update-labo.csv")
 	defer fp.Close()
-	records, err := irconv.ReadCSV(fp)
+	records, err := iconv.ReadCSV(fp)
 	assert.NoError(t, err)
 
 	ctx := context.Background()

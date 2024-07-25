@@ -11,3 +11,10 @@ type Desk struct {
 func (m *Desk) HasError() bool {
 	return m.Error != nil
 }
+
+func (m *Desk) GetError() string {
+	if m.HasError() {
+		return m.Error.Error()
+	}
+	return ""
+}

@@ -1,13 +1,13 @@
 package school
 
-import "github.com/yamagame/school-api-gateway/pkg/irconv"
+import "github.com/yamagame/school-api-gateway/pkg/iconv"
 
 type Labos struct {
-	*irconv.Slice[Labo]
+	*iconv.Slice[Labo]
 }
 
 func NewLabos(labos ...*Labo) *Labos {
 	return &Labos{
-		Slice: irconv.NewSlice(labos...),
+		Slice: iconv.NewSlice(labos...),
 	}
 }

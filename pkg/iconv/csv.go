@@ -1,4 +1,4 @@
-package irconv
+package iconv
 
 import (
 	"encoding/csv"

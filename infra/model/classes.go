@@ -16,3 +16,10 @@ type Class struct {
 func (m *Class) HasError() bool {
 	return m.Error != nil
 }
+
+func (m *Class) GetError() string {
+	if m.HasError() {
+		return m.Error.Error()
+	}
+	return ""
+}

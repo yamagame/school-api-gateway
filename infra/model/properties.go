@@ -14,3 +14,10 @@ type Property struct {
 func (m *Property) HasError() bool {
 	return m.Error != nil
 }
+
+func (m *Property) GetError() string {
+	if m.HasError() {
+		return m.Error.Error()
+	}
+	return ""
+}
