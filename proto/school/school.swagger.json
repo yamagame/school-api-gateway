@@ -88,6 +88,9 @@
         },
         "name": {
           "type": "string"
+        },
+        "error": {
+          "type": "string"
         }
       },
       "title": "建物"
@@ -100,6 +103,9 @@
           "format": "int32"
         },
         "name": {
+          "type": "string"
+        },
+        "error": {
           "type": "string"
         }
       },
@@ -123,6 +129,9 @@
         },
         "building": {
           "$ref": "#/definitions/schoolBuilding"
+        },
+        "error": {
+          "type": "string"
         }
       },
       "title": "研究室の情報"
@@ -166,6 +175,9 @@
           "format": "int32"
         },
         "name": {
+          "type": "string"
+        },
+        "error": {
           "type": "string"
         }
       },

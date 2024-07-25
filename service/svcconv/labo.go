@@ -1,6 +1,8 @@
 package svcconv
 
 import (
+	"fmt"
+
 	"github.com/yamagame/school-api-gateway/irmodel"
 	"github.com/yamagame/school-api-gateway/pkg/irconv"
 	"github.com/yamagame/school-api-gateway/proto/school"
@@ -36,10 +38,16 @@ func (c LaboConv) ToStruct(in *irconv.Record) *school.Labo {
 				ToStruct(".building.name", ".Building.Name", out, irconv.Keep)
 		}).
 		Self()
+	out.Error = in.Error.Error()
 	return out
 }
 
 func (c LaboConv) ToIRModel(in *school.Labo) *irconv.Record {
+	if in.Error != "" {
+		return &irconv.Record{
+			Error: fmt.Errorf(in.Error),
+		}
+	}
 	return irmodel.NewLabo().
 		FromStruct(".Id", ".id", in, irconv.Keep).
 		FromStruct(".Name", ".name", in, irconv.Keep).

@@ -22,18 +22,21 @@ service Shool {
 message Group {
   int32 id = 1;
   string name = 2;
+  string error = 99;
 }
 
 // プログラム
 message Program {
   int32 id = 1;
   string name = 2;
+  string error = 99;
 }
 
 // 建物
 message Building {
   int32 id = 1;
   string name = 2;
+  string error = 99;
 }
 
 // 研究室の情報
@@ -43,6 +46,7 @@ message Labo {
   Group group = 3;
   Program program = 4;
   Building building = 5;
+  string error = 99;
 }
 
 // The request message containing the user's name
