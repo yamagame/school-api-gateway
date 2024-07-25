@@ -8,13 +8,13 @@ import (
 
 type GroupConv struct{}
 
-func (GroupConv) ToStruct(in *iconv.Record) (*model.Group, error) {
+func (GroupConv) ToStruct(in *iconv.Record) *model.Group {
 	out := &model.Group{}
 	out.Error = in.
 		ToStruct(".id", ".ID", out, iconv.Int32Ptr).
 		ToStruct(".name", ".Name", out).
 		Error
-	return out, out.Error
+	return out
 }
 
 func (GroupConv) ToIModel(in *model.Group) *iconv.Record {
@@ -27,12 +27,4 @@ func (GroupConv) ToIModel(in *model.Group) *iconv.Record {
 		FromStruct(".ID", ".id", in, iconv.PtrInt32).
 		FromStruct(".Name", ".name", in).
 		Self()
-}
-
-func (GroupConv) NewSlice(models ...*model.Group) *model.Groups {
-	r := &model.Groups{
-		SliceWrapper: iconv.NewSlice[model.Group](),
-	}
-	r.Append(models...)
-	return r
 }

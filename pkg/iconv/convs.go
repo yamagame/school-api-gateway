@@ -1,10 +1,12 @@
 package iconv
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type ConvsInterface[M any] interface {
-	Append(...*M) *SliceWrapper[M]
-	SetError(err error) *SliceWrapper[M]
+	Append(...*M) *SliceContainer[M]
+	SetError(err error) *SliceContainer[M]
 	Slice() []*M
 	HasError() bool
 	GetError() string
@@ -18,6 +20,12 @@ type ConvInterface[M any, N any] interface {
 
 type Convs[M any, N ConvsInterface[M], B ConvInterface[M, N]] struct {
 	Conv B
+}
+
+func (c Convs[M, N, B]) NewSlice(in ...*M) *SliceContainer[M] {
+	r := &SliceContainer[M]{}
+	r.Append(in...)
+	return r
 }
 
 func (c Convs[M, N, B]) ToStruct(in *Records) *N {
@@ -54,7 +62,7 @@ func (c Convs[M, N, B]) ToIModel(in *N) *Records {
 }
 
 type valiables[T any] interface {
-	Append(records ...*T) *SliceWrapper[T]
+	Append(records ...*T) *SliceContainer[T]
 }
 
 func (c Convs[M, N, B]) ToStructWithMap(in []map[string]interface{}, out valiables[M], factory func() *Record) error {

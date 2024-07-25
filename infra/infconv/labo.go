@@ -66,11 +66,3 @@ func (LaboConv) ToIModel(in *model.Labo) *iconv.Record {
 		}).
 		Self()
 }
-
-func (LaboConv) NewSlice(models ...*model.Labo) *model.Labos {
-	r := &model.Labos{
-		SliceWrapper: iconv.NewSlice[model.Labo](),
-	}
-	r.Append(models...)
-	return r
-}

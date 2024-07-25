@@ -38,7 +38,7 @@ func NewLabo(repo repository.LaboInterface) *Labo {
 }
 
 func (s *Labo) Create(ctx context.Context) (int32, error) {
-	labos := infconv.Labo.NewSlice()
+	labos := infconv.NewLaboSlice()
 	labos.Append(&model.Labo{})
 	if err := s.laborepo.Create(ctx, labos); err != nil {
 		return 0, err

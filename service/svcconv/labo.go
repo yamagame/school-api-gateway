@@ -13,7 +13,7 @@ type LaboConv struct {
 
 func (LaboConv) NewSlice(models ...*school.Labo) *school.Labos {
 	ret := &school.Labos{
-		SliceWrapper: iconv.NewSlice[school.Labo](),
+		SliceContainer: iconv.NewSlice[school.Labo](),
 	}
 	ret.Append(models...)
 	return ret

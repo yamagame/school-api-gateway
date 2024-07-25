@@ -17,6 +17,12 @@ var Desks = iconv.Convs[model.Desk, model.Desks, DeskConv]{
 	Conv: Desk,
 }
 
+var Group = GroupConv{}
+
+var Groups = iconv.Convs[model.Group, model.Groups, GroupConv]{
+	Conv: Group,
+}
+
 var Property = PropertyConv{}
 
 var Properties = iconv.Convs[model.Property, model.Properties, PropertyConv]{

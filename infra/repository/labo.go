@@ -47,8 +47,8 @@ func (r *Labo) UpsertInBatches(ctx context.Context, labos *model.Labos, columns 
 
 func (r *Labo) Upsert(ctx context.Context, labos *model.Labos) error {
 	var err error
-	creates := infconv.Labo.NewSlice()
-	updates := infconv.Labo.NewSlice()
+	creates := infconv.NewLaboSlice()
+	updates := infconv.NewLaboSlice()
 	it := labos.NewIterator()
 	for it.HasNext() {
 		labo := it.Next()
@@ -103,7 +103,7 @@ func (r *Labo) Find(ctx context.Context, ids []int32) *model.Labos {
 		Preload(lb.Desks, lb.Chairs).
 		Joins(lb.Building, lb.Group, lb.Program).
 		Where(lb.ID.In(ids...)).Find()
-	ret := infconv.Labo.NewSlice()
+	ret := infconv.NewLaboSlice()
 	if err != nil {
 		ret.Error = err
 	}
@@ -118,7 +118,7 @@ func (r *Labo) FindWithName(ctx context.Context, names []string) *model.Labos {
 		Preload(lb.Desks, lb.Chairs).
 		Joins(lb.Building, lb.Group, lb.Program).
 		Where(lb.Name.In(names...)).Find()
-	ret := infconv.Labo.NewSlice()
+	ret := infconv.NewLaboSlice()
 	if err != nil {
 		ret.Error = err
 	}
@@ -135,10 +135,7 @@ func (r *Labo) List(ctx context.Context, limit, offset int32) *model.Labos {
 		Offset(int(offset)).
 		Order(lb.ID.Asc()).
 		Find()
-	ret := infconv.Labo.NewSlice()
-	if err != nil {
-		ret.Error = err
-	}
-	ret.Append(records...)
-	return ret
+	t := infconv.NewLaboSlice(records...)
+	t.SetError(err)
+	return t
 }

@@ -11,7 +11,7 @@ type License struct {
 }
 
 type Licenses struct {
-	*iconv.SliceWrapper[License]
+	*iconv.SliceContainer[License]
 }
 
 func (m *License) HasError() bool {

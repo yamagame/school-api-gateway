@@ -3,11 +3,11 @@ package model
 import "github.com/yamagame/school-api-gateway/pkg/iconv"
 
 type Areas struct {
-	*iconv.SliceWrapper[Area]
+	*iconv.SliceContainer[Area]
 }
 
 type Courses struct {
-	*iconv.SliceWrapper[Course]
+	*iconv.SliceContainer[Course]
 }
 
 // type LaboRooms struct {
@@ -15,11 +15,11 @@ type Courses struct {
 // }
 
 type Schools struct {
-	*iconv.SliceWrapper[School]
+	*iconv.SliceContainer[School]
 }
 
 type Addresses struct {
-	*iconv.SliceWrapper[Address]
+	*iconv.SliceContainer[Address]
 }
 
 // type ClassRooms struct {
@@ -27,15 +27,15 @@ type Addresses struct {
 // }
 
 type Groups struct {
-	*iconv.SliceWrapper[Group]
+	*iconv.SliceContainer[Group]
 }
 
 type Roles struct {
-	*iconv.SliceWrapper[Role]
+	*iconv.SliceContainer[Role]
 }
 
 type Students struct {
-	*iconv.SliceWrapper[Student]
+	*iconv.SliceContainer[Student]
 }
 
 // type LaboProfessors struct {
@@ -43,7 +43,7 @@ type Students struct {
 // }
 
 type Labos struct {
-	*iconv.SliceWrapper[Labo]
+	*iconv.SliceContainer[Labo]
 }
 
 // type SchoolPersons struct {
@@ -51,39 +51,39 @@ type Labos struct {
 // }
 
 type Posts struct {
-	*iconv.SliceWrapper[Post]
+	*iconv.SliceContainer[Post]
 }
 
 type Professors struct {
-	*iconv.SliceWrapper[Professor]
+	*iconv.SliceContainer[Professor]
 }
 
 type Chairs struct {
-	*iconv.SliceWrapper[Chair]
+	*iconv.SliceContainer[Chair]
 }
 
 type Aliases struct {
-	*iconv.SliceWrapper[Alias]
+	*iconv.SliceContainer[Alias]
 }
 
 type Buildings struct {
-	*iconv.SliceWrapper[Building]
+	*iconv.SliceContainer[Building]
 }
 
 type Desks struct {
-	*iconv.SliceWrapper[Desk]
+	*iconv.SliceContainer[Desk]
 }
 
 type People struct {
-	*iconv.SliceWrapper[Person]
+	*iconv.SliceContainer[Person]
 }
 
 type Employees struct {
-	*iconv.SliceWrapper[Employee]
+	*iconv.SliceContainer[Employee]
 }
 
 type Programs struct {
-	*iconv.SliceWrapper[Program]
+	*iconv.SliceContainer[Program]
 }
 
 // type SchoolClasses struct {
@@ -95,7 +95,7 @@ type Programs struct {
 // }
 
 type Classes struct {
-	*iconv.SliceWrapper[Class]
+	*iconv.SliceContainer[Class]
 }
 
 // type LaboStudents struct {
@@ -103,7 +103,7 @@ type Classes struct {
 // }
 
 type Rooms struct {
-	*iconv.SliceWrapper[Room]
+	*iconv.SliceContainer[Room]
 }
 
 // type SchoolBuildings struct {
@@ -111,5 +111,5 @@ type Rooms struct {
 // }
 
 type Properties struct {
-	*iconv.SliceWrapper[Property]
+	*iconv.SliceContainer[Property]
 }
